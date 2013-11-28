@@ -189,12 +189,23 @@ public class GPS {
 			
 			//los datos a guardar son los sigientes, mas la distance (0 para el primer punto y la diferencia entre los anteriores para el resto
 			//solo se necesita guardar a partir de pointsCuantity = 1, la que el 0 es el LastKnownLocation que es la cacheada
-//			latitude = localizacion.getLatitude();
-//			altitude = localizacion.getAltitude();
-//			longitude = localizacion.getLongitude();
-//			velocity = localizacion.getSpeed();
-//			time = localizacion.getTime();
-//
+			
+			
+			//Comentario de Daniel para la base de datos, en este punto almacenamos las variables en la base de datos, no podemos acceder a ellas desde 
+			//otra clase ya que son privadas y volatiles, no tiene sentido usar setters y getters ya que nunca se llamaran desde otra clase, desde otra clase solo
+			//se podra acceder a las variables que hemos almacenado en la base de datos, ya que estas solo viven 30 segundos para almacenarse 
+			//y despues mueren, si quieres obtener los datos de estas variables desde otra clase tendrias que sincronizarlas para que
+			//obtengan los valores dentro de los 30 segundos en los que no estan siendo modificadas.
+			//Desde aqui podemos acceder a cualquier otra clase, y usar setters para otra clase y guardar estas variables locales en las variables
+			//de la clase a la que queramos enviar la informacion, pero es mas recomendable guardarlas en la base de datos y recuperarlas desde alli
+			//tambien podemos obtener los datos de usuario y de sesion necesarios para guardar estos datos en la base de datos correctamente.
+			
+			latitude = localizacion.getLatitude();
+			altitude = localizacion.getAltitude();
+			longitude = localizacion.getLongitude();
+			velocity = localizacion.getSpeed();
+			time = localizacion.getTime();
+
 //			log("Localizacion[ " + "Orden=" + pointsCuantity + ", Latitud(grados)="
 //					+ latitude +
 //
@@ -214,22 +225,24 @@ public class GPS {
 		
 		
 		
-		//Modificado Jorge Zambrano
+//		//Modificado Jorge Zambrano
+//		
+		// no valido
 		
-		public Double getLatiude(){
-			return localizacion.getLatitude();
-		}
-
-		public Double getAltitude(){
-			return localizacion.getAltitude();
-		}
-		public Double getLongitude(){
-			return localizacion.getLongitude();
-		}
-		public Double getSpeed(){
-			return localizacion.getSpeed();
-		}
-		public Double getTime(){
-			return localizacion.getTime();
-		}
+//		public Double getLatiude(){
+//			return localizacion.getLatitude();
+//		}
+//
+//		public Double getAltitude(){
+//			return localizacion.getAltitude();
+//		}
+//		public Double getLongitude(){
+//			return localizacion.getLongitude();
+//		}
+//		public Double getSpeed(){
+//			return localizacion.getSpeed();
+//		}
+//		public Double getTime(){
+//			return localizacion.getTime();
+//		}
 }
