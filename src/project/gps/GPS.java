@@ -189,27 +189,47 @@ public class GPS {
 			
 			//los datos a guardar son los sigientes, mas la distance (0 para el primer punto y la diferencia entre los anteriores para el resto
 			//solo se necesita guardar a partir de pointsCuantity = 1, la que el 0 es el LastKnownLocation que es la cacheada
-			latitude = localizacion.getLatitude();
-			altitude = localizacion.getAltitude();
-			longitude = localizacion.getLongitude();
-			velocity = localizacion.getSpeed();
-			time = localizacion.getTime();
-
-			log("Localizacion[ " + "Orden=" + pointsCuantity + ", Latitud(grados)="
-					+ latitude +
-
-					", Longitud(grados)=" + longitude +
-
-					", Altitud(metros)=" + altitude +
-
-					", Velocidad(m/s)=" + velocity +
-
-					", Distancia(metros)=" + velocity +
-
-					", Tiempo(UTC millisegundos)=" + time + " ]\n");
+//			latitude = localizacion.getLatitude();
+//			altitude = localizacion.getAltitude();
+//			longitude = localizacion.getLongitude();
+//			velocity = localizacion.getSpeed();
+//			time = localizacion.getTime();
+//
+//			log("Localizacion[ " + "Orden=" + pointsCuantity + ", Latitud(grados)="
+//					+ latitude +
+//
+//					", Longitud(grados)=" + longitude +
+//
+//					", Altitud(metros)=" + altitude +
+//
+//					", Velocidad(m/s)=" + velocity +
+//
+//					", Distancia(metros)=" + velocity +
+//
+//					", Tiempo(UTC millisegundos)=" + time + " ]\n");
 			
 			pointsCuantity++;
 
 		}
+		
+		
+		
+		//Modificado Jorge Zambrano
+		
+		public Double getLatiude(){
+			return localizacion.getLatitude();
+		}
 
+		public Double getAltitude(){
+			return localizacion.getAltitude();
+		}
+		public Double getLongitude(){
+			return localizacion.getLongitude();
+		}
+		public Double getSpeed(){
+			return localizacion.getSpeed();
+		}
+		public Double getTime(){
+			return localizacion.getTime();
+		}
 }
