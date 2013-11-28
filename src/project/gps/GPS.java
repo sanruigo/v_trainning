@@ -115,7 +115,7 @@ public class GPS {
 		
 		//Esta localizacion esta cacheada, no hay que mostrarla, es solo para comenzar mas rapido la recepcion GPS
 		Location lastKnownLocation = manejador.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-		muestraLocaliz(lastKnownLocation);
+		guardaLozaliz(lastKnownLocation);
 
 		manejador.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTime,	minDist, this);
 	}
@@ -131,7 +131,7 @@ public class GPS {
 			
 		}
 
-		muestraLocaliz(location);
+		guardaLozaliz(location);
 
 	}
 
@@ -162,7 +162,7 @@ public class GPS {
 
 		}
 
-		private void muestraLocaliz(Location localizacion) {
+		private void guardaLozaliz(Location localizacion) {
 
 			if (localizacion == null)
 
