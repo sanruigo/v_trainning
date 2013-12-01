@@ -1,17 +1,27 @@
 package project.v_trainning;
 
+import com.androidplot.xy.XYPlot;
+
+import project.chart.ChartPlot;
 import project.database.DataBase_vTrainning;
 import android.os.Bundle;
 import android.app.Activity;
+import android.graphics.Color;
 import android.view.Menu;
 
 public class MainActivity extends Activity {
 
+	
+	private XYPlot mySimpleXYPlot;//Variable para cargar el Plot
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		 dbExample();
+		
+		plotExample();
+        
+		//dbExample();
 	}
 
 	@Override
@@ -21,6 +31,27 @@ public class MainActivity extends Activity {
 		return true;
 	}
 
+	
+	
+	
+	public void plotExample(){
+		
+		// Creamos dos arrays de prueba. En el caso real debemos reemplazar
+        // estos datos por los que realmente queremos mostrar
+		Number[] series1Numbers = {1, 8, 5, 2, 7, 4};
+		ChartPlot chP=new ChartPlot();
+		chP.setSerie1(series1Numbers);
+		chP.setXYSeries(chP.getSerie(), "Serie");
+		chP.setSeriesFormat(Color.BLUE, Color.RED, 0);
+		
+		// Inicializamos el objeto XYPlot búscandolo desde el layout:
+        mySimpleXYPlot = (XYPlot) findViewById(R.id.mySimpleXYPlot);
+        // Una vez definida la serie (datos y estilo), la añadimos al panel
+        mySimpleXYPlot.addSeries(chP.getSeries(), chP.getSeriesFormat());
+		
+	}
+	
+	
 	
 	public void dbExample(){
 		//Abrimos la base de datos 'DBUsuarios' en modo escritura

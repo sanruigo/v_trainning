@@ -108,7 +108,7 @@ public class GPS {
 
 		//salida = (TextView) findViewById(R.id.salida);
 
-		manejador = (LocationManager) getSystemService(LOCATION_SERVICE);
+		//manejador = (LocationManager) getSystemService(LOCATION_SERVICE);
 
 		log("Esperando recepcion GPS");
 
@@ -117,7 +117,7 @@ public class GPS {
 		Location lastKnownLocation = manejador.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 		guardaLozaliz(lastKnownLocation);
 
-		manejador.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTime,	minDist, this);
+		//manejador.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTime,	minDist, this);
 	}
 	
 	
@@ -147,18 +147,18 @@ public class GPS {
 
 	}
 
-	public void onStatusChanged(String proveedor, int estado, Bundle extras) {
-
-		log("Cambia estado proveedor: " + proveedor + ", estado="
-				+ E[Math.max(0, estado)] + "\n");
-
-	}
-	
+//	public void onStatusChanged(String proveedor, int estado, Bundle extras) {
+//
+//		log("Cambia estado proveedor: " + proveedor + ", estado="
+//				+ E[Math.max(0, estado)] + "\n");
+//
+//	}
+//	
 	// M�todos para mostrar informaci�n
 
 		private void log(String cadena) {
 
-			salida.append(cadena + "\n");
+			//salida.append(cadena + "\n");
 
 		}
 

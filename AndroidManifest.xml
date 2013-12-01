@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="project.v_trainning"
+    package="com.example.v_trainning"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -8,16 +8,13 @@
         android:minSdkVersion="8"
         android:targetSdkVersion="18" />
 
-        <uses-permission
-		android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="project.v_trainning.MainActivity"
+            android:name="com.example.v_trainning.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
