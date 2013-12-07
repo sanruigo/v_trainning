@@ -12,6 +12,7 @@ import com.androidplot.xy.XYPlot;
 import com.androidplot.xy.XYSeries;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.app.Activity;
 import android.graphics.Color;
 import android.view.Menu;
@@ -23,10 +24,23 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		esperarYCerrar(MILISEGUNDOS_ESPERA);
+		
 		chartExample();
 		//dbExample();
 	}
+	
+	public static int MILISEGUNDOS_ESPERA = 5000;
 
+	public void esperarYCerrar(int milisegundos) {
+		Handler handler = new Handler();
+		handler.postDelayed(new Runnable() {
+			public void run() {
+				// acciones que se ejecutan tras los milisegundos
+				setContentView(R.layout.activity_training);
+			}
+		}, milisegundos);
+	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
