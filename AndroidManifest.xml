@@ -22,6 +22,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="project.v_trainning.TrainningActivity"
+            android:label="@string/title_activity_trainning" >
+        </activity>
+        <activity
+            android:name="project.v_trainning.AjustesActivity"
+            android:label="@string/title_activity_ajustes" >
+        </activity>
+        <activity
+            android:name="project.v_trainning.ResumenActivity"
+            android:label="@string/title_activity_resumen" >
+        </activity>
     </application>
 
 </manifest>

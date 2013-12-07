@@ -37,7 +37,7 @@ public class MainActivity extends Activity {
 		handler.postDelayed(new Runnable() {
 			public void run() {
 				// acciones que se ejecutan tras los milisegundos
-				setContentView(R.layout.activity_training);
+				setContentView(R.layout.activity_trainning);
 			}
 		}, milisegundos);
 	}
