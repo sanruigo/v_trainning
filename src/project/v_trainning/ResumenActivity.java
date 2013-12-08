@@ -13,6 +13,7 @@ public class ResumenActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_resumen);
 		System.out.println("Creando Resumen");
+		
 	}
 
 	@Override
