@@ -14,8 +14,10 @@ import com.androidplot.xy.XYSeries;
 import android.os.Bundle;
 import android.os.Handler;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.Menu;
+import android.view.View;
 
 public class MainActivity extends Activity {
 	private XYPlot mySimpleXYPlot;
@@ -26,7 +28,7 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		esperarYCerrar(MILISEGUNDOS_ESPERA);
 		
-		chartExample();
+		//chartExample();
 		//dbExample();
 	}
 	
@@ -48,13 +50,22 @@ public class MainActivity extends Activity {
 		return true;
 	}
 	
+	public void launchSettingActivity(View view){
+		startActivity(new Intent(MainActivity.this,AjustesActivity.class));
+		
+	}
+	
+	public void launchResumeActivity(View view){
+		startActivity(new Intent(MainActivity.this,ResumenActivity.class));
+		
+	}
 	
 	
 	
 	public void chartExample(){
 		
 		cp = new ChartPlot();
-		// Inicializamos el objeto XYPlot búscandolo desde el layout:
+		// Inicializamos el objeto XYPlot b��scandolo desde el layout:
         mySimpleXYPlot = (XYPlot) findViewById(R.id.mySimpleXYPlot);
  
         // Creamos dos arrays de prueba. En el caso real debemos reemplazar
@@ -67,7 +78,7 @@ public class MainActivity extends Activity {
         cp.setSeriesFormat(Color.BLACK, Color.RED,Color.GRAY);
         cp.setXYSeries(cp.getSerie(), "Serie1");
 
-        // Una vez definida la serie (datos y estilo), la añadimos al panel
+        // Una vez definida la serie (datos y estilo), la a��adimos al panel
         mySimpleXYPlot.addSeries(cp.getSeries(), cp.getSeriesFormat());
       
 	

@@ -1,8 +1,11 @@
 package project.v_trainning;
 
+
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
+import android.view.View;
 
 public class TrainningActivity extends Activity {
 
@@ -10,6 +13,7 @@ public class TrainningActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_trainning);
+		System.out.println("Creando Trainning");
 	}
 
 	@Override
@@ -19,4 +23,7 @@ public class TrainningActivity extends Activity {
 		return true;
 	}
 
+
+	
+	
 }
