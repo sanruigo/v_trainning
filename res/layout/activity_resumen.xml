@@ -13,6 +13,19 @@
     android:background="@drawable/fondosilueta"
     android:gravity="center_horizontal"
     tools:context=".MainActivity" >
+    
+    
+            <com.androidplot.xy.XYPlot
+            android:id="@+id/mySimpleXYPlot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10px"
+            android:layout_marginRight="10px"
+            android:layout_marginTop="10px"
+            android:layout_weight="20.89" />
+    
+    
+    
 	<TabHost
         android:id="@android:id/tabhost"
         android:layout_width="match_parent"
@@ -76,6 +89,8 @@
     </TabHost>
    
    
+	
+	
     <LinearLayout
         android:id="@+id/barrabotones"
         android:layout_width="fill_parent"
@@ -91,6 +106,7 @@
             android:layout_marginLeft="0dp"
             android:layout_weight="1"
             android:background="@drawable/boton_men_play"
+            android:onClick="launchTrainningActivity"
             android:text="" />
 
         <Button
@@ -99,6 +115,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/boton_men_res"
+            
             android:text="" />
 
         <Button
@@ -107,6 +124,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/boton_men_ajus"
+            android:onClick="launchSettingActivity"
             android:text="" />
     </LinearLayout>
 

@@ -185,6 +185,7 @@
             android:layout_marginLeft="0dp"
             android:layout_weight="1"
             android:background="@drawable/boton_men_play"
+            android:onClick="launchTranningActivity"
             android:text="" />
 
         <Button
@@ -193,6 +194,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/boton_men_res"
+            android:onClick="launchResumeActivity"
             android:text="" />
 
         <Button

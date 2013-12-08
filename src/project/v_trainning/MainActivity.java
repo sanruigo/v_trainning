@@ -39,7 +39,8 @@ public class MainActivity extends Activity {
 		handler.postDelayed(new Runnable() {
 			public void run() {
 				// acciones que se ejecutan tras los milisegundos
-				setContentView(R.layout.activity_trainning);
+				//setContentView(R.layout.activity_trainning);
+				startActivity(new Intent(MainActivity.this,TrainningActivity.class));
 			}
 		}, milisegundos);
 	}
@@ -50,15 +51,15 @@ public class MainActivity extends Activity {
 		return true;
 	}
 	
-	public void launchSettingActivity(View view){
-		startActivity(new Intent(MainActivity.this,AjustesActivity.class));
-		
-	}
-	
-	public void launchResumeActivity(View view){
-		startActivity(new Intent(MainActivity.this,ResumenActivity.class));
-		
-	}
+//	public void launchSettingActivity(View view){
+//		startActivity(new Intent(MainActivity.this,AjustesActivity.class));
+//		
+//	}
+//	
+//	public void launchResumeActivity(View view){
+//		startActivity(new Intent(MainActivity.this,ResumenActivity.class));
+//		
+//	}
 	
 	
 	
