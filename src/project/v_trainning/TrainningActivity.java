@@ -8,12 +8,14 @@ import android.view.Menu;
 import android.view.View;
 
 public class TrainningActivity extends Activity {
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_trainning);
+
 		System.out.println("Creando Trainning");
+
 	}
 
 	@Override
@@ -24,6 +26,19 @@ public class TrainningActivity extends Activity {
 	}
 
 
+	/**
+	 * Method to launch Settings
+	 * */
+	public void launchSettingActivity(View view){
+		startActivity(new Intent(TrainningActivity.this,AjustesActivity.class));
+		
+	}
 	
+
+	public void launchResumeActivity(View view){
+		startActivity(new Intent(TrainningActivity.this,ResumenActivity.class));
+		
+	}
+
 	
 }
