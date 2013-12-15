@@ -89,7 +89,7 @@ public class MainActivity extends Activity {
         //Abrimos la base de datos 'DBUsuarios' en modo escritura
         DataBase_vTrainning db =new DataBase_vTrainning(this, "DBvTrainning", null, 1);
 		//Inserta Usuarios
-		db.setUsuario("Jorge", 25, 60.4);
+		db.setUsuario("Jorge", 25, 60.4,1.7);
 		//db.setUsuario("Luis", 25, 60.4);
 		//db.setUsuario("Zambrano", 25, 60.4);
 

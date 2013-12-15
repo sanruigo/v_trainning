@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name = "ActType">
+        <item>Ciclismo</item>
+        <item>Correr</item>       
+    </string-array>
+</resources>

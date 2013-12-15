@@ -30,7 +30,8 @@ public class DataBase_vTrainning extends SQLiteOpenHelper {
 			+ "(id_usuario INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , "
 			+ "nombre VARCHAR, "
 			+ "edad INTEGER, "
-			+ "peso DOUBLE)";
+			+ "peso DOUBLE," 
+			+ "estatura DOUBLE)";
 	
 	String sqlCreateTableSesiones="CREATE TABLE sesiones "
 			+ "(id_sesion INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL ,"
@@ -157,9 +158,9 @@ public class DataBase_vTrainning extends SQLiteOpenHelper {
      * @return isInsert if this transaction was successful
      * */
    
-    public boolean setUsuario(String name, int age,double weight){
+    public boolean setUsuario(String name, int age,double weight,double height){
     	boolean isInsert=true;
-       		String rowQuerry="INSERT INTO usuarios (id_usuario,nombre,edad,peso) VALUES(null,'"+name+"',"+age+","+weight+")"; 
+       		String rowQuerry="INSERT INTO usuarios (id_usuario,nombre,edad,peso,estatura) VALUES(null,'"+name+"',"+age+","+weight+","+height+")"; 
     		
     		dbWrite.execSQL(rowQuerry);
     		
@@ -251,6 +252,27 @@ public class DataBase_vTrainning extends SQLiteOpenHelper {
     		cursor.close();
         }
     	return weight;
+    }
+    
+    /**
+     * return user's weight
+     * @param name user's name
+     * @return weight user's weight
+     * */
+    public String getUsuarioHeight(String name){  	
+    	String height="";
+      	if(dbRead != null)
+        {
+    		String rowQuerry="select estatura from usuarios where nombre='"+name+"'"; 
+    		Cursor cursor=dbRead.rawQuery(rowQuerry,null);
+    		while(cursor.moveToNext()){
+    			//System.out.println("name:"+cursor.getString(0));
+    			height=cursor.getString(0);
+    		}
+    		//Cerramos el cursor
+    		cursor.close();
+        }
+    	return height;
     }
     
     /**
