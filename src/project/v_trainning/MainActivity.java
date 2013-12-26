@@ -32,7 +32,7 @@ public class MainActivity extends Activity {
 		//dbExample();
 	}
 	
-	public static int MILISEGUNDOS_ESPERA = 3000;
+	public static int MILISEGUNDOS_ESPERA = 5000;
 
 	public void esperarYCerrar(int milisegundos) {
 		Handler handler = new Handler();
