@@ -32,7 +32,7 @@ public class MainActivity extends Activity {
 		//dbExample();
 	}
 	
-	public static int MILISEGUNDOS_ESPERA = 5000;
+	public static int MILISEGUNDOS_ESPERA = 3000;
 
 	public void esperarYCerrar(int milisegundos) {
 		Handler handler = new Handler();
@@ -43,6 +43,7 @@ public class MainActivity extends Activity {
 				startActivity(new Intent(MainActivity.this,TrainningActivity.class));
 			}
 		}, milisegundos);
+		
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -62,7 +63,7 @@ public class MainActivity extends Activity {
 //	}
 	
 	
-	
+	/*
 	public void chartExample(){
 		
 		cp = new ChartPlot();
@@ -85,7 +86,21 @@ public class MainActivity extends Activity {
 	
 	}
 	
+	
+	    <!-- 
+            <com.androidplot.xy.XYPlot
+            android:id="@+id/mySimpleXYPlot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10px"
+            android:layout_marginRight="10px"
+            android:layout_marginTop="10px"
+            android:layout_weight="20.89" />
+     -->
+	*/
+	
 	public void dbExample(){
+		
         //Abrimos la base de datos 'DBUsuarios' en modo escritura
         DataBase_vTrainning db =new DataBase_vTrainning(this, "DBvTrainning", null, 1);
 		//Inserta Usuarios

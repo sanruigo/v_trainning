@@ -28,6 +28,7 @@ public class TrainningActivity extends Activity {
 		
 		createWidget();
 		
+		
 	}
 
 	@Override
