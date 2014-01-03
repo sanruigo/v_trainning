@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Virtual Training Assistant</string>
+    <string name="action_settings">Ajustes</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_trainning">VTA - Entrenamiento</string>
+    <string name="title_activity_ajustes">VTA - Ajustes</string>
+    <string name="title_activity_resumen">VTA - Resumen</string>
+
+</resources>
