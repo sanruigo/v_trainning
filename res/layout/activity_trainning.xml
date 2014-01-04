@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="0dp"
             android:layout_weight="1"
-            android:background="@drawable/boton_men_play"
+            android:background="@drawable/boton_men_play_activ"
             android:text="" />
 
         <Button
@@ -64,6 +64,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginLeft="27dp"
+            android:onClick="startTraining"
             android:background="@drawable/boton_grande1" />
 
     </LinearLayout>
@@ -94,8 +95,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:padding="5px"
-                    android:text="Duración"
+                    android:padding="5dp"
+                    android:text="@string/txtViewDuracion"
                     android:textColor="#000000"
                     android:textSize="26sp" />
 
@@ -103,7 +104,7 @@
                     android:id="@+id/noUsar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Large Text"
+                    android:text="         "
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="#FFFFFF" />
 
@@ -131,7 +132,7 @@
                 <FrameLayout
                     android:id="@+id/LineaSeparacion1"
                     android:layout_width="fill_parent"
-                    android:layout_height="2px"
+                    android:layout_height="2dp"
                     android:layout_span="12"
                     android:background="#000000" >
                 </FrameLayout>
@@ -147,8 +148,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:padding="5px"
-                    android:text="Distancia"
+                    android:padding="5dp"
+                    android:text="@string/txtViewDistancia"
                     android:textColor="#000000"
                     android:textSize="26sp" />
             </TableRow>
@@ -164,7 +165,7 @@
                     android:layout_height="wrap_content"
                     android:layout_span="2"
                     android:gravity="center"
-                    android:text="distanRec"
+                    android:text=""
                     android:textColor="#000000"
                     android:textSize="22sp" />
 
@@ -178,7 +179,7 @@
                 <FrameLayout
                     android:id="@+id/LineaSeparacion3"
                     android:layout_width="fill_parent"
-                    android:layout_height="2px"
+                    android:layout_height="2dp"
                     android:layout_span="5"
                     android:background="#000000" >
                 </FrameLayout>
@@ -194,8 +195,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:padding="5px"
-                    android:text="Actividad"
+                    android:padding="5dp"
+                    android:text="@string/txtViewActividad"
                     android:textColor="#000000"
                     android:textSize="26sp" />
             </TableRow>
@@ -211,20 +212,20 @@
                     android:layout_height="wrap_content"
                     android:layout_span="2"
                     android:gravity="center"
-                    android:text="tipoActivid"
+                    android:text=""
                     android:textColor="#000000"
                     android:textSize="22sp" />
             </TableRow>
 
             <TableRow
-                android:id="@+id/Separador1"
+                android:id="@+id/Separador3"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content" >
 
                 <FrameLayout
-                    android:id="@+id/LineaSeparacion3"
+                    android:id="@+id/LineaSeparacion4"
                     android:layout_width="fill_parent"
-                    android:layout_height="2px"
+                    android:layout_height="2dp"
                     android:layout_span="5"
                     android:background="#000000" >
                 </FrameLayout>

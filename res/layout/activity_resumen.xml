@@ -105,7 +105,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/boton_men_res"
+            android:background="@drawable/boton_men_res_activ"
             
             android:text="" />
 

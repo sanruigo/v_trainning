@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--Strings in english -->
 <resources>
 
     <string name="app_name">Virtual Training Assistant</string>
@@ -8,4 +9,15 @@
     <string name="title_activity_ajustes">VTA - Settings</string>
     <string name="title_activity_resumen">VTA - Summary</string>
 
+    <string name="txtViewDuracion">Duration</string>
+    <string name="txtViewDistancia">Distance</string>
+    <string name="txtViewActividad">Activity</string>
+    
+    <string name="txtViewNombre">Name</string>
+    <string name="txtViewPeso">Weight</string>
+    <string name="txtViewEstatura">Height</string>
+    <string name="txtViewEdad">Age</string>
+    <string name="txtViewUnidLongitud">m</string>
+    <string name="txtViewUnidPeso">Kg</string>
+    
 </resources>
