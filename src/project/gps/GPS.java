@@ -2,10 +2,13 @@ package project.gps;
 
 
 
+import android.app.Activity;
+import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
+import android.os.Bundle;
 
 
 public class GPS {
@@ -13,17 +16,60 @@ public class GPS {
 	 * @param E
 	 *            array de strings con posibles estados del gps
 	 */
-	private static final String[] E = { "fuera de servicio",
+	private static  String[] E = { "fuera de servicio",
 			"temporalmente no disponible ", "disponible" };
 
-	private static final String LOCATION_SERVICE = null;
+	private static  String LOCATION_SERVICE = null;
 
 	/***
-	 * @param manejador
-	 *            manejador del gps
+	 * @param manejador, listener
+	 *            manejador y listener del gps
 	 */
+	private Activity act;
 	private LocationManager manejador;
+	
+	
+	/*ATENCION
+	 * El LocationListener es el que hay que programar para que se obtengan los cambios de 
+	 * posicionamiento y localizacion a traves del GPS 
+	 * (Marlon)
+	 */
+	private LocationListener listener;/* = new LocationListener();{
+		public void onLocationChanged(Location location) {
 
+			log("Nueva localizacion: ");
+
+			if (pointsCuantity == 1) {
+				
+				lastLoc = new Location(location);
+				
+			}
+
+			guardaLozaliz(location);
+
+		}
+
+		public void onProviderDisabled(String proveedor) {
+
+			log("Proveedor deshabilitado: " + proveedor + "\n");
+
+		}
+
+		public void onProviderEnabled(String proveedor) {
+
+			log("Proveedor habilitado: " + proveedor + "\n");
+
+		}
+
+		@Override
+		public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
+			// TODO Auto-generated method stub
+			
+		}
+
+	  };*/
+	
+	
 	/***
 	 * @param salida
 	 *            para mostrar la salida en el textview
@@ -99,6 +145,29 @@ public class GPS {
 	 */
 	private int minDist;
 
+	public GPS(Activity activ){
+		act=activ;
+		manejador = (LocationManager) act.getSystemService(LOCATION_SERVICE);
+	}
+	
+	
+	/**
+	 * @author MNM
+	 * verifica que el gps este activo y funcionando
+	 */
+	public boolean isGPSactive(){
+		boolean rtn=false;
+			if (manejador==null){
+				manejador=(LocationManager)act.getSystemService(Context.LOCATION_SERVICE);
+				System.out.println("manejador era null");
+			}
+			if (manejador.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+				rtn=true;
+				System.out.println("gps activo");
+					
+			}
+		return rtn;
+	}
 	
 	public void localizador(){
 		
@@ -108,7 +177,7 @@ public class GPS {
 
 		//salida = (TextView) findViewById(R.id.salida);
 
-		//manejador = (LocationManager) getSystemService(LOCATION_SERVICE);
+		
 
 		log("Esperando recepcion GPS");
 
@@ -163,33 +232,37 @@ public class GPS {
 		}
 
 		private void guardaLozaliz(Location localizacion) {
-
+			System.out.println("Localizacion:"+localizacion);
 			if (localizacion == null)
 
 				log("Localizaci�n desconocida\n");
 
-			else
+			else{
 
-			if (pointsCuantity <= 1) {
-				distance = 0;
+				if (pointsCuantity <= 1) {
+					distance = 0;
 
-				if (pointsCuantity == 1)
-					log("FirstLocation");
+					if (pointsCuantity == 1)
+						log("FirstLocation");
 
-				if (pointsCuantity == 0)
-					log("LastKnownLocation");
-			}
+					if (pointsCuantity == 0)
+						log("LastKnownLocation");
 
-			else {
-				distance = localizacion.distanceTo(lastLoc);
-				lastLoc = new Location(localizacion);
-			}
+					latitude = localizacion.getLatitude();
+					altitude = localizacion.getAltitude();
+					longitude = localizacion.getLongitude();
+					velocity = localizacion.getSpeed();
+					time = localizacion.getTime();
 
-			
+
+				}else {
+					distance = localizacion.distanceTo(lastLoc);
+					lastLoc = new Location(localizacion);
+				}
+			}	
 			
 			//los datos a guardar son los sigientes, mas la distance (0 para el primer punto y la diferencia entre los anteriores para el resto
 			//solo se necesita guardar a partir de pointsCuantity = 1, la que el 0 es el LastKnownLocation que es la cacheada
-			
 			
 			//Comentario de Daniel para la base de datos, en este punto almacenamos las variables en la base de datos, no podemos acceder a ellas desde 
 			//otra clase ya que son privadas y volatiles, no tiene sentido usar setters y getters ya que nunca se llamaran desde otra clase, desde otra clase solo
@@ -200,12 +273,6 @@ public class GPS {
 			//de la clase a la que queramos enviar la informacion, pero es mas recomendable guardarlas en la base de datos y recuperarlas desde alli
 			//tambien podemos obtener los datos de usuario y de sesion necesarios para guardar estos datos en la base de datos correctamente.
 			
-			latitude = localizacion.getLatitude();
-			altitude = localizacion.getAltitude();
-			longitude = localizacion.getLongitude();
-			velocity = localizacion.getSpeed();
-			time = localizacion.getTime();
-
 //			log("Localizacion[ " + "Orden=" + pointsCuantity + ", Latitud(grados)="
 //					+ latitude +
 //
@@ -223,6 +290,13 @@ public class GPS {
 
 		}
 		
+	//Agregado por Marlon para prueba	
+		public float getLastDistance(){
+			return distance;
+		}
+		public float getLastSpeed(){
+			return velocity;
+		}
 		
 		
 //		//Modificado Jorge Zambrano
@@ -245,4 +319,8 @@ public class GPS {
 //		public Double getTime(){
 //			return localizacion.getTime();
 //		}
+
+
+
+
 }

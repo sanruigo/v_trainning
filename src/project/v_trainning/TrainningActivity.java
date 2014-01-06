@@ -1,16 +1,21 @@
 package project.v_trainning;
 
+import android.location.LocationManager;
 
-import android.os.AsyncTask;
+import java.util.Vector;
+
+//import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
+//import android.content.SharedPreferences.Editor;
 import android.view.Menu;
 import android.view.View;
-import android.widget.EditText;
+//import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 import project.gps.*;
 
 public class TrainningActivity extends Activity {
@@ -22,7 +27,18 @@ public class TrainningActivity extends Activity {
 	  final String MYPREFS_SETTINGS = "MyPreferencesSettings";
 	  SharedPreferences myPreferences, myPreferencesRecover;
 	boolean isActivatedAjustes=false;
-	TextView actividad;
+	TextView txtActividad;
+	TextView txtDistancia;
+	TextView txtTiempo;
+
+	GPS gps;
+/*
+ * Variables para almacenar lo que devuelve el GPS
+ */
+	public Vector<Long> Tiempo=new Vector();
+	public Vector<Float> Velocidad=new Vector();
+	public Vector<Float> Distancia=new Vector();
+	public int index=0;
 	/***
 	 * @param isTrainingActive 
 	 * Variable que indica si esta activo el modo entrenamiento 
@@ -40,7 +56,7 @@ public class TrainningActivity extends Activity {
 		setContentView(R.layout.activity_trainning);
 
 		System.out.println("Creando Trainning");
-		
+		gps = new GPS(this);
 		createWidget();
 		
 		
@@ -72,7 +88,9 @@ public class TrainningActivity extends Activity {
 
 	private void createWidget(){
 		
-		actividad=(TextView)findViewById(R.id.tViewTrainActAct);
+		txtActividad=(TextView)findViewById(R.id.tViewTrainActAct);
+		txtDistancia=(TextView)findViewById(R.id.tViewTrainActDist);
+		txtTiempo=(TextView)findViewById(R.id.chronometer);
 	}
 	
 
@@ -97,8 +115,8 @@ public class TrainningActivity extends Activity {
 		// TODO Auto-generated method stub
 		myPreferencesRecover = getSharedPreferences(MYPREFS_SETTINGS,mode);
 		System.out.println(myPreferencesRecover.getString("nombre_actividad", "").toString());
-		actividad.setText(myPreferencesRecover.getString("nombre_actividad", "").toString());
-		TM=new TrainingMonitor((String) actividad.getText());
+		txtActividad.setText(myPreferencesRecover.getString("nombre_actividad", "").toString());
+		TM=new TrainingMonitor((String) txtActividad.getText());
 		//actividad.setText(myPreferencesRecover.getString("nombre_actividad", ""));
 				
 
@@ -108,10 +126,21 @@ public class TrainningActivity extends Activity {
 	 * startTraining inicia o termina la función de entrenmiento
 	 * @param view
 	 */
-	private void startTraining(View view){
-		if (!isTrainingActive && isActivatedAjustes){
-			isTrainingActive=true;
-			TM.startTrainingMonitoring();
+	public void startTraining(View view){
+		System.out.println("trainingactive="+isTrainingActive);
+		if (!isTrainingActive){
+			System.out.println("ActivedAjustes="+isActivatedAjustes);
+			if (isActivatedAjustes){
+				System.out.println("Verificando si GPS esta activo");
+				if (gps.isGPSactive()){
+					isTrainingActive=true;
+					TM.run();
+				}else{
+					Toast.makeText(getApplicationContext(), R.string.msgNoGPS, Toast.LENGTH_LONG).show();
+				}
+			}else{
+				Toast.makeText(getApplicationContext(), R.string.msgNoAjustes, Toast.LENGTH_LONG).show();
+			}
 		}
 		else{
 			isTrainingActive=false;
@@ -125,40 +154,75 @@ public class TrainningActivity extends Activity {
 	 * @author MNM
 	 * clase encargada del monitoreo de la actividad
 	 */
-	public class TrainingMonitor extends AsyncTask<Boolean,Integer,Boolean>{
+	public class TrainingMonitor extends Thread{
 		
 		private String Actividad;
-		private GPS gps;
 		private boolean isActive;
 		
 		TrainingMonitor(String activ){
 			Actividad=activ;
-			gps = new GPS();
 			isActive=false;
+			Tiempo.clear();
+			Velocidad.clear();
+			Distancia.clear();
+			Tiempo.add(Long.parseLong("0"));
+			Velocidad.add(Float.parseFloat("0"));
+			Distancia.add(Float.parseFloat("0"));
+			index=0;
 		}
 		
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			super.run();
+			startTrainingMonitoring();
+		}
+
+		@Override
+		public synchronized void start() {
+			// TODO Auto-generated method stub
+			super.start();
+		}
+
+		@Override
+		public void interrupt() {
+			// TODO Auto-generated method stub
+			super.interrupt();
+			isActive=false;
+		}
+
 		/**
 	 	* startTrainingMonitoring ejecuta el monitoreo secuencial del recorrido
 	 	*/
 		public void startTrainingMonitoring(){
 			isActive=true;
 			while (isActive){
-				
+				try {
+					sleep(5000);
+					index=index+1;
+					Tiempo.add((long) (index*5));
+					gps.localizador();
+					Velocidad.add(gps.getLastSpeed());
+					Distancia.add(gps.getLastDistance());
+					txtTiempo.setText(String.valueOf(Tiempo.get(index)));
+					txtDistancia.setText(String.valueOf(Distancia.get(index)));
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
+			
 		}
 	
 		/**
 	 	* showResults muestra los resultados al volver a pulsar el boton play
 	 	*/
 		public void showResults(){
-		
+			this.interrupt();
+			
 		}
 
-		@Override
-		protected Boolean doInBackground(Boolean... params) {
-			// TODO Auto-generated method stub
-			return null;
-		}	
+
 	
 	}
 }

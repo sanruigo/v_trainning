@@ -19,5 +19,8 @@
     <string name="txtViewEdad">Edad</string>
     <string name="txtViewUnidLongitud">m</string>
     <string name="txtViewUnidPeso">Kg</string>
+
+    <string name="msgNoGPS">"El GPS esta desactivado o no se puede obtener la ubicación.\nVerifique el servicio."</string>
+    <string name="msgNoAjustes">"Debe verificar los ajustes del entrenamiento antes de iniciar el mismo."</string>
     
 </resources>

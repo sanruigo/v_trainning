@@ -20,4 +20,7 @@
     <string name="txtViewUnidLongitud">m</string>
     <string name="txtViewUnidPeso">Kg</string>
     
+    <string name="msgNoGPS">"GPS is disabled or it can't obtain the location.\nVerify the service."</string>
+    <string name="msgNoAjustes">"You must verify de training settings before to start it."</string>
+    
 </resources>
