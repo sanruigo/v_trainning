@@ -22,5 +22,6 @@
     
     <string name="msgNoGPS">"GPS is disabled or it can't obtain the location.\nVerify the service."</string>
     <string name="msgNoAjustes">"You must verify de training settings before to start it."</string>
+    <string name="timerVal">00:00:00</string>
     
 </resources>

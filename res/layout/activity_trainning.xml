@@ -115,13 +115,14 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content" >
 
-                <Chronometer
-                    android:id="@+id/chronometer"
+                <TextView
+                    android:id="@+id/txtTiempo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_span="2"
-                    android:gravity="center"
-                    android:text="Chronometer" />
+                    android:text="@string/timerVal"
+                    android:textColor="#256"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+              
             </TableRow>
 
             <TableRow

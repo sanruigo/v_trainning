@@ -6,6 +6,7 @@ import java.util.Vector;
 
 //import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -13,15 +14,19 @@ import android.content.SharedPreferences;
 //import android.content.SharedPreferences.Editor;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 //import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import project.gps.*;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
 
 public class TrainningActivity extends Activity {
 	/***
 	 * @param mode, MYPREFS_SETTINGS
-	 * Variables estaticas del modo en que se guardarán las preferencias
+	 * Variables estaticas del modo en que se guardarï¿½n las preferencias
 	 * */
 	  final int mode = Activity.MODE_PRIVATE;
 	  final String MYPREFS_SETTINGS = "MyPreferencesSettings";
@@ -29,9 +34,13 @@ public class TrainningActivity extends Activity {
 	boolean isActivatedAjustes=false;
 	TextView txtActividad;
 	TextView txtDistancia;
-	TextView txtTiempo;
-
+	Button btnTrainActStart;
+	
+	
 	GPS gps;
+	
+	
+	
 /*
  * Variables para almacenar lo que devuelve el GPS
  */
@@ -50,6 +59,23 @@ public class TrainningActivity extends Activity {
 	 */ 
 	TrainingMonitor TM; //Agregado por Marlon  
 	
+	
+	/**
+	 * Timer
+	 * 
+	 * 
+	 * */
+	private long startTime = 0L;
+	
+	private Handler customHandler = new Handler();
+	
+	long timeInMilliseconds = 0L;
+	long timeSwapBuff = 0L;
+	long updatedTime = 0L;
+	private TextView txtTiempo;
+	private Runnable updateTimerThread;
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -57,7 +83,9 @@ public class TrainningActivity extends Activity {
 
 		System.out.println("Creando Trainning");
 		gps = new GPS(this);
+		timerCore();
 		createWidget();
+		
 		
 		
 	}
@@ -90,7 +118,28 @@ public class TrainningActivity extends Activity {
 		
 		txtActividad=(TextView)findViewById(R.id.tViewTrainActAct);
 		txtDistancia=(TextView)findViewById(R.id.tViewTrainActDist);
-		txtTiempo=(TextView)findViewById(R.id.chronometer);
+		txtTiempo=(TextView)findViewById(R.id.txtTiempo);
+		btnTrainActStart=(Button)findViewById(R.id.btnTrainActStart);
+		
+		btnTrainActStart.setOnClickListener(new View.OnClickListener() {
+			
+			public void onClick(View view) {
+				startTraining();
+				
+				
+				if(!isTrainingActive){
+					System.out.println(isTrainingActive);
+					startTime();
+					isTrainingActive=true;
+				}else{
+					stopTime();
+					isTrainingActive=false;
+					
+				}
+				
+			}
+		});
+
 	}
 	
 
@@ -123,10 +172,10 @@ public class TrainningActivity extends Activity {
 	}
 	
 	/**
-	 * startTraining inicia o termina la función de entrenmiento
+	 * startTraining inicia o termina la funciï¿½n de entrenmiento
 	 * @param view
 	 */
-	public void startTraining(View view){
+	public void startTraining(){
 		System.out.println("trainingactive="+isTrainingActive);
 		if (!isTrainingActive){
 			System.out.println("ActivedAjustes="+isActivatedAjustes);
@@ -135,6 +184,9 @@ public class TrainningActivity extends Activity {
 				if (gps.isGPSactive()){
 					isTrainingActive=true;
 					TM.run();
+					
+					//startTime();
+					
 				}else{
 					Toast.makeText(getApplicationContext(), R.string.msgNoGPS, Toast.LENGTH_LONG).show();
 				}
@@ -144,6 +196,7 @@ public class TrainningActivity extends Activity {
 		}
 		else{
 			isTrainingActive=false;
+			//stopTime();
 			TM.showResults();
 		}
 		
@@ -204,7 +257,7 @@ public class TrainningActivity extends Activity {
 					gps.localizador();
 					Velocidad.add(gps.getLastSpeed());
 					Distancia.add(gps.getLastDistance());
-					txtTiempo.setText(String.valueOf(Tiempo.get(index)));
+					//txtTiempo.setText(String.valueOf(Tiempo.get(index)));
 					txtDistancia.setText(String.valueOf(Distancia.get(index)));
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
@@ -219,10 +272,63 @@ public class TrainningActivity extends Activity {
 	 	*/
 		public void showResults(){
 			this.interrupt();
+		
 			
 		}
 
 
 	
+		
 	}
+	
+	
+	
+	/**
+	 * Timer
+	 * */
+	
+	
+	private void startTime(){
+		
+		startTime = SystemClock.uptimeMillis();
+		customHandler.postDelayed(updateTimerThread, 0);
+		
+	}
+	
+	private void stopTime(){
+		timeSwapBuff += timeInMilliseconds;
+		customHandler.removeCallbacks(updateTimerThread);
+	}
+
+	
+	private void timerCore(){
+		updateTimerThread = new Runnable() {
+
+			public void run() {
+				
+				timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
+				
+				updatedTime = timeSwapBuff + timeInMilliseconds;
+
+				int secs = (int) (updatedTime / 1000);
+				int mins = secs / 60;
+				secs = secs % 60;
+				int milliseconds = (int) (updatedTime % 1000);
+				System.out.println("" + mins + ":"
+						+ String.format("%02d", secs) + ":"
+						+ String.format("%03d", milliseconds));
+				
+				txtTiempo.setText("" + mins + ":"
+						+ String.format("%02d", secs) + ":"
+						+ String.format("%03d", milliseconds));
+				customHandler.postDelayed(this, 0);
+			}
+
+		};
+		
+		
+	}
+	
+	
+	
 }
