@@ -64,7 +64,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginLeft="27dp"
-            android:onClick="startTraining"
+            android:onClick="onClick"
             android:background="@drawable/boton_grande1" />
 
     </LinearLayout>

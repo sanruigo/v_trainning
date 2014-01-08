@@ -124,8 +124,8 @@ public class TrainningActivity extends Activity {
 		btnTrainActStart.setOnClickListener(new View.OnClickListener() {
 			
 			public void onClick(View view) {
-				startTraining();
-				
+				//startTraining();
+				System.out.println("click start");
 				
 				if(!isTrainingActive){
 					System.out.println(isTrainingActive);
@@ -183,9 +183,10 @@ public class TrainningActivity extends Activity {
 				System.out.println("Verificando si GPS esta activo");
 				if (gps.isGPSactive()){
 					isTrainingActive=true;
+//					startTime();
 					TM.run();
 					
-					//startTime();
+					
 					
 				}else{
 					Toast.makeText(getApplicationContext(), R.string.msgNoGPS, Toast.LENGTH_LONG).show();
@@ -196,7 +197,7 @@ public class TrainningActivity extends Activity {
 		}
 		else{
 			isTrainingActive=false;
-			//stopTime();
+			stopTime();
 			TM.showResults();
 		}
 		
@@ -229,6 +230,7 @@ public class TrainningActivity extends Activity {
 			// TODO Auto-generated method stub
 			super.run();
 			startTrainingMonitoring();
+			//startTime();
 		}
 
 		@Override
@@ -303,7 +305,8 @@ public class TrainningActivity extends Activity {
 	
 	private void timerCore(){
 		updateTimerThread = new Runnable() {
-
+			
+			boolean primerMultiplo=true;
 			public void run() {
 				
 				timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
@@ -318,10 +321,39 @@ public class TrainningActivity extends Activity {
 						+ String.format("%02d", secs) + ":"
 						+ String.format("%03d", milliseconds));
 				
+				
+				
+				if(GPS5Seg(secs, 5)){
+					if(primerMultiplo){
+						System.out.println("GPSSSSSS");
+						
+						gps.localizador();
+						System.out.println("Distancia:"+gps.getLastDistance()+" "+gps.getLastSpeed());
+						//Velocidad.add(gps.getLastSpeed());
+						//Distancia.add(gps.getLastDistance());
+						
+						primerMultiplo=false;
+					}					
+					}else{
+					primerMultiplo=true;
+				}	
+				
+				
+				
 				txtTiempo.setText("" + mins + ":"
 						+ String.format("%02d", secs) + ":"
 						+ String.format("%03d", milliseconds));
 				customHandler.postDelayed(this, 0);
+			
+			}
+			
+			public boolean GPS5Seg(int num1,int num2){
+				int resto=0;
+				resto=num1%num2;
+				if(resto==0){
+					return true;
+				}
+				return false;
 			}
 
 		};
