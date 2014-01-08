@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--Strings in english -->
+<!-- Strings in english -->
 <resources>
+    
 
     <string name="app_name">Virtual Training Assistant</string>
     <string name="action_settings">Settings</string>
@@ -8,10 +9,12 @@
     <string name="title_activity_trainning">VTA - Training</string>
     <string name="title_activity_ajustes">VTA - Settings</string>
     <string name="title_activity_resumen">VTA - Summary</string>
-
+    <string name="title_activity_results">VTA - Results</string>
+    
     <string name="txtViewDuracion">Duration</string>
     <string name="txtViewDistancia">Distance</string>
     <string name="txtViewActividad">Activity</string>
+    <string name="timerVal">00:00:00.0</string>
     
     <string name="txtViewNombre">Name</string>
     <string name="txtViewPeso">Weight</string>
@@ -20,8 +23,14 @@
     <string name="txtViewUnidLongitud">m</string>
     <string name="txtViewUnidPeso">Kg</string>
     
-    <string name="msgNoGPS">"GPS is disabled or it can't obtain the location.\nVerify the service."</string>
-    <string name="msgNoAjustes">"You must verify de training settings before to start it."</string>
-    <string name="timerVal">00:00:00</string>
+    <string name="txtViewHola">Hi: </string>
+    <string name="txtViewTuActividad">Your activity: </string>
+    <string name="txtViewCalQuemadas">Burned calories:</string>
+    <string name="txtViewDistRecorrida">Distance:</string>
+    <string name="txtViewTiempo">Training time:</string>
     
+    <string name="msgNoGPS">"GPS is disabled or it can't obtain the location.\nVerify the service."</string>
+    <string name="msgNoAjustes">You must verify de training settings before to start it.</string>
+    <string name="msgSalir">Do you want to quit of the training?</string>
+
 </resources>

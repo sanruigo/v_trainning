@@ -1,0 +1,184 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/fondosilueta"
+    android:gravity="center_horizontal"
+    tools:context=".ResultsActivity" >
+
+    
+    <LinearLayout 
+        android:id="@+id/LLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="35dp"
+        android:layout_alignParentTop="true"
+	    android:paddingLeft="@dimen/activity_horizontal_margin"
+    	android:paddingRight="@dimen/activity_horizontal_margin"
+    	android:paddingTop="@dimen/activity_vertical_margin"
+    	android:orientation="horizontal"
+		>
+        <LinearLayout 
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+		    android:paddingLeft="@dimen/activity_horizontal_margin"
+            > 
+		<TextView
+    	    android:id="@+id/txtViewHola"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:textColor="#000000"
+        	android:textSize="20dp"
+        	android:text="@string/txtViewHola" />
+        </LinearLayout>
+        <LinearLayout 
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent" 
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            >
+    	<TextView
+    	    android:id="@+id/txtViewNombre"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:textSize="20dp"
+        	android:textColor="#000000"
+        	android:text="Nombre1" />
+        </LinearLayout>
+        
+    </LinearLayout>
+
+    <LinearLayout 
+        android:id="@+id/LLayout2"
+        android:layout_width="fill_parent"
+        android:layout_height="35dp"
+        android:layout_below="@id/LLayout1"
+	    android:paddingLeft="@dimen/activity_horizontal_margin"
+    	android:paddingRight="@dimen/activity_horizontal_margin"
+    	android:paddingTop="@dimen/activity_vertical_margin"
+    	android:orientation="horizontal"
+		>
+        <LinearLayout 
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+		    android:paddingLeft="@dimen/activity_horizontal_margin"
+            > 
+		<TextView
+    	    android:id="@+id/txtViewlblTiempo"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:textColor="#000000"
+        	android:textSize="16sp"
+        	android:text="@string/txtViewTiempo" />
+        </LinearLayout>
+        <LinearLayout 
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent" 
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            >
+    	<TextView
+    	    android:id="@+id/txtViewTiempo"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:textSize="16sp"
+        	android:textColor="#000000"
+        	android:text="00:00.00" />
+        </LinearLayout>
+        
+    </LinearLayout>
+
+<LinearLayout 
+        android:id="@+id/LLayout3"
+        android:layout_width="fill_parent"
+        android:layout_height="35dp"
+        android:layout_below="@id/LLayout2"
+	    android:paddingLeft="@dimen/activity_horizontal_margin"
+    	android:paddingRight="@dimen/activity_horizontal_margin"
+    	android:paddingTop="@dimen/activity_vertical_margin"
+    	android:orientation="horizontal"
+		>
+        <LinearLayout 
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+		    android:paddingLeft="@dimen/activity_horizontal_margin"
+            > 
+		<TextView
+    	    android:id="@+id/txtViewlblDistancia"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:textColor="#000000"
+        	android:textSize="16sp"
+        	android:text="@string/txtViewDistRecorrida" />
+        </LinearLayout>
+        <LinearLayout 
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent" 
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            >
+    	<TextView
+    	    android:id="@+id/txtViewDistRecorrida"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:textSize="16sp"
+        	android:textColor="#000000"
+        	android:text="0.00" />
+        </LinearLayout>
+        <LinearLayout 
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent" 
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            >
+    	<TextView
+    	    android:id="@+id/txtViewUnidLong"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:textSize="16sp"
+        	android:textColor="#000000"
+        	android:text="@string/txtViewUnidLongitud" />
+        </LinearLayout>
+        
+    </LinearLayout>
+
+
+<LinearLayout 
+        android:id="@+id/LLayout4"
+        android:layout_width="fill_parent"
+        android:layout_height="35dp"
+        android:layout_below="@id/LLayout3"
+	    android:paddingLeft="@dimen/activity_horizontal_margin"
+    	android:paddingRight="@dimen/activity_horizontal_margin"
+    	android:paddingTop="@dimen/activity_vertical_margin"
+    	android:orientation="horizontal"
+		>
+        <LinearLayout 
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+		    android:paddingLeft="@dimen/activity_horizontal_margin"
+            > 
+		<TextView
+    	    android:id="@+id/txtViewlblCalorias"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:textColor="#000000"
+        	android:textSize="16sp"
+        	android:text="@string/txtViewCalQuemadas" />
+        </LinearLayout>
+        <LinearLayout 
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent" 
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            >
+    	<TextView
+    	    android:id="@+id/txtViewCalorias"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:textSize="16sp"
+        	android:textColor="#000000"
+        	android:text="0.00" />
+        </LinearLayout>
+        
+    </LinearLayout>
+
+</RelativeLayout>

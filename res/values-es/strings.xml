@@ -23,4 +23,5 @@
     <string name="msgNoGPS">"El GPS esta desactivado o no se puede obtener la ubicación.\nVerifique el servicio."</string>
     <string name="msgNoAjustes">"Debe verificar los ajustes del entrenamiento antes de iniciar el mismo."</string>
     
+    
 </resources>

@@ -7,18 +7,19 @@
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="18" />
-
-    ﻿<uses-permission android:name="android.permission.INTERNET"/>
+    ﻿
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-   
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <application
         android:allowBackup="true"
+        android:debuggable="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:debuggable="true">
+        android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         <activity
             android:name="project.v_trainning.MainActivity"
             android:label="@string/app_name" >
@@ -39,6 +40,10 @@
         <activity
             android:name="project.v_trainning.ResumenActivity"
             android:label="@string/title_activity_resumen" >
+        </activity>
+        <activity
+            android:name="project.v_trainning.ResultsActivity"
+            android:label="@string/title_activity_results" >
         </activity>
     </application>
 
