@@ -32,5 +32,12 @@
     <string name="msgNoGPS">"GPS is disabled or it can't obtain the location.\nVerify the service."</string>
     <string name="msgNoAjustes">You must verify de training settings before to start it.</string>
     <string name="msgSalir">Do you want to quit of the training?</string>
-
+	<string name="msgAjustes">Some information is empty. Please complete it all for a better app working.</string>
+	<string name="msgErrorEdad">The age is not a valid number</string>
+	<string name="msgErrorPeso">The weight is not a valid number</string>
+	<string name="msgErrorEstatura">The height is not a valid number</string>
+	
+    <string name="btnOk">Ok</string>
+    
+    
 </resources>

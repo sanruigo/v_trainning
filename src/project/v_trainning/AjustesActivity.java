@@ -8,6 +8,8 @@ import project.database.DataBase_vTrainning;
 import android.os.Bundle;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -30,6 +32,7 @@ public class AjustesActivity extends Activity {
 	  EditText txtPrefName, txtPrefAge, txtPrefWeight, txtPrefHeight;
 	  Spinner spinActType;
 	  String spin;
+	  
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -98,14 +101,32 @@ public class AjustesActivity extends Activity {
 
 	@Override
 	protected void onPause(){
-		super.onPause();
-		savePreferences();
+		boolean completo=false;
 		if(!txtPrefName.getText().toString().isEmpty() && !txtPrefAge.getText().toString().isEmpty() && !txtPrefHeight.getText().toString().isEmpty() && !txtPrefWeight.getText().toString().isEmpty()){
-			savedDataBase();
+			Integer int1=Integer.getInteger(txtPrefAge.getText().toString());
+			if (int1!=null && int1>0){
+				Integer int2=Integer.getInteger(txtPrefHeight.getText().toString());
+				if (int2!=null && int2>0){
+					if (isPosDouble((txtPrefHeight.getText().toString()))){
+						savedDataBase();
+						completo=true;
+					}else{
+						Toast.makeText(getApplicationContext(), R.string.msgErrorEstatura, Toast.LENGTH_LONG).show();
+					}
+				}else{
+					Toast.makeText(getApplicationContext(), R.string.msgErrorPeso, Toast.LENGTH_LONG).show();
+				}
+			}else{
+				Toast.makeText(getApplicationContext(), R.string.msgErrorEdad, Toast.LENGTH_LONG).show();
+			}
+		}else{
+			Toast.makeText(getApplicationContext(), R.string.msgAjustes, Toast.LENGTH_LONG).show();
 		}
+		savePreferences(completo);
+		super.onPause();
 	}
 
-	private void savePreferences() {
+	private void savePreferences(boolean completo) {
 		// TODO Auto-generated method stub
 		myPreferences = getSharedPreferences(MYPREFS_SETTINGS, mode);
 		Editor myEditor = myPreferences.edit();
@@ -116,6 +137,7 @@ public class AjustesActivity extends Activity {
 		myEditor.putString("nombre_actividad", nombreActividad);
 		//myEditor.putString("actividad", tipoActividad+"");
 		myEditor.putInt("actividad", tipoActividad);
+		myEditor.putString("completo", String.valueOf(completo));
 		myEditor.commit();	
 	}
 
@@ -136,5 +158,33 @@ public class AjustesActivity extends Activity {
 		startActivity(new Intent(AjustesActivity.this,ResumenActivity.class));
 		
 	}
+	
+	public boolean isPosDouble(String cadena){
+		try{
+			Double dd=Double.parseDouble(cadena);
+			if (dd>0){
+				return true;
+			}else return false;
+		}catch (NumberFormatException e){
+			return false;
+		}
+	}
+	
+	public void alertMessage(String title, String text, String nameButton, boolean cancelable){
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage(text)
+		        .setTitle(title)
+		        .setCancelable(cancelable)
+		        .setNeutralButton(nameButton,
+		                new DialogInterface.OnClickListener() {
+		                    public void onClick(DialogInterface dialog, int id) {
+		                        dialog.cancel();
+		                        
+		                    }
+		                });
+		AlertDialog alert = builder.create();
+		alert.show();
+	}
+
 
 }
