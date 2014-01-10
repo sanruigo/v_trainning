@@ -11,10 +11,10 @@
 package project.chart;
 
 import java.util.Arrays;
-import java.util.List;
-import java.util.Vector;
+//import java.util.List;
+//import java.util.Vector;
 
-import android.graphics.Color;
+//import android.graphics.Color;
 
 import com.androidplot.xy.LineAndPointFormatter;
 import com.androidplot.xy.SimpleXYSeries;
@@ -24,7 +24,7 @@ import com.androidplot.xy.XYSeries;
 
 public class ChartPlot {
 
-	//private XYPlot mySimpleXYPlot;
+	protected XYPlot myXYPlot;
 	/**
 	 * Set of number for plot
 	 * */
@@ -89,6 +89,20 @@ public class ChartPlot {
 	 **/
 	public void setSeriesFormat(int linea,int punto,int relleno){
 			seriesFormat= new LineAndPointFormatter(linea,punto,relleno, null);
+	}
+	/**
+	 * 
+	 * @Plot()
+	 * devuelve true si se pudo plotear
+	 * false si no se pudo
+	 */
+	public boolean Plot(){
+		if (this.myXYPlot!=null && this.serie!=null && this.series!=null && this.seriesFormat!=null){
+			myXYPlot.addSeries(series, seriesFormat);
+			return true;
+		}else{
+			return false;
+		}
 	}
 	
 	

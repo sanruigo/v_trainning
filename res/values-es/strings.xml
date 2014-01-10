@@ -8,10 +8,13 @@
     <string name="title_activity_trainning">VTA - Entrenamiento</string>
     <string name="title_activity_ajustes">VTA - Ajustes</string>
     <string name="title_activity_resumen">VTA - Resumen</string>
-
+    <string name="title_activity_results">VTA - Resultados</string>
+    
     <string name="txtViewDuracion">Duración</string>
     <string name="txtViewDistancia">Distancia</string>
     <string name="txtViewActividad">Actividad</string>
+    <string name="txtViewPulso">Frecuencia (pulso) en reposo</string>
+    <string name="timerVal">00:00:00.0</string>
     
     <string name="txtViewNombre">Nombre</string>
     <string name="txtViewPeso">Peso</string>
@@ -20,13 +23,25 @@
     <string name="txtViewUnidLongitud">m</string>
     <string name="txtViewUnidPeso">Kg</string>
 
+    <string name="txtViewHola">Hola </string>
+    <string name="txtViewTuActividad">Tu actividad: </string>
+    <string name="txtViewCalQuemadas">Calorías quemadas:</string>
+    <string name="txtViewDistRecorrida">Distancia:</string>
+    <string name="txtViewTiempo">Tiempo de entrenamiento:</string>
+    <string name="txtViewFrecOptima">Frecuencia cardiaca óptima:</string>
+    
+    <string name="txtVelocidad">Velocidad</string>
+    <string name="txtTiempo">Tiempo</string>
+    
     <string name="msgNoGPS">"El GPS esta desactivado o no se puede obtener la ubicación.\nVerifique el servicio."</string>
     <string name="msgNoAjustes">"Debe verificar los ajustes del entrenamiento antes de iniciar el mismo."</string>
     <string name="msgAjustes">Falta alguna información. Por favor complete todo para un mejor funcionamiento de la Aplicación.</string>
 	<string name="msgErrorEdad">La edad no es un número válido</string>
 	<string name="msgErrorPeso">El peso no es un número válido</string>
 	<string name="msgErrorEstatura">La estatura no es un número válido</string>
-		
+	<string name="msgCompartir">Compartir resultados</string>
+			
     <string name="btnOk">Aceptar</string>
+    <string name="btnShare">Compartir</string>
     
 </resources>

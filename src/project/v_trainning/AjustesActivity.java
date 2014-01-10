@@ -93,7 +93,8 @@ public class AjustesActivity extends Activity {
 		
 		if(!txtPrefName.getText().toString().isEmpty() && !txtPrefAge.getText().toString().isEmpty() && !txtPrefHeight.getText().toString().isEmpty() && !txtPrefWeight.getText().toString().isEmpty()){
 			DataBase_vTrainning db =new DataBase_vTrainning(this, "DBvTrainning", null, 1);
-			System.out.println("Usuario:"+db.getUsuarioName(1)+" Edad:"+db.getUsuarioAge(1)+" Peso:"+db.getUsuarioWeight(db.getUsuarioName(1))+" Estatura:"+db.getUsuarioHeight(db.getUsuarioName(1)));
+			if (!db.equals(null))
+				//System.out.println("Usuario:"+db.getUsuarioName(1)+" Edad:"+db.getUsuarioAge(1)+" Peso:"+db.getUsuarioWeight(db.getUsuarioName(1))+" Estatura:"+db.getUsuarioHeight(db.getUsuarioName(1)));
 			db.closeDataBase();
 		}
 	}

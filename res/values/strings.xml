@@ -14,6 +14,7 @@
     <string name="txtViewDuracion">Duration</string>
     <string name="txtViewDistancia">Distance</string>
     <string name="txtViewActividad">Activity</string>
+    <string name="txtViewPulso">Resting heart rate</string>
     <string name="timerVal">00:00:00.0</string>
     
     <string name="txtViewNombre">Name</string>
@@ -23,11 +24,15 @@
     <string name="txtViewUnidLongitud">m</string>
     <string name="txtViewUnidPeso">Kg</string>
     
-    <string name="txtViewHola">Hi: </string>
+    <string name="txtViewHola">Hi</string>
     <string name="txtViewTuActividad">Your activity: </string>
     <string name="txtViewCalQuemadas">Burned calories:</string>
     <string name="txtViewDistRecorrida">Distance:</string>
     <string name="txtViewTiempo">Training time:</string>
+    <string name="txtViewFrecOptima">Optimal heart rate:</string>
+    
+    <string name="txtVelocidad">Speed</string>
+    <string name="txtTiempo">Time</string>
     
     <string name="msgNoGPS">"GPS is disabled or it can't obtain the location.\nVerify the service."</string>
     <string name="msgNoAjustes">You must verify de training settings before to start it.</string>
@@ -36,8 +41,10 @@
 	<string name="msgErrorEdad">The age is not a valid number</string>
 	<string name="msgErrorPeso">The weight is not a valid number</string>
 	<string name="msgErrorEstatura">The height is not a valid number</string>
-	
-    <string name="btnOk">Ok</string>
+	<string name="msgCompartir">Share results</string>
+		
+    <string name="btnOk">OK</string>
+    <string name="btnShare">Share</string>
     
     
 </resources>

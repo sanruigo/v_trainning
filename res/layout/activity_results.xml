@@ -176,9 +176,77 @@
         	android:layout_height="wrap_content"
         	android:textSize="16sp"
         	android:textColor="#000000"
-        	android:text="0.00" />
+        	android:text="0.00KCal" />
         </LinearLayout>
         
     </LinearLayout>
+
+	<LinearLayout 
+        android:id="@+id/LLayout5"
+        android:layout_width="fill_parent"
+        android:layout_height="35dp"
+        android:layout_below="@id/LLayout4"
+	    android:paddingLeft="@dimen/activity_horizontal_margin"
+    	android:paddingRight="@dimen/activity_horizontal_margin"
+    	android:paddingTop="@dimen/activity_vertical_margin"
+    	android:orientation="horizontal"
+		>
+        <LinearLayout 
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+		    android:paddingLeft="@dimen/activity_horizontal_margin"
+            > 
+		<TextView
+    	    android:id="@+id/txtViewlblFrecuencia"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:textColor="#000000"
+        	android:textSize="16sp"
+        	android:text="@string/txtViewFrecOptima" />
+        </LinearLayout>
+        <LinearLayout 
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent" 
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            >
+    	<TextView
+    	    android:id="@+id/txtViewFrecOptima"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:textSize="16sp"
+        	android:textColor="#000000"
+        	android:text="0ppm" />
+        </LinearLayout>
+        
+    </LinearLayout>
+    
+	<LinearLayout 
+		android:id="@+id/PlotLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="220dp"
+        android:layout_below="@id/LLayout5"
+	    android:paddingLeft="@dimen/activity_horizontal_margin"
+    	android:paddingRight="@dimen/activity_horizontal_margin"
+    	android:paddingTop="@dimen/activity_vertical_margin"
+    	android:orientation="horizontal"
+	    >
+	    <com.androidplot.xy.XYPlot
+    		android:id="@+id/PlotResult"
+    		android:layout_width="fill_parent"
+    		android:layout_height="fill_parent"
+    		android:background="#BBBBBB"
+	    	title="PlotResult"/>
+	    
+	</LinearLayout>
+
+	<Button
+	    android:id="@+id/btnShare"
+	    android:layout_width="180dp"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentBottom="true"
+	    
+	    android:layout_centerHorizontal="true"
+	    android:drawableTop="@drawable/ic_action_share"
+	    android:text="@string/btnShare" />
 
 </RelativeLayout>

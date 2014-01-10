@@ -79,11 +79,11 @@
 
         <TableLayout
             android:id="@+id/tableLayout1"
-            android:layout_width="210dp"
+            android:layout_width="220dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="65dp"
             android:layout_marginTop="30dp"
-            android:background="#FFFFFF" >
+            > <!-- suprimido android:background="#FFFFFF"  -->
 
             <TableRow
                 android:id="@+id/Fila0"
@@ -195,7 +195,7 @@
                     android:id="@+id/Actividad"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:gravity="left"
                     android:padding="5dp"
                     android:text="@string/txtViewActividad"
                     android:textColor="#000000"
@@ -231,7 +231,55 @@
                     android:background="#000000" >
                 </FrameLayout>
             </TableRow>
-        </TableLayout>
+            
+            <TableRow
+                android:id="@+id/Fila6"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/Frecuencia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/txtViewPulso"
+                    android:textColor="#000000"
+                    android:textSize="22sp" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/Fila7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <EditText
+                    android:id="@+id/eTextPulso"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_span="2"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:textColor="#000000"
+                    android:alpha="0.4"
+                    android:textSize="22sp" />
+            </TableRow>
+            
+            <TableRow
+                android:id="@+id/Separador4"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <FrameLayout
+                    android:id="@+id/LineaSeparacion5"
+                    android:layout_width="fill_parent"
+                    android:layout_height="2dp"
+                    android:layout_span="5"
+                    android:background="#000000" >
+                </FrameLayout>
+            </TableRow>
+            
+         </TableLayout>
 
         <ImageView
             android:id="@+id/imageCronometro"
@@ -240,7 +288,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignTop="@+id/tableLayout1"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="15dp"
             android:src="@drawable/cronometro2" />
 
         <ImageView
@@ -249,7 +297,7 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/imageCronometro"
             android:layout_below="@+id/imageCronometro"
-            android:layout_marginTop="27dp"
+            android:layout_marginTop="42dp"
             android:src="@drawable/regla" />
 
         <ImageView
@@ -258,9 +306,18 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/imageRegla"
             android:layout_below="@+id/imageRegla"
-            android:layout_marginTop="45dp"
+            android:layout_marginTop="50dp"
             android:src="@drawable/actividad" />
 
-    </RelativeLayout>
+        <ImageView
+            android:id="@+id/imagePulso"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/imageActividad"
+            android:layout_below="@+id/imageActividad"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/pulso" />
+
+  </RelativeLayout>
 
 </RelativeLayout>
