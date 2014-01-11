@@ -13,6 +13,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 //import android.content.SharedPreferences.Editor;
 import android.view.Menu;
 import android.view.View;
@@ -36,7 +37,8 @@ public class TrainningActivity extends Activity implements LocationListener{
 	 * */
 	  final int mode = Activity.MODE_PRIVATE;
 	  final String MYPREFS_SETTINGS = "MyPreferencesSettings";
-	  SharedPreferences myPreferences, myPreferencesRecover;
+	  final String MYPREFS_TRAINING = "MyPreferencesTrainning";
+	  SharedPreferences myPreferences, myPreferencesRecover,myPreferencesRecoverTrainning;
 	boolean isActivatedAjustes=false;
 	TextView txtActividad;
 	TextView txtDistancia;
@@ -80,7 +82,7 @@ public class TrainningActivity extends Activity implements LocationListener{
 	long updatedTime = 0L;
 	private TextView txtTiempo;
 	private Runnable updateTimerThread;
-	
+	public Boolean isStopTimer=false;
 	
 	
 	/***
@@ -188,28 +190,41 @@ public class TrainningActivity extends Activity implements LocationListener{
 
 		System.out.println("Creando Trainning");
 		gps = new GPS(this);
-		timerCore();
+		
+
+		
 		createWidget();
 		
 		
 		
 	}
 
+	
+	
+	@Override
+	protected void onStart() {
+		// TODO Auto-generated method stub
+		super.onStart();
+		
+	}
+
+
+
 	@Override
 	protected void onPause() {
 		// TODO Auto-generated method stub
 		super.onPause();
-		
+		savePreferences();
 	}
 
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		System.out.println(isActivatedAjustes);
-		if(isActivatedAjustes){
+		//System.out.println(isActivatedAjustes);
+		//if(isActivatedAjustes){
 			showSavedPreferencesSettings();
-		}
+		//}
 	}
 
 	@Override
@@ -234,8 +249,10 @@ public class TrainningActivity extends Activity implements LocationListener{
 				
 				if(!isTrainingActive){
 					System.out.println(isTrainingActive);
-					startTime();
+					
 					isTrainingActive=true;
+					timerCore();
+					startTime();
 				}else{
 					stopTime();
 					isTrainingActive=false;
@@ -264,17 +281,71 @@ public class TrainningActivity extends Activity implements LocationListener{
 		startActivity(new Intent(TrainningActivity.this,ResumenActivity.class));
 		
 	}
+	
+	
+	private void savePreferences() {
+		// TODO Auto-generated method stub
+		myPreferences = getSharedPreferences(MYPREFS_TRAINING, mode);
+		Editor myEditor = myPreferences.edit();
+		//myEditor.putString("estadoTimer", isActivadoTimer);
+		myEditor.putBoolean("estadoTimer", isTrainingActive);
+		myEditor.putBoolean("estadoStopTimer", isStopTimer);
+		myEditor.commit();	
+		stopTime();
+	}
+	private void savePreferencesTime(long time){
+		myPreferences = getSharedPreferences(MYPREFS_TRAINING, mode);
+		Editor myEditor = myPreferences.edit();
+		//myEditor.putString("estadoTimer", isActivadoTimer);
+		myEditor.putLong("Timer", time);
+		System.out.println("save:"+time);
+		myEditor.commit();	
+	}
+	private void savePreferencesTime(String time){
+		myPreferences = getSharedPreferences(MYPREFS_TRAINING, mode);
+		Editor myEditor = myPreferences.edit();
+		//myEditor.putString("estadoTimer", isActivadoTimer);
+		myEditor.putString("TimerString", time);
+		//System.out.println("save:"+time);
+		myEditor.commit();	
+	}
 
 	private void showSavedPreferencesSettings() {
 		// TODO Auto-generated method stub
+		
 		myPreferencesRecover = getSharedPreferences(MYPREFS_SETTINGS,mode);
 		System.out.println(myPreferencesRecover.getString("nombre_actividad", "").toString());
 		txtActividad.setText(myPreferencesRecover.getString("nombre_actividad", "").toString());
 		TM=new TrainingMonitor((String) txtActividad.getText());
 		//actividad.setText(myPreferencesRecover.getString("nombre_actividad", ""));
-				
-
+		myPreferencesRecoverTrainning=getSharedPreferences(MYPREFS_TRAINING,mode);
+		
+		isTrainingActive=myPreferencesRecoverTrainning.getBoolean("estadoTimer", false);
+		//isStopTimer=myPreferencesRecoverTrainning.getBoolean("estadoStopTimer", false);
+		//timeSwapBuff=myPreferencesRecoverTrainning.getLong("Timer", 0);
+		System.out.println("//////////"+isTrainingActive);
+		System.out.println("----"+isStopTimer);
+		if(isTrainingActive){
+			//stopTime();
+			timeSwapBuff=myPreferencesRecoverTrainning.getLong("Timer", 0);
+			
+//			customHandler.removeCallbacks(updateTimerThread);
+			timerCore();
+			startTime();
+		}
+		else{ 
+			if(isStopTimer){
+				timeSwapBuff=myPreferencesRecoverTrainning.getLong("Timer", 0);
+				txtTiempo.setText(myPreferencesRecoverTrainning.getString("TimerString", "10:00:00"));	
+			}
+			
+			
+		}
+		
+		
 	}
+	
+	
 	
 	/**
 	 * startTraining inicia o termina la funci�n de entrenmiento
@@ -290,7 +361,7 @@ public class TrainningActivity extends Activity implements LocationListener{
 					isTrainingActive=true;
 //					startTime();
 					TM.run();
-					
+				
 					
 					
 				}else{
@@ -305,6 +376,7 @@ public class TrainningActivity extends Activity implements LocationListener{
 			stopTime();
 			TM.showResults();
 		}
+		
 		
 	}
 	
@@ -399,41 +471,48 @@ public class TrainningActivity extends Activity implements LocationListener{
 		
 		startTime = SystemClock.uptimeMillis();
 		customHandler.postDelayed(updateTimerThread, 0);
-		
+		isStopTimer=false;
 	}
 	
 	private void stopTime(){
 		timeSwapBuff += timeInMilliseconds;
+		System.out.println("....."+timeSwapBuff+"   "+timeInMilliseconds);
 		customHandler.removeCallbacks(updateTimerThread);
+		isStopTimer=true;
 	}
 
-	
+	String timer="00:00:00";
 	private void timerCore(){
 		updateTimerThread = new Runnable() {
 			
 			boolean primerMultiplo=true;
+			
 			public void run() {
 				
 				timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
 				
 				updatedTime = timeSwapBuff + timeInMilliseconds;
-
+				savePreferencesTime(updatedTime);
+				//System.out.println(".,,,,."+updatedTime);
 				int secs = (int) (updatedTime / 1000);
 				int mins = secs / 60;
 				secs = secs % 60;
 				int milliseconds = (int) (updatedTime % 1000);
-				System.out.println("" + mins + ":"
+//				System.out.println("" + mins + ":"
+//						+ String.format("%02d", secs) + ":"
+//						+ String.format("%03d", milliseconds));
+				timer=("" + mins + ":"
 						+ String.format("%02d", secs) + ":"
 						+ String.format("%03d", milliseconds));
+				System.out.println(timer);
 				
-				
-				
+				savePreferencesTime(timer);
 				if(GPS5Seg(secs, 5)){
 					if(primerMultiplo){
 						System.out.println("GPSSSSSS");
 						
-						startGPS();
-						txtDistancia.setText(String.valueOf(getLastDistance()));
+						//startGPS();
+						//txtDistancia.setText(String.valueOf(getLastDistance()));
 						primerMultiplo=false;
 					}					
 					}else{
@@ -446,6 +525,7 @@ public class TrainningActivity extends Activity implements LocationListener{
 						+ String.format("%02d", secs) + ":"
 						+ String.format("%03d", milliseconds));
 				customHandler.postDelayed(this, 0);
+				
 			
 			}
 			
