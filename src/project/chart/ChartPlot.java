@@ -10,7 +10,9 @@
 
 package project.chart;
 
+import java.text.DecimalFormat;
 import java.util.Arrays;
+
 //import java.util.List;
 //import java.util.Vector;
 
@@ -20,6 +22,8 @@ import com.androidplot.xy.LineAndPointFormatter;
 import com.androidplot.xy.SimpleXYSeries;
 import com.androidplot.xy.XYPlot;
 import com.androidplot.xy.XYSeries;
+//import com.androidplot.xy.XYStep;
+import com.androidplot.xy.XYStepMode;
 
 
 public class ChartPlot {
@@ -31,7 +35,8 @@ public class ChartPlot {
 	private Number[] serie;
 	private XYSeries series;
 	private LineAndPointFormatter seriesFormat;
-	
+	//private XYStepMode mode;
+	private int valorMode;
 	
 	/**
 	 * Get all Numbers for Plot
@@ -67,8 +72,8 @@ public class ChartPlot {
 	 * @param serie Set of Number for Plot
 	 * @param name_serie Name of set data 
 	 * */
-	public void setXYSeries(Number[] serie,String name_serie){
-		this.series=new SimpleXYSeries(Arrays.asList(serie),  SimpleXYSeries.ArrayFormat.Y_VALS_ONLY,name_serie);
+	public void setXYSeries(Number[] serieX, Number[] serieY, String name_serie){
+		this.series=new SimpleXYSeries(Arrays.asList(serieX), Arrays.asList(serieY),name_serie);
 		
 	}
 
@@ -96,8 +101,15 @@ public class ChartPlot {
 	 * devuelve true si se pudo plotear
 	 * false si no se pudo
 	 */
-	public boolean Plot(){
-		if (this.myXYPlot!=null && this.serie!=null && this.series!=null && this.seriesFormat!=null){
+	public boolean Plot(String label, int valmode){
+		this.valorMode=valmode;
+		
+		myXYPlot.setDomainStep(XYStepMode.SUBDIVIDE, valorMode);
+		myXYPlot.setDomainLabel(label);
+		myXYPlot.setDomainValueFormat(new DecimalFormat("##.##"));
+		myXYPlot.setRangeLabel("m/s");
+		
+		if (this.myXYPlot!=null && this.series!=null && this.seriesFormat!=null){
 			myXYPlot.addSeries(series, seriesFormat);
 			return true;
 		}else{

@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import project.database.DataBase_vTrainning;
 
 //import com.androidplot.xy.LineAndPointFormatter;
 //import com.androidplot.xy.SimpleXYSeries;
@@ -24,12 +25,14 @@ public class ResultsActivity extends Activity {
 	TextView txtFrecOptima;
 	Button btnShare;
 	ChartPlot plot;
+	String activ="";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_results);
 		createWidgets();
+		CargaDatos();
 		plot= new CPlot(R.id.PlotResult);
 		PlotResults();
 	}
@@ -56,22 +59,34 @@ public class ResultsActivity extends Activity {
 	}
 	
 	private void PlotResults(){
-		Number[] serie1={10,12,13,12,15,9};
-		
-		plot.setSerie(serie1);
-		plot.setXYSeries(serie1, getResources().getString(R.string.txtVelocidad));
+		Number[] serie1={0, 10, 12, 13, 12, 15};
+		Number[] serie2={0, 1.2, 2.2, 3.3, 4.4, 5.5};
+		//plot.setSerie(serie1);
+		plot.setXYSeries(serie2, serie1, getResources().getString(R.string.txtVelocidad));
 		plot.setSeriesFormat(Color.rgb(10, 200, 10), Color.BLACK, Color.LTGRAY);
-		plot.Plot();
+		
+		plot.Plot(getResources().getString(R.string.txtTiempo), serie1.length);
 	}
 	
 	private void compartir(){
 		String comp="";
-		comp=txtNombre.getText().toString()+": He recorrido "+txtDistancia.getText().toString()+"Km en "+txtTiempo.getText().toString()+
-				", quemando "+txtCalorias.getText().toString()+", usando V-Training Assistant";
+		if (getResources().getString(R.string.idiomaApp).equals("english")){
+			comp="I have raced "+txtDistancia.getText().toString()+" during "+txtTiempo.getText().toString()+
+				activ+" training, and I burned "+txtCalorias.getText().toString()+". V-Training Assistant";}
+		else{
+			comp="He recorrido"+txtDistancia.getText().toString()+" durante "+txtTiempo.getText().toString()+
+					" entrenando "+activ+", y quemé "+txtCalorias.getText().toString()+". V-Training Assistant";
+		}
 		Intent intent = new Intent(android.content.Intent.ACTION_SEND);
 		intent.putExtra(android.content.Intent.EXTRA_TEXT, comp);
 		intent.setType("text/plain");
 		startActivity(Intent.createChooser(intent, getResources().getString(R.string.msgCompartir)));
+	}
+	
+	private void CargaDatos(){
+		DataBase_vTrainning db =new DataBase_vTrainning(this, "DBvTrainning", null, 1);
+		//TODO el resto de la carga
+		db.closeDataBase();
 	}
 	
 	private class CPlot extends ChartPlot{

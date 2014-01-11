@@ -31,7 +31,7 @@
         	android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
         	android:textColor="#000000"
-        	android:textSize="20dp"
+        	android:textSize="20sp"
         	android:text="@string/txtViewHola" />
         </LinearLayout>
         <LinearLayout 
@@ -43,7 +43,7 @@
     	    android:id="@+id/txtViewNombre"
         	android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
-        	android:textSize="20dp"
+        	android:textSize="20sp"
         	android:textColor="#000000"
         	android:text="Nombre1" />
         </LinearLayout>
@@ -235,7 +235,7 @@
     		android:layout_width="fill_parent"
     		android:layout_height="fill_parent"
     		android:background="#BBBBBB"
-	    	title="PlotResult"/>
+	    	title="@string/txtGrafVelocidad"/>
 	    
 	</LinearLayout>
 

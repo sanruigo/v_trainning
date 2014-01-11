@@ -2,6 +2,8 @@
 <!--Strings en español-->
 <resources>
 
+    <string name="idiomaApp">español</string>
+    
     <string name="app_name">Virtual Training Assistant</string>
     <string name="action_settings">Ajustes</string>
     <string name="hello_world">Hello world!</string>
@@ -15,6 +17,9 @@
     <string name="txtViewActividad">Actividad</string>
     <string name="txtViewPulso">Frecuencia (pulso) en reposo</string>
     <string name="timerVal">00:00:00.0</string>
+    
+    <string name="ActivRunning">Correr</string>
+    <string name="ActivCycling">Ciclismo</string>
     
     <string name="txtViewNombre">Nombre</string>
     <string name="txtViewPeso">Peso</string>
@@ -30,8 +35,9 @@
     <string name="txtViewTiempo">Tiempo de entrenamiento:</string>
     <string name="txtViewFrecOptima">Frecuencia cardiaca óptima:</string>
     
-    <string name="txtVelocidad">Velocidad</string>
+    <string name="txtVelocidad">Velocidad (m/s)</string>
     <string name="txtTiempo">Tiempo</string>
+    <string name="txtGrafVelocidad">Gráfico de Velocidad</string>
     
     <string name="msgNoGPS">"El GPS esta desactivado o no se puede obtener la ubicación.\nVerifique el servicio."</string>
     <string name="msgNoAjustes">"Debe verificar los ajustes del entrenamiento antes de iniciar el mismo."</string>
@@ -40,8 +46,8 @@
 	<string name="msgErrorPeso">El peso no es un número válido</string>
 	<string name="msgErrorEstatura">La estatura no es un número válido</string>
 	<string name="msgCompartir">Compartir resultados</string>
-			
+				
     <string name="btnOk">Aceptar</string>
-    <string name="btnShare">Compartir</string>
+    <string name="btnShare">Compartir Resultados</string>
     
 </resources>
