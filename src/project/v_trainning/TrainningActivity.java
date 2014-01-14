@@ -449,8 +449,6 @@ public class TrainningActivity extends Activity implements LocationListener{
     	// start async task setting the progress to zero
 		task.execute(startTime);
 		
-		
-		
 		isStopTimer=false;
 	}
 	

@@ -20,7 +20,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="0dp"
-        android:gravity="center" >
+        android:gravity="center" 
+        >
 
         <Button
             android:id="@+id/btnTrainActTrain"
