@@ -6,9 +6,12 @@ import android.location.LocationManager;
 
 import java.util.Vector;
 
+
+
 //import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -22,6 +25,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import project.gps.*;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -75,7 +79,8 @@ public class TrainningActivity extends Activity implements LocationListener{
 	 * */
 	private long startTime = 0L;
 	
-	private Handler customHandler = new Handler();
+	//private Handler customHandler = new Handler();
+	private HugeWork task = null;
 	
 	long timeInMilliseconds = 0L;
 	long timeSwapBuff = 0L;
@@ -190,23 +195,10 @@ public class TrainningActivity extends Activity implements LocationListener{
 
 		System.out.println("Creando Trainning");
 		gps = new GPS(this);
-		
-
-		
 		createWidget();
-		
-		
-		
 	}
 
 	
-	
-	@Override
-	protected void onStart() {
-		// TODO Auto-generated method stub
-		super.onStart();
-		
-	}
 
 
 
@@ -221,10 +213,9 @@ public class TrainningActivity extends Activity implements LocationListener{
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		//System.out.println(isActivatedAjustes);
-		//if(isActivatedAjustes){
+
 			showSavedPreferencesSettings();
-		//}
+
 	}
 
 	@Override
@@ -244,19 +235,20 @@ public class TrainningActivity extends Activity implements LocationListener{
 		btnTrainActStart.setOnClickListener(new View.OnClickListener() {
 			
 			public void onClick(View view) {
-				//startTraining();
+				
 				System.out.println("click start");
 				
 				if(!isTrainingActive){
 					System.out.println(isTrainingActive);
 					
 					isTrainingActive=true;
-					timerCore();
+					savePreferences();
 					startTime();
 				}else{
-					stopTime();
-					isTrainingActive=false;
 					
+					isTrainingActive=false;
+					savePreferences();
+					stopTime();
 				}
 				
 			}
@@ -291,7 +283,7 @@ public class TrainningActivity extends Activity implements LocationListener{
 		myEditor.putBoolean("estadoTimer", isTrainingActive);
 		myEditor.putBoolean("estadoStopTimer", isStopTimer);
 		myEditor.commit();	
-		stopTime();
+		
 	}
 	private void savePreferencesTime(long time){
 		myPreferences = getSharedPreferences(MYPREFS_TRAINING, mode);
@@ -321,27 +313,8 @@ public class TrainningActivity extends Activity implements LocationListener{
 		myPreferencesRecoverTrainning=getSharedPreferences(MYPREFS_TRAINING,mode);
 		
 		isTrainingActive=myPreferencesRecoverTrainning.getBoolean("estadoTimer", false);
-		//isStopTimer=myPreferencesRecoverTrainning.getBoolean("estadoStopTimer", false);
-		//timeSwapBuff=myPreferencesRecoverTrainning.getLong("Timer", 0);
 		System.out.println("//////////"+isTrainingActive);
 		System.out.println("----"+isStopTimer);
-		if(isTrainingActive){
-			//stopTime();
-			timeSwapBuff=myPreferencesRecoverTrainning.getLong("Timer", 0);
-			
-//			customHandler.removeCallbacks(updateTimerThread);
-			timerCore();
-			startTime();
-		}
-		else{ 
-			if(isStopTimer){
-				timeSwapBuff=myPreferencesRecoverTrainning.getLong("Timer", 0);
-				txtTiempo.setText(myPreferencesRecoverTrainning.getString("TimerString", "10:00:00"));	
-			}
-			
-			
-		}
-		
 		
 	}
 	
@@ -359,7 +332,6 @@ public class TrainningActivity extends Activity implements LocationListener{
 				System.out.println("Verificando si GPS esta activo");
 				if (gps.isGPSactive()){
 					isTrainingActive=true;
-//					startTime();
 					TM.run();
 				
 					
@@ -373,7 +345,6 @@ public class TrainningActivity extends Activity implements LocationListener{
 		}
 		else{
 			isTrainingActive=false;
-			stopTime();
 			TM.showResults();
 		}
 		
@@ -469,64 +440,113 @@ public class TrainningActivity extends Activity implements LocationListener{
 	
 	private void startTime(){
 		
+		//startTime = SystemClock.uptimeMillis();
+		//customHandler.postDelayed(updateTimerThread, 0);
+		
 		startTime = SystemClock.uptimeMillis();
-		customHandler.postDelayed(updateTimerThread, 0);
+    	// instantiate a new async task
+    	task = new HugeWork();
+    	// start async task setting the progress to zero
+		task.execute(startTime);
+		
+		
+		
 		isStopTimer=false;
 	}
 	
 	private void stopTime(){
 		timeSwapBuff += timeInMilliseconds;
-		System.out.println("....."+timeSwapBuff+"   "+timeInMilliseconds);
-		customHandler.removeCallbacks(updateTimerThread);
+		
+    	task.cancel(true);
+		
 		isStopTimer=true;
 	}
+	private long executeHardWork(){
 
-	String timer="00:00:00";
-	private void timerCore(){
-		updateTimerThread = new Runnable() {
-			
+		timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
+				
+		updatedTime = timeSwapBuff + timeInMilliseconds;
+		return updatedTime;
+	
+	}
+	
+	 @SuppressLint("NewApi")
+		class HugeWork extends AsyncTask<Long, Long, Long> {
+		 
 			boolean primerMultiplo=true;
+
+	    	// Method executed before the async task start. All things needed to be
+	    	// setup before the async task must be done here. In this example we
+	    	// simply display a message.
+	    	@Override
+	    	protected void onPreExecute() {
+	    		
+	    		super.onPreExecute();
+	    	}
+	    	
+	    	// Here is where all the hard work is done. We simulate it by executing
+	    	// a sleep for 1 second, 10 times. Each time the sleep is performed, we update
+	    	// our progress in the method publishProgress(...). This method executes the
+	    	// overridden method onProgressUpdate(...) which updates the progress.
 			
-			public void run() {
-				
-				timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
-				
-				updatedTime = timeSwapBuff + timeInMilliseconds;
-				savePreferencesTime(updatedTime);
-				//System.out.println(".,,,,."+updatedTime);
-				int secs = (int) (updatedTime / 1000);
+			protected Long doInBackground(Long... params) {
+			
+				// get the initial parameters. For us, this is the initial bar progress = 0
+				Long progress = ((Long[])params)[0];
+				do {
+					//System.out.println(progress);
+					// only keep going in case the task was not cancelled
+					if (!this.isCancelled()) {
+						// execute hard work - sleep
+						progress=executeHardWork();
+						
+					}
+					else {
+						// in case the task was cancelled, break the loop
+						// and finish this task
+						break;
+					}
+						
+					// upgrade progress
+					//progress++;
+					publishProgress(progress);
+				}while (true);
+//				} while (progress <= 10);
+		
+				return progress;
+			}
+
+			// Every time the progress is informed, we update the progress bar
+			@Override
+			protected void onProgressUpdate(Long... values) {
+				long progress = ((Long[])values)[0];
+				//timerValue.setText(progress+"");
+				//System.out.println(progress);
+//				
+				int secs = (int) (progress / 1000);
 				int mins = secs / 60;
 				secs = secs % 60;
-				int milliseconds = (int) (updatedTime % 1000);
-//				System.out.println("" + mins + ":"
-//						+ String.format("%02d", secs) + ":"
-//						+ String.format("%03d", milliseconds));
-				timer=("" + mins + ":"
-						+ String.format("%02d", secs) + ":"
-						+ String.format("%03d", milliseconds));
-				System.out.println(timer);
+				//int milliseconds = (int) (progress % 1000);
+				txtTiempo.setText("" + mins + ":"
+						+ String.format("%02d", secs));
 				
-				savePreferencesTime(timer);
 				if(GPS5Seg(secs, 5)){
 					if(primerMultiplo){
 						System.out.println("GPSSSSSS");
-						
-						//startGPS();
-						//txtDistancia.setText(String.valueOf(getLastDistance()));
+					
+					//startGPS();
+					//txtDistancia.setText(String.valueOf(getLastDistance()));
 						primerMultiplo=false;
 					}					
-					}else{
+				}else{
 					primerMultiplo=true;
 				}	
-				
-				
-				
-				txtTiempo.setText("" + mins + ":"
-						+ String.format("%02d", secs) + ":"
-						+ String.format("%03d", milliseconds));
-				customHandler.postDelayed(this, 0);
-				
-			
+
+//				System.out.println("" + mins + ":"
+//						+ String.format("%02d", secs) + ":"
+//						+ String.format("%03d", milliseconds));
+				//mProgressBar.setProgress(progress);
+				super.onProgressUpdate(values);
 			}
 			
 			public boolean GPS5Seg(int num1,int num2){
@@ -537,11 +557,25 @@ public class TrainningActivity extends Activity implements LocationListener{
 				}
 				return false;
 			}
+			
+			// If the cancellation occurs, set the message informing so
+			@Override
+			protected void onCancelled(Long result) {
+				//txtMessage.setText(MessageFormat.format("Async task has been cancelled at {0} seconds.", result - 1));
+				super.onCancelled(result);
+			}
+			
+			// Method executed after the task is finished. If the task is cancelled this method is not
+			// called. Here we display a finishing message and arrange the buttons.
+			@Override
+			protected void onPostExecute(Long result) {
+				super.onPostExecute(result);
+			}
 
-		};
-		
-		
-	}
+
+
+	    }
+
 
 	public void startGPS(){
 		

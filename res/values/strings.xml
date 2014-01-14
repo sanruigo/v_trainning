@@ -16,7 +16,7 @@
     <string name="txtViewDistancia">Distance</string>
     <string name="txtViewActividad">Activity</string>
     <string name="txtViewPulso">Resting heart rate</string>
-    <string name="timerVal">00:00:00.0</string>
+    <string name="timerVal">00:00</string>
     
     <string name="ActivRunning">Running</string>
     <string name="ActivCycling">Cycling</string>
