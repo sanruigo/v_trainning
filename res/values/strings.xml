@@ -19,7 +19,7 @@
     <string name="menuTraining">To Train!</string>
     
     <string name="txtViewDuracion">Duration</string>
-    <string name="txtViewDistancia">Distance</string>
+    <string name="txtViewDistancia">Distance (Km)</string>
     <string name="txtViewActividad">Activity</string>
     <string name="txtViewPulso">Resting heart rate</string>
     <string name="timerVal">00:00</string>
