@@ -67,8 +67,8 @@
 		    android:orientation="vertical">
         	<Button
             	android:id="@+id/btnTrainActStart"
-	            android:layout_width="70dp"
-    	        android:layout_height="70dp"
+	            android:layout_width="40dp"
+    	        android:layout_height="40dp"
         	    android:layout_marginLeft="10dp"
         	    android:layout_marginTop="20dp"
             	android:onClick="onClick"
@@ -76,13 +76,22 @@
 
          	<Button
 	            android:id="@+id/btnTrainActPause"
-    	        android:layout_width="70dp"
-        	    android:layout_height="70dp"
+    	        android:layout_width="40dp"
+        	    android:layout_height="40dp"
             	android:layout_marginLeft="10dp"
             	android:layout_marginTop="15dp"
 	            android:onClick="onClick"
 	            android:background="@drawable/boton_grande2"
         	     />
+         	<Button
+	            android:id="@+id/btnTrainActStop"
+    	        android:layout_width="40dp"
+        	    android:layout_height="40dp"
+            	android:layout_marginLeft="10dp"
+            	android:layout_marginTop="15dp"
+	            android:onClick="onClick"
+	            android:background="@drawable/boton_grande2"
+	            />
 		</LinearLayout>
         
         <LinearLayout

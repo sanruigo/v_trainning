@@ -29,7 +29,7 @@ public class AjustesActivity extends Activity {
 	  SharedPreferences myPreferences, myPreferencesRecover;
 	  String nombreActividad;
 	  int tipoActividad;
-	  EditText txtPrefName, txtPrefAge, txtPrefWeight, txtPrefHeight;
+	  EditText txtPrefName, txtPrefAge, txtPrefWeight, txtPrefHeight,eTextPulso;
 	  Spinner spinActType;
 	  String spin;
 	  
@@ -47,6 +47,7 @@ public class AjustesActivity extends Activity {
 		txtPrefAge= (EditText)findViewById(R.id.eTextAjustActEdad);
 		txtPrefWeight =(EditText)findViewById(R.id.eTextAjustActPeso);
 		txtPrefHeight =(EditText)findViewById(R.id.eTextAjustActEstatura);
+		eTextPulso=(EditText)findViewById(R.id.eTextPulso);
 		spinActType =  (Spinner) findViewById(R.id.spnAjustActTipoAct);
 		ArrayAdapter<CharSequence> adapter= ArrayAdapter.createFromResource(this, R.array.ActType, android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
@@ -79,6 +80,7 @@ public class AjustesActivity extends Activity {
 		txtPrefAge.setText(myPreferencesRecover.getString("edad", ""));
 		txtPrefWeight.setText(myPreferencesRecover.getString("peso", ""));
 		txtPrefHeight.setText(myPreferencesRecover.getString("estatura", ""));
+		eTextPulso.setText(String.valueOf(myPreferencesRecover.getInt("frecuencia_basal", 120)));
 		//spinActType.setSelection(Integer.valueOf(myPreferencesRecover.getString("actividad", "1")));
 		spinActType.setSelection(myPreferencesRecover.getInt("actividad", 0));
 		
@@ -199,6 +201,7 @@ public class AjustesActivity extends Activity {
 		myEditor.putString("nombre", txtPrefName.getText().toString().trim());
 		myEditor.putString("edad", txtPrefAge.getText().toString().trim());
 		myEditor.putString("peso", txtPrefWeight.getText().toString().trim());
+		myEditor.putInt("frecuencia_basal", Integer.valueOf(eTextPulso.getText().toString().trim()));
 		myEditor.putString("estatura", txtPrefHeight.getText().toString().trim());
 		myEditor.putString("nombre_actividad", nombreActividad);
 		//myEditor.putString("actividad", tipoActividad+"");

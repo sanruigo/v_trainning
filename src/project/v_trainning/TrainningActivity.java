@@ -8,6 +8,7 @@ import android.location.LocationProvider;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
@@ -24,6 +25,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 //import android.content.SharedPreferences.Editor;
 import android.view.Menu;
@@ -35,6 +37,7 @@ import android.widget.EditText;
 //import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import project.database.DataBase_vTrainning;
 import project.gps.*;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -45,6 +48,7 @@ import android.os.SystemClock;
 //import android.location.LocationListener;
 //import android.location.LocationManager;
 import android.location.Criteria;
+
 
 
 import com.google.android.gms.internal.s;
@@ -70,7 +74,7 @@ public class TrainningActivity extends Activity implements LocationSource{
 	boolean isActivatedAjustes=false;
 	TextView txtActividad;
 	TextView txtDistancia;
-	Button btnTrainActStart,btnTrainActPause;
+	Button btnTrainActStart,btnTrainActPause,btnTrainActStop;
 	Chronometer crono;
 	
 	
@@ -116,42 +120,48 @@ public class TrainningActivity extends Activity implements LocationSource{
     
 	Double velocidad;
 	Double velocidadKM = 0.0;
+	
 	Double ritmomedioactual;
 	Double ritmomediofinal;
-	Double velocidadfinal;
-	Double velocidadLap;
-	
+	Double velocidadFinal=0.0;
+	Double velocidadesAux=0.0;
+	Vector<Double> velocidades;
 	Float distancia=(float) 0;
-	Float distanciaKM = (float) 0;
+	double distanciaKM =  0.000;
 	Float distanciaLap = (float) 0;
 	Float calReto;
-	DecimalFormat df = new DecimalFormat("0.00"); 
+	DecimalFormat df = new DecimalFormat("0.000"); 
 	SimpleDateFormat dfo = new SimpleDateFormat("00:00");
-	Integer altitud;
+	Integer edad;
+	String actividad;
 	Bundle recuperacionpeso; //recuperaci�n param
-	Integer peso; //recuperaci�n param
-	Integer kg=90; //variable peso en kg si no se introduce por parte de usuario
-	Float calorias =(float) 0;
-	Float caloriastotal = (float) 0;
+	Double peso; //recuperaci�n param
+	Double kg=90.0; //variable peso en kg si no se introduce por parte de usuario
+	Double calorias =0.0;
+	Double caloriastotal = 0.0;
 	Long memoCrono;
 	Long elapsedMillis;
 	Long elapsedMillisLapInicial=(long) 0;
 	Long elapsedMillisLapFinal=(long) 0;
 	Long diferenciatime;
-	long mitime;
+	long minutos;
 	Double elapsedMillis2;
 	Long elapsedMillis3;
 	Double elapsedMillis4;
 	Integer km=1;
 	Integer distareto;
-	
+	String nombre;
 	TextView distance;
 	TextView speed;
 	TextView alt;
 	TextView ritmoact;
 	TextView cal;
 	TextView usuario;
-	EditText etxtPulso;
+	//EditText etxtPulso;
+	
+	double frecMaxCad=0.0;
+	int frecBasal=120;
+	double frecOptima=0.0;
 	
 	private String proveedor;
 	private Resources res = null;
@@ -169,6 +179,7 @@ public class TrainningActivity extends Activity implements LocationSource{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_trainning);
+		velocidades=new Vector<Double>();
 		//Crea el objeto que gestiona las localizaciones
 		 lm = (LocationManager) getSystemService(locationContext);
 		 myLocationListener = new MyLocationListener();
@@ -176,6 +187,8 @@ public class TrainningActivity extends Activity implements LocationSource{
 		 //Location myLocation = lm.getLastKnownLocation("network"); //using "gps" returned NULL
 		 Location myLocation = lm.getLastKnownLocation(lm.GPS_PROVIDER);
 		
+		 
+		 
 		System.out.println("Creando Trainning");
 		
 		createWidget();
@@ -259,11 +272,11 @@ public class TrainningActivity extends Activity implements LocationSource{
 		
 		txtActividad=(TextView)findViewById(R.id.tViewTrainActAct);
 		txtDistancia=(TextView)findViewById(R.id.tViewTrainActDist);
-		etxtPulso=(EditText)findViewById(R.id.eTextPulso);
+//		etxtPulso=(EditText)findViewById(R.id.eTextPulso);
 		crono = (Chronometer)findViewById(R.id.chronometer1);
 		btnTrainActStart=(Button)findViewById(R.id.btnTrainActStart);
 		btnTrainActPause=(Button)findViewById(R.id.btnTrainActPause);
-		
+		btnTrainActStop=(Button)findViewById(R.id.btnTrainActStop);
 		btnTrainActStart.setOnClickListener(new View.OnClickListener() {
 			
 			public void onClick(View view) {
@@ -288,7 +301,7 @@ public class TrainningActivity extends Activity implements LocationSource{
 	              float tiempo =  (SystemClock.elapsedRealtime() - stoppedMilliseconds);
 	              
 	              estado = "activo"; //al darle a bot�n inicio el estado pasa a estar activo
-	              etxtPulso.setActivated(false);
+	              //etxtPulso.setActivated(false);
 	              crono.start(); //inicia el cron�metro    
 				
 			}
@@ -298,10 +311,46 @@ public class TrainningActivity extends Activity implements LocationSource{
 			
 			public void onClick(View view) {
 				System.out.println("click pause");
-				etxtPulso.setActivated(true);
+				//etxtPulso.setActivated(true);
 				crono.stop();
 			}
 		});
+		
+		btnTrainActStop.setOnClickListener(new View.OnClickListener() {
+			
+			public void onClick(View view) {
+				//c�lculo de los par�metros finales de resumen
+            	calculofinal();      	
+            	//acceso a bd para guardar el entrenamiento realizado         	
+            	//SQLiteDatabase db = data.getWritableDatabase();              	
+            	//CAMBIOS EN FECHA AHORA SIENDO UN STRING MOSTRANDO BIEN EL FORMATO
+            	//mitime = fechaActusql.getTime();          	            	          	
+            	String mitime = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
+            	//guardamos entrenamiento en la BD
+            	//data.guardarEntrenamiento(id, duracel, distanciaKM, velocidadfinal, ritmoresumen, caloriastotal, mitime, elapsedMillis);    
+            	
+                //db.close();
+                 
+                
+              
+            			 
+            		crono.setBase(SystemClock.elapsedRealtime());
+                    estado = "inactivo"; //el estado pasa a estar inactivo y paramos el tiempo
+                    crono.stop();
+                    
+                    //reset de preferencias al guardar la sesi�n
+//                    misPreferencias = getSharedPreferences(MYPREFS, mode);
+//                	miEditor = misPreferencias.edit();
+//                	miEditor.putFloat("calorias", 0);    
+//                	miEditor.putInt("distancia", 0);
+//                	miEditor.putLong("duracion", 0);
+//                    miEditor.commit();
+//                    
+//                    tarea tat = new tarea(MainActivity.this);
+//            		tat.execute();
+            	}
+		});
+		
 	}
 
 	
@@ -331,7 +380,7 @@ public class TrainningActivity extends Activity implements LocationSource{
 		Editor myEditor = myPreferences.edit();
 	
 		myEditor.putBoolean("estadoTimer", isTrainingActive);
-	
+		myEditor.putString("velocidadFinal", velocidadFinal.toString());
 		myEditor.commit();	
 		
 	}
@@ -343,259 +392,19 @@ public class TrainningActivity extends Activity implements LocationSource{
 
 		myPreferencesRecover = getSharedPreferences(MYPREFS_SETTINGS,mode);
 		System.out.println(myPreferencesRecover.getString("nombre_actividad", "").toString());
-		txtActividad.setText(myPreferencesRecover.getString("nombre_actividad", "").toString());
+		actividad=myPreferencesRecover.getString("nombre_actividad", "").toString();
+		txtActividad.setText(actividad);
 		temp=myPreferencesRecover.getString("completo", "").toString();
 		isActivatedAjustes=Boolean.valueOf(temp);
-		//actividad.setText(myPreferencesRecover.getString("nombre_actividad", ""));
-		myPreferencesRecoverTrainning=getSharedPreferences(MYPREFS_TRAINING,mode);
+		peso=Double.valueOf(myPreferencesRecover.getString("peso", "60.0").toString());
+		edad=Integer.valueOf(myPreferencesRecover.getString("edad", "20").toString());
+		frecBasal=myPreferencesRecover.getInt("frecuencia_basal", 120);
 		
+		myPreferencesRecoverTrainning=getSharedPreferences(MYPREFS_TRAINING,mode);
 		isTrainingActive=myPreferencesRecoverTrainning.getBoolean("estadoTimer", false);
+		velocidadFinal=Double.valueOf(myPreferencesRecoverTrainning.getString("velocidadFinal", "0.0"));
 
 	}
-	
-	
-//	
-//	/**
-//	 * startTraining inicia o termina la funci�n de entrenmiento
-//	 * @param view
-//	 */
-//	public void startTraining(){
-//		System.out.println("trainingactive="+isTrainingActive);
-//		if (!isTrainingActive){
-//			System.out.println("ActivedAjustes="+isActivatedAjustes);
-//			if (isActivatedAjustes){
-//				System.out.println("Verificando si GPS esta activo");
-//				if (gps.isGPSactive()){
-//					isTrainingActive=true;
-//					TM.run();
-//				
-//					
-//					
-//				}else{
-//					Toast.makeText(getApplicationContext(), R.string.msgNoGPS, Toast.LENGTH_LONG).show();
-//				}
-//			}else{
-//				Toast.makeText(getApplicationContext(), R.string.msgNoAjustes, Toast.LENGTH_LONG).show();
-//			}
-//		}
-//		else{
-//			isTrainingActive=false;
-//			TM.showResults();
-//		}
-//		
-//		
-//	}
-//	
-//	/**
-//	 *
-//	 * @author MNM
-//	 * clase encargada del monitoreo de la actividad
-//	 */
-//	public class TrainingMonitor extends Thread{
-//		
-//		private String Actividad;
-//		private boolean isActive;
-//		
-//		TrainingMonitor(String activ){
-//			Actividad=activ;
-//			isActive=false;
-//			Tiempo.clear();
-//			Velocidad.clear();
-//			Distancia.clear();
-//			Tiempo.add(Long.parseLong("0"));
-//			Velocidad.add(Float.parseFloat("0"));
-//			Distancia.add(Float.parseFloat("0"));
-//			index=0;
-//		}
-//		
-//		@Override
-//		public void run() {
-//			// TODO Auto-generated method stub
-//			super.run();
-//			startTrainingMonitoring();
-//			//startTime();
-//		}
-//
-//		@Override
-//		public synchronized void start() {
-//			// TODO Auto-generated method stub
-//			super.start();
-//		}
-//
-//		@Override
-//		public void interrupt() {
-//			// TODO Auto-generated method stub
-//			super.interrupt();
-//			isActive=false;
-//		}
-//
-//		/**
-//	 	* startTrainingMonitoring ejecuta el monitoreo secuencial del recorrido
-//	 	*/
-//		public void startTrainingMonitoring(){
-//			isActive=true;
-//			while (isActive){
-//				try {
-//					sleep(5000);
-//					index=index+1;
-//					Tiempo.add((long) (index*5));
-//					gps.localizador();
-//					Velocidad.add(gps.getLastSpeed());
-//					Distancia.add(gps.getLastDistance());
-//					//txtTiempo.setText(String.valueOf(Tiempo.get(index)));
-//					txtDistancia.setText(String.valueOf(Distancia.get(index)));
-//				} catch (InterruptedException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//			}
-//			
-//		}
-//	
-//		/**
-//	 	* showResults muestra los resultados al volver a pulsar el boton play
-//	 	*/
-//		public void showResults(){
-//			this.interrupt();
-//		
-//			
-//		}
-//
-//
-//	
-//		
-//	}
-//	
-//	
-//	
-//
-//
-//	public void startGPS(){
-//		
-//		
-//		pointsCuantity = 0;
-//		minTime = 30000;
-//		minDist = 1;
-//
-//		
-//
-//		manejador = (LocationManager) getSystemService(LOCATION_SERVICE);
-//
-//		log("Esperando recepcion GPS");
-//
-//		
-//		//Esta localizacion esta cacheada, no hay que mostrarla, es solo para comenzar mas rapido la recepcion GPS
-//		Location lastKnownLocation = manejador.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-//		muestraLocaliz(lastKnownLocation);
-//
-//		manejador.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTime,	minDist, this);
-//	}
-//	
-//	
-//	@Override
-//	public void onLocationChanged(Location location) {
-//		// TODO Auto-generated method stub
-//		log("Nueva localizaciÛn: ");
-//
-//		if (pointsCuantity == 1) {
-//			
-//			lastLoc = new Location(location);
-//			
-//		}
-//
-//		muestraLocaliz(location);
-//	}
-//
-//	@Override
-//	public void onProviderDisabled(String proveedor) {
-//		// TODO Auto-generated method stub
-//		log("Proveedor deshabilitado: " + proveedor + "\n");
-//
-//	}
-//
-//	@Override
-//	public void onProviderEnabled(String proveedor) {
-//		// TODO Auto-generated method stub
-//		log("Proveedor habilitado: " + proveedor + "\n");
-//
-//	}
-//
-//	@Override
-//	public void onStatusChanged(String proveedor, int estado, Bundle extras) {
-// 
-//		// TODO Auto-generated method stub
-//		log("Cambia estado proveedor: " + proveedor + ", estado="
-//				+ E[Math.max(0, estado)] + "\n");
-//	}
-//	
-//	
-//	// MÈtodos para mostrar informaciÛn
-//
-//		private void log(String cadena) {
-//
-//			//salida.append(cadena + "\n");
-//
-//		}
-//
-//		private void muestraLocaliz(Location localizacion) {
-//
-//			if (localizacion == null)
-//
-//				log("LocalizaciÛn desconocida\n");
-//
-//			else
-//
-//			if (pointsCuantity <= 1) {
-//				distance = 0;
-//
-//				if (pointsCuantity == 1)
-//					log("FirstLocation");
-//
-//				if (pointsCuantity == 0)
-//					log("LastKnownLocation");
-//			}
-//
-//			else {
-//				distance = localizacion.distanceTo(lastLoc);
-//				lastLoc = new Location(localizacion);
-//			}
-//
-//			
-//			
-//			//los datos a guardar son los sigientes, mas la distance (0 para el primer punto y la diferencia entre los anteriores para el resto
-//			//solo se necesita guardar a partir de pointsCuantity = 1, la que el 0 es el LastKnownLocation que es la cacheada
-//			latitude = localizacion.getLatitude();
-//			altitude = localizacion.getAltitude();
-//			longitude = localizacion.getLongitude();
-//			velocity = localizacion.getSpeed();
-//			time = localizacion.getTime();
-//
-//			log("Localizacion[ " + "Orden=" + pointsCuantity + ", Latitud(grados)="
-//					+ latitude +
-//
-//					", Longitud(grados)=" + longitude +
-//
-//					", Altitud(metros)=" + altitude +
-//
-//					", Velocidad(m/s)=" + velocity +
-//
-//					", Distancia(metros)=" + velocity +
-//
-//					", Tiempo(UTC millisegundos)=" + time + " ]\n");
-//			
-//			pointsCuantity++;
-//
-//		}
-//	
-//		public float getLastDistance(){
-//			return distance;
-//		}
-//		public float getLastSpeed(){
-//			return velocity;
-//		}
-
-
-
 
 
 		@Override
@@ -650,6 +459,23 @@ public class TrainningActivity extends Activity implements LocationSource{
 			            //calculo de la velocidad actual  
 			            velocidad = (double) location.getSpeed(); 
 			            velocidadKM = (velocidad / 1000) * 3600;
+			            
+			            
+			            velocidades.add(velocidadKM);
+			            System.out.println("Velocidad Size:"+velocidades.size());
+			            
+			            for(int i=0;i<velocidades.size();i++){
+			            	velocidadesAux+=velocidades.get(i);
+			            }
+			            
+			            velocidadFinal=velocidadesAux/velocidades.size();
+			            
+			            myPreferences = getSharedPreferences(MYPREFS_TRAINING, mode);
+			    		Editor myEditor = myPreferences.edit();
+			    		myEditor.putString("velocidadFinal", velocidadFinal.toString());
+			    		myEditor.commit();	
+			            
+			            
 
 			            //llamamos a la funci�n que nos calcula la distancia
 			            distancefunc(location);
@@ -663,90 +489,39 @@ public class TrainningActivity extends Activity implements LocationSource{
 					    task.execute();
 		  
 					    
-//			            //C�LCULO DE CALOR�AS Y RECUPERACI�N DEL PASO DE PAR�METROS DESDE AJUSTES DE USUARIO
-//					    misPreferencias = getSharedPreferences(MYPREFS,mode);			    
-//					    peso = misPreferencias.getInt("peso", 90);	   			   			
-//					    calReto = misPreferencias.getFloat("calorias", 0);
-//					   			    
-//					    if(peso == 90){	 //no hay preferencias de usuario--no introdujo sus datos   	
-//					    	if(velocidadKM <= 5) calorias =  (float) ((0.1 * kg)/60); 	            
-//		                	else if(velocidadKM > 5.6 && velocidadKM <= 7.5) calorias = (float) ((0.2 * kg)/60);
-//		                	else if(velocidadKM > 7.6 ) calorias = (float) ((0.3 * kg)/60);
-//		                
-//					    }else{		   //usuario introdujo sus datos  	
-//					    	
-//					    	if(velocidadKM <= 5) calorias =  (float) ((0.1 * peso)/60); 	            
-//					    	else if(velocidadKM > 5.6 && velocidadKM <= 7.5) calorias = (float) ((0.2 * peso)/60);
-//					    	else if(velocidadKM > 7.6 ) calorias = (float) ((0.3 * peso)/60);
-//					    }			    	
-//					    	caloriastotal = caloriastotal + calorias; //c�lculo del valor de calor�as consumidas
-//					    	
-//					    	//comprobaci�n si consigue reto de calor�as
-//					    	if(repeat == 1 && calReto != 0  ){ //tenemos reto	
-//		                			if(caloriastotal > calReto){              				
-//		                				avisoRetoCompletado();
-//		                				repeat = 0;
-//		                				
-//		                			}			    		
-//					    	}
-					    	
-					    	
-					   //calculo de reto tiempo
-					   //comprobaci�n si consigue reto del tiempo
-//						   misPreferencias = getSharedPreferences(MYPREFS,mode);		    
-//						   timereto = misPreferencias.getLong("duracion", 0);
-//						   elapsedMillis = (SystemClock.elapsedRealtime() - crono.getBase()) / 1000;
-//						   elapsedMillis3 = elapsedMillis / 60; // me quedo con los minutos
-//						   				  
-//					    	if(repeat == 1 && timereto != 0  ){ //tenemos reto	
-//				       			if(elapsedMillis3 >= timereto){              				
-//				       				avisoRetoCompletado();
-//				       				repeat = 0;
-//					       				
-//					       		}			    		
-//						   	}
-						    	
+			            //C�LCULO DE CALOR�AS Y RECUPERACI�N DEL PASO DE PAR�METROS DESDE AJUSTES DE USUARIO
+//					    myPreferencesRecover = getSharedPreferences(MYPREFS_SETTINGS,mode);
+//						peso=Double.valueOf(myPreferencesRecover.getString("peso", "").toString());
+//						edad=Integer.valueOf(myPreferencesRecover.getString("edad", "").toString());
+//						actividad=myPreferencesRecover.getString("nombre_actividad", "").toString();		   
+//						
+//						
+//						if(actividad.equalsIgnoreCase("Ciclismo")){
+//							
+//								
+//							
+//						}else if(actividad.equalsIgnoreCase("Correr")){
+//							
+//							
+//							calorias=1.03*peso*distancia;
+//						}
+//						
+						
+						
 
-			            //C�LCULO DEL RITMO MEDIO ACTUAL			   			    
-					     elapsedMillis = (SystemClock.elapsedRealtime() - crono.getBase())/1000;
-					     elapsedMillisLapFinal = elapsedMillis;
-					     diferenciatime = elapsedMillisLapFinal - elapsedMillisLapInicial;
-				
-			            if(estado == "activo"){
-			            	ritmomedioactual = (double) ((diferenciatime  / distanciaLap));
-			            	//conversi�n para mostrar minutos y segundos que llevamos en la vuelta actual por km
-			            	ritmomedioactual = (ritmomedioactual / 60)*1000;
-			            }            	          	                      
-			            String chronoText2 = String.valueOf(ritmomedioactual);  
-			            //LE PASAMOS A STRING EL VALOR DEL RITMOMEDIOACTUAL QUE LLEVAMOS	            
-			            String[] array = chronoText2.split("\\.");   //SEPARAMOS LAS CIFRAS POR EL "." PARA SACAR MINUTOS Y SEGUNDOS       	            
-			              if (array.length == 2) {           	  
-			            	  //acotar y transformar decimales para no pasar de 60 seg y sacar minutos           	  
-			            	  array[1]=array[1].substring(0, 3); //ACOTA A 3 DECIMALES
-			            	  //convertimos a double para poder realizar y sacar el valor correcto tipo :04 segs
-			            	  Double segundos = (double) Integer.parseInt(array[1]);
-			            	  segundos = segundos*(double)6/(double)10000;
-			            	  String seeg = String.valueOf(segundos);  
-			            	  String[] array2 = seeg.split("\\."); 
-			            	  Integer minutos = Integer.parseInt(array[0]); 
-			            	  //HAY QUE PASARLOS A STRINGS PARA HACER LA CONCATENACI�N DE VALORES Y MOSTRAR EN TEXTVIEW
-			            	  String min = String.valueOf(minutos);  
-			            	 
-			            	  if(array2[1].length()>2) array2[1] = array2[1].substring(0,2);            	  	
-			            	 
-			            	  //CONCATENACI�N DE LOS MINUTOS Y SEGUNDOS PARA LUEGO MOSTRAR RESULTADO EN TEXTVIEW
-			            	  ritmo = min.concat(":").concat(array2[1]);	 
-			               }
-			              
-			              //guardar los laps en la bd
-			              if(distanciaLap >= 10){ //en metros
-				           	   velocidadLap = (double) (distanciaLap / diferenciatime);
-				    		   velocidadLap = (velocidadLap / 1000) * 3600;
-				               //data.guardarLaps(id, km, ritmo, velocidadLap);
-				    		   km = km + 1;
-				    		   distanciaLap = (float) 0;
-				               elapsedMillisLapInicial = elapsedMillisLapFinal;
-				          }	              
+					    	
+
+
+
+//			              //guardar los laps en la bd
+//			              if(distanciaLap >= 10){ //en metros
+//				           	   velocidadLap = (double) (distanciaLap / diferenciatime);
+//				    		   velocidadLap = (velocidadLap / 1000) * 3600;
+//				               //data.guardarLaps(id, km, ritmo, velocidadLap);
+//				    		   km = km + 1;
+//				    		   distanciaLap = (float) 0;
+//				               elapsedMillisLapInicial = elapsedMillisLapFinal;
+//				          }	              
 			            }                
 			        }else{
 			        	Toast.makeText(TrainningActivity.this, "no hay", Toast.LENGTH_LONG).show();
@@ -808,17 +583,12 @@ public class TrainningActivity extends Activity implements LocationSource{
 		            distancia = distancia + distanciaAux;
 		            distanciaLap = distanciaLap + distanciaAux;
 		        }
-		        distanciaKM = (distancia / 1000);    
+		        
+		        distanciaKM = (distancia / 1000);
+		        System.out.println("DistanciaKM==="+distanciaKM);
 		        locationAux = locationDis;
 		        
-		        //comprobaci�n si consigue reto de distancia
-//		    	if(repeat == 1 && distareto != 0  ){ //tenemos reto	
-//		    			if(distancia > distareto){              				
-//		    				avisoRetoCompletado();
-//		    				repeat = 0;
-//		    				
-//		    			}			    		
-//		    	}
+
 		    }
 		 
 		  private class task extends AsyncTask<Void, Void, Void>{
@@ -835,12 +605,16 @@ public class TrainningActivity extends Activity implements LocationSource{
 				   distance = (TextView) findViewById(R.id.tViewTrainActDist);			  
 				   //cal = (TextView) findViewById(R.id.textView11);
 				   
+				   
+				   
+				   
+				   //distance.setText(String.valueOf(distanciaKM).substring(0, String.valueOf(distanciaKM).indexOf(".")+2));
 				   distance.setText(String.valueOf(df.format(distanciaKM)));
-				   System.out.println(distanciaKM);
+				   //System.out.println("DistanciaKM:"+distanciaKM);
 				   //speed.setText(String.valueOf(df.format(velocidadKM)));  			  
 				   //alt.setText(String.valueOf(altitud));			  
 				   //ritmoact.setText(ritmo);	
-				   //int calo = (int) (Math.round(caloriastotal));
+				   int calo = (int) (Math.round(caloriastotal));
 				   //cal.setText(String.valueOf((calo)));
 				   
 			   }
@@ -951,5 +725,83 @@ public class TrainningActivity extends Activity implements LocationSource{
 
 		}
 			 
-						 
+			
+		
+		
+		public void calculofinal(){
+			myPreferencesRecover = getSharedPreferences(MYPREFS_SETTINGS,mode);
+			frecBasal=myPreferencesRecover.getInt("frecuencia_basal", 120);
+			peso=Double.valueOf(myPreferencesRecover.getString("peso", "").toString());
+			edad=Integer.valueOf(myPreferencesRecover.getString("edad", "").toString());
+			actividad=myPreferencesRecover.getString("nombre_actividad", "").toString();
+			nombre=myPreferencesRecover.getString("nombre", "");
+			double basal=myPreferencesRecover.getInt("frecuencia_basal", 120);
+			frecMaxCad=208-(0.7*edad);
+			frecOptima=((frecMaxCad-frecBasal)/2)+80;
+			
+			myPreferencesRecoverTrainning=getSharedPreferences(MYPREFS_TRAINING,mode);
+			
+			velocidadFinal=Double.valueOf(myPreferencesRecoverTrainning.getString("velocidadFinal", "0.0"));
+			
+
+            
+            
+		
+            minutos=Long.valueOf((crono.getText().toString().substring(0,crono.getText().toString().indexOf(":"))));
+            System.out.println("..............."+minutos);
+            
+			if(actividad.equalsIgnoreCase("Ciclismo")){
+				
+				if(velocidadFinal>=0 && velocidadFinal<=16){
+					calorias=0.049*peso*2.2*minutos;
+				}else {
+					calorias=0.071*peso*2.2*minutos;
+				}	
+				
+				
+				
+			}else if(actividad.equalsIgnoreCase("Correr")){
+				
+				System.out.println("peso:"+peso);
+				System.out.println("distancia:"+String.valueOf(distanciaKM).substring(0, String.valueOf(distanciaKM).indexOf(".")+4));
+				
+				calorias=1.03*peso*Double.valueOf(String.valueOf(distanciaKM).substring(0, String.valueOf(distanciaKM).indexOf(".")+4));
+			}
+			String mitime = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
+			double distanciafinal=Double.valueOf(String.valueOf(distanciaKM).substring(0, String.valueOf(distanciaKM).indexOf(".")+4));
+			savedDataBaseSesion(nombre,mitime,basal, 60, calorias,  velocidadFinal, distanciafinal, minutos+"");
+			
+			
+  		it=list.listIterator();
+          while(it.hasNext()){
+              loc = new Location((Location) it.next());
+              
+              //guardamos puntos longitud-latitud en BD
+             // data.guardarPuntos(id, loc.getLongitude(), loc.getLatitude());
+              savedDataBaseGPS(nombre,loc.getLatitude(),loc.getLongitude(),loc.getAltitude(),0.0,0.0,0.0);
+              
+          }
+
+			//System.out.println("..............."+calorias);
+			
+			   //velocidad promedio
+//			   velocidadfinal = (double) (distancia / elapsedMillis);
+//			   velocidadfinal = (velocidadfinal / 1000) * 3600;			   
+		 }
+		
+		private void savedDataBaseSesion(String name,String date,double basal_sistolica, double basal_diastolica,double calories, double average_speed,double total_distance, String total_time){
+			
+			DataBase_vTrainning db =new DataBase_vTrainning(this, "DBvTrainning", null, 1);
+			//Inserta Usuarios
+			db.setSesion(name, date, basal_sistolica, basal_diastolica, calories, average_speed, total_distance, total_time);
+			db.closeDataBase();
+		}
+		
+		private void savedDataBaseGPS(String name,double latitude,double longitude,double GPS_height,double partial_speed,double partial_distance,double partial_time){
+			
+			DataBase_vTrainning db =new DataBase_vTrainning(this, "DBvTrainning", null, 1);
+			//Inserta Usuarios
+			db.setGPS(name, latitude, longitude, GPS_height, partial_speed, partial_distance, partial_time);
+			db.closeDataBase();
+		}
 }
