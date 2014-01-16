@@ -33,7 +33,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
-import android.widget.EditText;
 //import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -74,7 +73,12 @@ public class TrainningActivity extends Activity implements LocationSource{
 	boolean isActivatedAjustes=false;
 	TextView txtActividad;
 	TextView txtDistancia;
+<<<<<<< HEAD
 	Button btnTrainActStart,btnTrainActPause,btnTrainActStop;
+=======
+	TextView txtVelocidad;
+	Button btnTrainActStart,btnTrainActPause;
+>>>>>>> 0d2fed84aafbe7cc0829f7e9ed53d8f6bb422fc5
 	Chronometer crono;
 	
 	
@@ -158,10 +162,13 @@ public class TrainningActivity extends Activity implements LocationSource{
 	TextView cal;
 	TextView usuario;
 	//EditText etxtPulso;
+<<<<<<< HEAD
 	
 	double frecMaxCad=0.0;
 	int frecBasal=120;
 	double frecOptima=0.0;
+=======
+>>>>>>> 0d2fed84aafbe7cc0829f7e9ed53d8f6bb422fc5
 	
 	private String proveedor;
 	private Resources res = null;
@@ -272,11 +279,32 @@ public class TrainningActivity extends Activity implements LocationSource{
 		
 		txtActividad=(TextView)findViewById(R.id.tViewTrainActAct);
 		txtDistancia=(TextView)findViewById(R.id.tViewTrainActDist);
+<<<<<<< HEAD
 //		etxtPulso=(EditText)findViewById(R.id.eTextPulso);
 		crono = (Chronometer)findViewById(R.id.chronometer1);
 		btnTrainActStart=(Button)findViewById(R.id.btnTrainActStart);
 		btnTrainActPause=(Button)findViewById(R.id.btnTrainActPause);
 		btnTrainActStop=(Button)findViewById(R.id.btnTrainActStop);
+=======
+		txtVelocidad=(TextView)findViewById(R.id.tViewTrainActVeloc);
+		//etxtPulso=(EditText)findViewById(R.id.eTextPulso);
+		crono = (Chronometer)findViewById(R.id.chronometer1);
+		btnTrainActStart=(Button)findViewById(R.id.btnTrainActStart);
+		btnTrainActPause=(Button)findViewById(R.id.btnTrainActPause);
+		
+		if (isTrainingActive){
+			btnTrainActStart.setAlpha(1);
+			btnTrainActStart.setEnabled(true);
+			btnTrainActPause.setAlpha((float) 0.5);
+			btnTrainActPause.setEnabled(false);
+		}else{
+			btnTrainActStart.setAlpha((float) 0.5);
+			btnTrainActStart.setEnabled(false);
+			btnTrainActPause.setAlpha(1);
+			btnTrainActPause.setEnabled(true);
+			
+		}
+>>>>>>> 0d2fed84aafbe7cc0829f7e9ed53d8f6bb422fc5
 		btnTrainActStart.setOnClickListener(new View.OnClickListener() {
 			
 			public void onClick(View view) {
@@ -302,7 +330,16 @@ public class TrainningActivity extends Activity implements LocationSource{
 	              
 	              estado = "activo"; //al darle a bot�n inicio el estado pasa a estar activo
 	              //etxtPulso.setActivated(false);
+<<<<<<< HEAD
+=======
+	              isTrainingActive=true;
+
+>>>>>>> 0d2fed84aafbe7cc0829f7e9ed53d8f6bb422fc5
 	              crono.start(); //inicia el cron�metro    
+	              btnTrainActStart.setAlpha((float) 0.5);
+	              btnTrainActStart.setEnabled(false);
+	              btnTrainActPause.setAlpha(1);
+	              btnTrainActPause.setEnabled(true);
 				
 			}
 		});
@@ -312,7 +349,15 @@ public class TrainningActivity extends Activity implements LocationSource{
 			public void onClick(View view) {
 				System.out.println("click pause");
 				//etxtPulso.setActivated(true);
+<<<<<<< HEAD
+=======
+				isTrainingActive=false;
+>>>>>>> 0d2fed84aafbe7cc0829f7e9ed53d8f6bb422fc5
 				crono.stop();
+				btnTrainActStart.setAlpha(1);
+				btnTrainActStart.setEnabled(true);
+				btnTrainActPause.setAlpha((float) 0.5);
+				btnTrainActPause.setEnabled(false);
 			}
 		});
 		

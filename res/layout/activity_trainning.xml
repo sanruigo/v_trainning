@@ -54,7 +54,7 @@
     <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="fill_parent"
-        android:layout_height="200dp"
+        android:layout_height="220dp"
         android:layout_above="@+id/barrabotones"
         android:layout_alignParentLeft="true"
         android:layout_marginBottom="5dp"
@@ -70,7 +70,7 @@
 	            android:layout_width="40dp"
     	        android:layout_height="40dp"
         	    android:layout_marginLeft="10dp"
-        	    android:layout_marginTop="20dp"
+        	    android:layout_marginTop="25dp"
             	android:onClick="onClick"
             	android:background="@drawable/boton_grande1" />
 
@@ -79,7 +79,7 @@
     	        android:layout_width="40dp"
         	    android:layout_height="40dp"
             	android:layout_marginLeft="10dp"
-            	android:layout_marginTop="15dp"
+            	android:layout_marginTop="20dp"
 	            android:onClick="onClick"
 	            android:background="@drawable/boton_grande2"
         	     />
@@ -213,7 +213,7 @@
                     android:gravity="center"
                     android:text=""
                     android:textColor="#000000"
-                    android:textSize="20sp" />
+                    android:textSize="22sp" />
 
             </TableRow>
 
@@ -260,7 +260,7 @@
                     android:gravity="center"
                     android:text=""
                     android:textColor="#000000"
-                    android:textSize="20sp" />
+                    android:textSize="22sp" />
             </TableRow>
 
             <TableRow
@@ -283,12 +283,12 @@
                 android:layout_height="wrap_content" >
 
                 <TextView
-                    android:id="@+id/Frecuencia"
+                    android:id="@+id/Velocidad"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:padding="3sp"
-                    android:text="@string/txtViewPulso"
+                    android:text="@string/txtVelocidad"
                     android:textColor="#000000"
                     android:textSize="18sp" />
             </TableRow>
@@ -296,19 +296,19 @@
             <TableRow
                 android:id="@+id/Fila7"
                 android:layout_width="wrap_content"
-                android:layout_height="20sp" 
+                android:layout_height="wrap_content" 
                 >
 
-                <EditText
-                    android:id="@+id/eTextPulso"
+                <TextView
+                    android:id="@+id/tViewTrainActVeloc"
                     android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    
+                    android:layout_height="wrap_content"
+                    android:layout_span="2"
                     android:gravity="center"
-                    android:inputType="number"
+                    android:text=""
                     android:textColor="#000000"
-                    android:alpha="0.5"
-                    android:textSize="16sp" />
+                    android:textSize="22sp" />
+
             </TableRow>
             
             <TableRow
@@ -356,13 +356,13 @@
             android:src="@drawable/actividad" />
 
         <ImageView
-            android:id="@+id/imagePulso"
+            android:id="@+id/imageSpeed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/imageActividad"
             android:layout_below="@+id/imageActividad"
-            android:layout_marginTop="40dp"
-            android:src="@drawable/pulso" />
+            android:layout_marginTop="35sp"
+            android:src="@drawable/speed" />
 
   </RelativeLayout>
 

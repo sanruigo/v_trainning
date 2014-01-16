@@ -29,7 +29,11 @@ public class AjustesActivity extends Activity {
 	  SharedPreferences myPreferences, myPreferencesRecover;
 	  String nombreActividad;
 	  int tipoActividad;
+<<<<<<< HEAD
 	  EditText txtPrefName, txtPrefAge, txtPrefWeight, txtPrefHeight,eTextPulso;
+=======
+	  EditText txtPrefName, txtPrefAge, txtPrefWeight, txtPrefHeight, txtPrefPulso;
+>>>>>>> 0d2fed84aafbe7cc0829f7e9ed53d8f6bb422fc5
 	  Spinner spinActType;
 	  String spin;
 	  
@@ -47,7 +51,11 @@ public class AjustesActivity extends Activity {
 		txtPrefAge= (EditText)findViewById(R.id.eTextAjustActEdad);
 		txtPrefWeight =(EditText)findViewById(R.id.eTextAjustActPeso);
 		txtPrefHeight =(EditText)findViewById(R.id.eTextAjustActEstatura);
+<<<<<<< HEAD
 		eTextPulso=(EditText)findViewById(R.id.eTextPulso);
+=======
+		txtPrefPulso =(EditText)findViewById(R.id.eTextAjustActPulso);
+>>>>>>> 0d2fed84aafbe7cc0829f7e9ed53d8f6bb422fc5
 		spinActType =  (Spinner) findViewById(R.id.spnAjustActTipoAct);
 		ArrayAdapter<CharSequence> adapter= ArrayAdapter.createFromResource(this, R.array.ActType, android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
