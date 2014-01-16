@@ -12,6 +12,12 @@
     <string name="title_activity_resumen">VTA - Summary</string>
     <string name="title_activity_results">VTA - Results</string>
     
+    <string name="menuExit">Exit</string>
+    <string name="menuCredits">About</string>
+    <string name="menuAjustes">Settings</string>
+    <string name="menuResumen">Training Summary</string>
+    <string name="menuTraining">To Train!</string>
+    
     <string name="txtViewDuracion">Duration</string>
     <string name="txtViewDistancia">Distance</string>
     <string name="txtViewActividad">Activity</string>
@@ -47,8 +53,11 @@
 	<string name="msgErrorPeso">The weight is not a valid number</string>
 	<string name="msgErrorEstatura">The height is not a valid number</string>
 	<string name="msgCompartir">Share results</string>
-			
+	<string name="msgWarning">Warning!</string>
+	<string name="msgGPSok">GPS is active</string>
+					
     <string name="btnOk">OK</string>
+    <string name="btnCancel">Cancel</string>
     <string name="btnShare">Share Results</string>
     
     

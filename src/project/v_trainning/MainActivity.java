@@ -32,7 +32,7 @@ public class MainActivity extends Activity {
 		//dbExample();
 	}
 	
-	public static int MILISEGUNDOS_ESPERA = 5000;
+	public static int MILISEGUNDOS_ESPERA = 2000;
 
 	public void esperarYCerrar(int milisegundos) {
 		Handler handler = new Handler();
@@ -41,6 +41,7 @@ public class MainActivity extends Activity {
 				// acciones que se ejecutan tras los milisegundos
 				//setContentView(R.layout.activity_trainning);
 				startActivity(new Intent(MainActivity.this,TrainningActivity.class));
+				finish();
 			}
 		}, milisegundos);
 		

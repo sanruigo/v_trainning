@@ -12,10 +12,16 @@
     <string name="title_activity_resumen">VTA - Resumen</string>
     <string name="title_activity_results">VTA - Resultados</string>
     
+    <string name="menuExit">Salir</string>
+    <string name="menuCredits">Acerca de</string>
+    <string name="menuAjustes">Ajustes</string>
+    <string name="menuResumen">Entrenamientos anteriores</string>
+    <string name="menuTraining">Entrenar!</string>
+    
     <string name="txtViewDuracion">Duración</string>
     <string name="txtViewDistancia">Distancia</string>
     <string name="txtViewActividad">Actividad</string>
-    <string name="txtViewPulso">Frecuencia (pulso) en reposo</string>
+    <string name="txtViewPulso">Pulso en reposo</string>
     <string name="timerVal">00:00</string>
     
     <string name="ActivRunning">Correr</string>
@@ -41,13 +47,17 @@
     
     <string name="msgNoGPS">"El GPS esta desactivado o no se puede obtener la ubicación.\nVerifique el servicio."</string>
     <string name="msgNoAjustes">"Debe verificar los ajustes del entrenamiento antes de iniciar el mismo."</string>
+    <string name="msgSalir">¿En verdad quieres salir?</string>
     <string name="msgAjustes">Falta alguna información. Por favor complete todo para un mejor funcionamiento de la Aplicación.</string>
 	<string name="msgErrorEdad">La edad no es un número válido</string>
 	<string name="msgErrorPeso">El peso no es un número válido</string>
 	<string name="msgErrorEstatura">La estatura no es un número válido</string>
 	<string name="msgCompartir">Compartir resultados</string>
-				
+	<string name="msgWarning">¡Atención!</string>
+	<string name="msgGPSok">GPS activado</string>
+						
     <string name="btnOk">Aceptar</string>
+    <string name="btnCancel">Cancelar</string>
     <string name="btnShare">Compartir Resultados</string>
     
 </resources>

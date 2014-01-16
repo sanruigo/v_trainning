@@ -1,7 +1,6 @@
 package project.v_trainning;
 
 //import android.R;
-import java.io.IOException;
 
 import project.database.DataBase_vTrainning;
 
@@ -14,6 +13,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -38,7 +38,6 @@ public class AjustesActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_ajustes);
 		createWidget();
-		
 	}
 
 	
@@ -103,11 +102,12 @@ public class AjustesActivity extends Activity {
 	@Override
 	protected void onPause(){
 		boolean completo=false;
+		String temp;
 		if(!txtPrefName.getText().toString().isEmpty() && !txtPrefAge.getText().toString().isEmpty() && !txtPrefHeight.getText().toString().isEmpty() && !txtPrefWeight.getText().toString().isEmpty()){
-			Integer int1=Integer.getInteger(txtPrefAge.getText().toString());
-			if (int1!=null && int1>0){
-				Integer int2=Integer.getInteger(txtPrefHeight.getText().toString());
-				if (int2!=null && int2>0){
+			temp=(txtPrefAge.getText().toString());
+			if (isPosInteger(temp)){
+				temp=(txtPrefWeight.getText().toString());
+				if (isPosInteger(temp)){
 					if (isPosDouble((txtPrefHeight.getText().toString()))){
 						savedDataBase();
 						completo=true;
@@ -125,7 +125,72 @@ public class AjustesActivity extends Activity {
 		}
 		savePreferences(completo);
 		super.onPause();
+		finish();
 	}
+
+	public void salir(){
+		finishFromChild(getParent());
+		finish();
+	}
+	
+
+	public void questionMessage(String title,String text, String nameButton1, String nameButton2, boolean cancelable){
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage(text)
+		        .setTitle(title)
+		        .setCancelable(cancelable)
+		        .setPositiveButton(nameButton1,
+		                new DialogInterface.OnClickListener() {
+		                    public void onClick(DialogInterface dialog, int id) {
+		                		salir();
+		                		//finish();
+		                    }
+		                })
+		         .setNegativeButton(nameButton2,
+		        		 new DialogInterface.OnClickListener() {
+		        	 		public void onClick(DialogInterface dialog, int id) {
+		        	 		}
+                });
+		AlertDialog alert = builder.create();
+		alert.show();
+
+	}
+	
+	public boolean onMenuItemClick(MenuItem item) {
+		  return true;
+	}
+	
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    switch (item.getItemId()) {
+	        case R.id.menuOpTraining:
+	        	System.out.println("menuAjustes");
+	        	launchTranningActivity(findViewById(R.id.btnAjustActTrain));
+	            return true;
+	        case R.id.menuOpResumen:
+	        	System.out.println("menuResumen");
+	        	launchResumeActivity(findViewById(R.id.btnAjustActResum));
+	            return true;
+	        case R.id.menuOpCreditos:
+	            
+	            return true;
+	        case R.id.menuOpSalir:
+	            questionMessage(getResources().getString(R.string.title_activity_trainning),getResources().getString(R.string.msgSalir),
+	            		getResources().getString(R.string.btnOk),getResources().getString(R.string.btnCancel),false);
+	            return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+	}
+	
+	
+	
+	
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		//super.onBackPressed();
+	}
+
 
 	private void savePreferences(boolean completo) {
 		// TODO Auto-generated method stub
@@ -150,8 +215,9 @@ public class AjustesActivity extends Activity {
 	}
 	
 	public void launchTranningActivity(View view){
-		startActivity(new Intent(AjustesActivity.this,TrainningActivity.class));
 		
+		startActivity(new Intent(AjustesActivity.this,TrainningActivity.class));
+
 	}
 	
 
@@ -160,9 +226,20 @@ public class AjustesActivity extends Activity {
 		
 	}
 	
+	public boolean isPosInteger(String cadena){
+		try{
+			int dd=Integer.parseInt(cadena);
+			if (dd>0){
+				return true;
+			}else return false;
+		}catch (NumberFormatException e){
+			return false;
+		}
+	}
+
 	public boolean isPosDouble(String cadena){
 		try{
-			Double dd=Double.parseDouble(cadena);
+			double dd=Double.parseDouble(cadena);
 			if (dd>0){
 				return true;
 			}else return false;
@@ -171,7 +248,8 @@ public class AjustesActivity extends Activity {
 		}
 	}
 	
-	public void alertMessage(String title, String text, String nameButton, boolean cancelable){
+	/*
+	private void alertMessage(String title, String text, String nameButton, boolean cancelable){
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setMessage(text)
 		        .setTitle(title)
@@ -180,12 +258,11 @@ public class AjustesActivity extends Activity {
 		                new DialogInterface.OnClickListener() {
 		                    public void onClick(DialogInterface dialog, int id) {
 		                        dialog.cancel();
-		                        
 		                    }
 		                });
 		AlertDialog alert = builder.create();
 		alert.show();
 	}
-
+	*/
 
 }
