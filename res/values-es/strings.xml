@@ -19,6 +19,7 @@
     <string name="menuResumen">Entrenamientos anteriores</string>
     <string name="menuTraining">Entrenar!</string>
     
+    <string name="txtViewSummary">Resumen de entrenamientos anteriores:</string>
     <string name="txtViewDuracion">Duración</string>
     <string name="txtViewDistancia">Distancia (km)</string>
     <string name="txtViewActividad">Actividad</string>

@@ -2,7 +2,7 @@ package project.v_trainning;
 
 import android.os.Bundle;
 import android.app.Activity;
-import android.view.Menu;
+//import android.view.Menu;
 
 public class AboutActivity extends Activity {
 

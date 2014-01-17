@@ -29,6 +29,7 @@ public class AjustesActivity extends Activity {
 	  SharedPreferences myPreferences, myPreferencesRecover;
 	  String nombreActividad;
 	  int tipoActividad;
+	  boolean datosCompletos;
 	  EditText txtPrefName, txtPrefAge, txtPrefWeight, txtPrefHeight, txtPrefPulso;
 	  Spinner spinActType;
 	  String spin;
@@ -70,7 +71,8 @@ public class AjustesActivity extends Activity {
 		
 		DataBase_vTrainning db =new DataBase_vTrainning(this, "DBvTrainning", null, 1);
 		//Inserta Usuarios
-		db.setUsuario(txtPrefName.getText().toString(),Integer.valueOf(txtPrefAge.getText().toString()),Double.valueOf(txtPrefWeight.getText().toString()),Double.valueOf(txtPrefHeight.getText().toString()));
+		if (!datosCompletos)
+			db.setUsuario(txtPrefName.getText().toString(),Integer.valueOf(txtPrefAge.getText().toString()),Double.valueOf(txtPrefWeight.getText().toString()),Double.valueOf(txtPrefHeight.getText().toString()));
 		db.closeDataBase();
 	}
 	private void showSavedPreferences() {
@@ -81,6 +83,7 @@ public class AjustesActivity extends Activity {
 		txtPrefWeight.setText(myPreferencesRecover.getString("peso", ""));
 		txtPrefHeight.setText(myPreferencesRecover.getString("estatura", ""));
 		txtPrefPulso.setText(myPreferencesRecover.getString("frecuencia_basal", ""));
+		datosCompletos=Boolean.valueOf(myPreferencesRecover.getString("completo", "false"));
 		//spinActType.setSelection(Integer.valueOf(myPreferencesRecover.getString("actividad", "1")));
 		spinActType.setSelection(myPreferencesRecover.getInt("actividad", 0));
 		

@@ -36,12 +36,13 @@ public class ResultsActivity extends Activity {
 	TextView txtCalorias;
 	TextView txtFrecOptima;
 	Button btnShare;
-	Button btnMapa;
+	//Button btnMapa;
 	ChartPlot plot;
 	String activ="";
 	String fecha="";
-	
-	
+	DataBase_vTrainning db;
+	private Number[] serie1; //resultados graficados en Y
+	private Number[] serie2; //resultados graficados en X
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +51,6 @@ public class ResultsActivity extends Activity {
 		createWidgets();
 		//CargaDatos();
 		plot= new CPlot(R.id.PlotResult);
-		PlotResults();
 		System.out.println("onCreate results");
 	}
 
@@ -67,6 +67,7 @@ public class ResultsActivity extends Activity {
 		System.out.println("onResume result");
 		super.onResume();
 		CargaDatos();
+		PlotResults();
 		
 	}
 
@@ -108,21 +109,21 @@ public class ResultsActivity extends Activity {
 			}	
 		});
 		
-		btnMapa=(Button)findViewById(R.id.btnMapa);
+		/*btnMapa=(Button)findViewById(R.id.btnMapa);
 		btnMapa.setOnClickListener(new View.OnClickListener(){
 			public void onClick(View view) {
 				mostrarMapa();
 			}	
-		});
+		});*/
 	}
 	
-	private void mostrarMapa(){
+	/*private void mostrarMapa(){
 		
-	}
+	}*/
 	
 	private void PlotResults(){
-		Number[] serie1={0, 10, 12, 13, 12, 15}; //reemplazar por valores de resultados en Y
-		Number[] serie2={0, 1.2, 2.2, 3.3, 4.4, 5.5}; //reemplazar por valores de resultados en X
+		//Number[] serie1={0, 10, 12, 13, 12, 15}; //reemplazar por valores de resultados en Y
+		//Number[] serie2={0, 1.2, 2.2, 3.3, 4.4, 5.5}; //reemplazar por valores de resultados en X
 		
 		//plot.setSerie(serie1);
 		plot.setXYSeries(serie2, serie1, getResources().getString(R.string.txtVelocidad));
@@ -148,31 +149,67 @@ public class ResultsActivity extends Activity {
 	
 	public void CargaDatos(){
 		int indice;
-		String temp="";
+		String temp="",nombre;
 		System.out.println("Empieza carga");
 		int mode = Activity.MODE_PRIVATE;
 		String MYPREFS_SETTINGS = "MyPreferencesSettings";
-		SharedPreferences myPreferencesRecover;
+		SharedPreferences myPreferencesRecover,myPreferencesRecover2;
 		myPreferencesRecover = getSharedPreferences(MYPREFS_SETTINGS,mode);
 		txtNombre.setText(myPreferencesRecover.getString("nombre", ""));
-
-		DataBase_vTrainning db =new DataBase_vTrainning(this, "DBvTrainning", null, 1);
+		activ=myPreferencesRecover.getString("nombre_actividad", "");
+				
+		serie1=new Number[9];
+		serie2=new Number[9];
+		myPreferencesRecover2 = getSharedPreferences("MyPreferencesTrainning",mode);
+		serie1[0]=Double.parseDouble(myPreferencesRecover2.getString("velocidadPromedio0", "0.0"));
+		serie1[1]=Double.parseDouble(myPreferencesRecover2.getString("velocidadPromedio1", "0.0"));
+		serie1[2]=Double.parseDouble(myPreferencesRecover2.getString("velocidadPromedio2", "0.0"));
+		serie1[3]=Double.parseDouble(myPreferencesRecover2.getString("velocidadPromedio3", "0.0"));
+		serie1[4]=Double.parseDouble(myPreferencesRecover2.getString("velocidadPromedio4", "0.0"));
+		serie1[5]=Double.parseDouble(myPreferencesRecover2.getString("velocidadPromedio5", "0.0"));
+		serie1[6]=Double.parseDouble(myPreferencesRecover2.getString("velocidadPromedio6", "0.0"));
+		serie1[7]=Double.parseDouble(myPreferencesRecover2.getString("velocidadPromedio7", "0.0"));
+		serie1[8]=Double.parseDouble(myPreferencesRecover2.getString("velocidadPromedio8", "0.0"));
+		
+		db =new DataBase_vTrainning(this, "DBvTrainning", null, 1);
 		// el resto de la carga	
-		indice=db.getRows("select id_sesion from sesiones");
-		System.out.println(db.toString());
-		fecha=db.getSesionPerIdSesion(txtNombre.getText().toString().trim(), indice, 2);
-		System.out.println(fecha);
-		temp=db.getSesionPerIdSesion(txtNombre.getText().toString().trim(), indice, 5);
-		System.out.println(temp);
+		indice=db.getRows("select count(*) from usuarios");
+		//System.out.println(db.toString());
+		//System.out.println(indice);
+		nombre=db.getUsuarioName(indice);
+		//System.out.println(nombre);
+		//fecha=db.getSesionPerIdSesion(nombre, indice, 0);
+		//System.out.println("forma1 fecha:"+fecha);
+		fecha=db.getSesionPerUser(nombre, 0);
+		//System.out.println("fecha:"+fecha);
+		
+		temp=db.getSesionPerUser(nombre, 3);
+		//System.out.println(temp);
 		txtCalorias.setText(temp);
-		temp=db.getSesionPerIdSesion(txtNombre.getText().toString().trim(), indice, 6);
-		System.out.println(temp);
-		txtDistancia.setText(temp);
-		temp=db.getSesionPerIdSesion(txtNombre.getText().toString(), indice, 7);
-		System.out.println(temp);
-		txtTiempo.setText(temp);
+		
+		//temp=db.getSesionPerUser(nombre, 5);
+		//System.out.println(temp);
+		txtDistancia.setText(db.getSesionPerUser(nombre, 5));
+		
+		temp=db.getSesionPerUser(nombre, 2);
+		//System.out.println(temp);
+		txtFrecOptima.setText(temp);
+		
+		temp=db.getSesionPerUser(nombre, 6);
+		//System.out.println(temp);
+		txtTiempo.setText(db.getSesionPerUser(nombre, 6));
+		System.out.println(db.toString());
 		db.closeDataBase();
+		
+		if (temp.isEmpty() || temp.equals(""))
+			temp="1";
+		for (indice=0;indice<9;indice++){
+			serie2[indice]=(indice*(Double.parseDouble(temp)/8));
+			System.out.println(serie1[indice]);
+		}
 	}
+	
+	
 	
 	/**
 	 * This private class inherits CharPlot class and add a constructor function to assign it the right view id

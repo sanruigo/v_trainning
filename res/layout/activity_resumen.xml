@@ -13,75 +13,44 @@
     android:background="@drawable/fondosilueta"
     android:gravity="center_horizontal"
     tools:context=".MainActivity" >
-    
+   
+   
+    <TextView
+        android:id="@+id/textViewSumm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:textSize="18sp"
+        android:text="@string/txtViewSummary" />
 
-    
-    
-	<TabHost
-        android:id="@android:id/tabhost"
+    <ScrollView
+        android:id="@+id/scrollView1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+    	android:paddingRight="@dimen/activity_horizontal_margin"
+        
+        android:layout_marginTop="20dp" >
 
         <LinearLayout
+            android:id="@+id/Layout1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical" >
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" 
+            >
 
-            <TabWidget
-                android:id="@android:id/tabs"
+            <TableLayout
+                android:id="@+id/Table1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-            </TabWidget>
+                android:layout_height="match_parent"
+                 
+                >
 
-            <FrameLayout
-                android:id="@android:id/tabcontent"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" >
-
-                <LinearLayout
-                    android:id="@+id/running"
-                    android:layout_width="match_parent"
-                    android:layout_height="365dp" >
-
-                    <ScrollView
-                        android:id="@+id/scrollView1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent" >
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical" >
-                        </LinearLayout>
-                    </ScrollView>
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/ciclismo"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
-
-                    <ScrollView
-                        android:id="@+id/scrollView2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent" >
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical" >
-                        </LinearLayout>
-                    </ScrollView>
-
-                </LinearLayout>
-            </FrameLayout>
+            </TableLayout>
+            
         </LinearLayout>
-    </TabHost>
-   
-   
-	
+    </ScrollView>
 	
     <LinearLayout
         android:id="@+id/barrabotones"

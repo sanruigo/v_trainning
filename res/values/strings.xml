@@ -19,6 +19,7 @@
     <string name="menuResumen">Training Summary</string>
     <string name="menuTraining">To Train!</string>
     
+    <string name="txtViewSummary">Summary of previous trainings:</string>
     <string name="txtViewDuracion">Duration</string>
     <string name="txtViewDistancia">Distance (Km)</string>
     <string name="txtViewActividad">Activity</string>
@@ -62,6 +63,6 @@
     <string name="btnOk">OK</string>
     <string name="btnCancel">Cancel</string>
     <string name="btnShare">Share Results</string>
-    <string name="btnMapa">Show Roadmap</string>
+    <string name="btnMapa">Show Route</string>
     
 </resources>

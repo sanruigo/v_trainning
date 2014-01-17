@@ -200,38 +200,15 @@
 	    
 	</LinearLayout>
 	
-    <LinearLayout
-            android:id="@+id/linearLayoutBotones"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/activity_vertical_margin"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-    		android:paddingRight="@dimen/activity_horizontal_margin"
-            android:layout_alignParentBottom="true"
-            android:orientation="horizontal"
-            android:layout_centerHorizontal="true"
-            >
-        	<Button
+        		<Button
 	    			android:id="@+id/btnShare"
-		    		android:layout_width="140dp"
+		    		android:layout_width="150dp"
 		    		android:layout_height="wrap_content"
-	    			android:paddingTop="10dp"
 	    			android:textAlignment="center"
-	    			android:layout_marginLeft="10dp"
+					android:layout_alignParentBottom="true"
+					android:layout_centerHorizontal="true"
 	    			android:drawableTop="@drawable/ic_action_share"
 	    			android:text="@string/btnShare" />
-
-        	<Button
-	    			android:id="@+id/btnMapa"
-		    		android:layout_width="140dp"
-		    		android:layout_height="wrap_content"
-	    			android:paddingTop="10dp"
-	    			android:layout_marginRight="10dp"
-	    			android:textAlignment="center"
-	    			android:drawableTop="@drawable/ic_action_location"
-	    			android:text="@string/btnMapa" />
-        	
-     </LinearLayout>
 	
 
 </RelativeLayout>

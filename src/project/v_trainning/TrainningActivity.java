@@ -293,8 +293,8 @@ public class TrainningActivity extends Activity implements LocationSource{
 			btnTrainActStart.setEnabled(false);
 			btnTrainActPause.setAlpha(1);
 			btnTrainActPause.setEnabled(true);
-			btnTrainActStop.setAlpha((float) 0.5);
-			btnTrainActStop.setEnabled(false);
+			btnTrainActStop.setAlpha(1);
+			btnTrainActStop.setEnabled(true);
 			
 		}
 		btnTrainActStart.setOnClickListener(new View.OnClickListener() {
@@ -329,6 +329,8 @@ public class TrainningActivity extends Activity implements LocationSource{
 	              btnTrainActStart.setEnabled(false);
 	              btnTrainActPause.setAlpha(1);
 	              btnTrainActPause.setEnabled(true);
+	              btnTrainActStop.setAlpha(1);
+	              btnTrainActStop.setEnabled(true);
 	              
 			}
 		});
@@ -340,12 +342,12 @@ public class TrainningActivity extends Activity implements LocationSource{
 				//etxtPulso.setActivated(true);
 				isTrainingActive=false;
 				crono.stop();
-				btnTrainActStart.setAlpha((float)0.5);
-				btnTrainActStart.setEnabled(false);
+				btnTrainActStart.setAlpha(1);
+				btnTrainActStart.setEnabled(true);
 				btnTrainActPause.setAlpha((float) 0.5);
 				btnTrainActPause.setEnabled(false);
-				btnTrainActStop.setAlpha(1);
-				btnTrainActStop.setEnabled(true);
+				btnTrainActStop.setAlpha((float) 0.5);
+				btnTrainActStop.setEnabled(false);
 
 			}
 		});
@@ -540,90 +542,7 @@ public class TrainningActivity extends Activity implements LocationSource{
 					    task.execute();
 		  
 					    
-//			            //C�LCULO DE CALOR�AS Y RECUPERACI�N DEL PASO DE PAR�METROS DESDE AJUSTES DE USUARIO
-//					    misPreferencias = getSharedPreferences(MYPREFS,mode);			    
-//					    peso = misPreferencias.getInt("peso", 90);	   			   			
-//					    calReto = misPreferencias.getFloat("calorias", 0);
-//					   			    
-//					    if(peso == 90){	 //no hay preferencias de usuario--no introdujo sus datos   	
-//					    	if(velocidadKM <= 5) calorias =  (float) ((0.1 * kg)/60); 	            
-//		                	else if(velocidadKM > 5.6 && velocidadKM <= 7.5) calorias = (float) ((0.2 * kg)/60);
-//		                	else if(velocidadKM > 7.6 ) calorias = (float) ((0.3 * kg)/60);
-//		                
-//					    }else{		   //usuario introdujo sus datos  	
-//					    	
-//					    	if(velocidadKM <= 5) calorias =  (float) ((0.1 * peso)/60); 	            
-//					    	else if(velocidadKM > 5.6 && velocidadKM <= 7.5) calorias = (float) ((0.2 * peso)/60);
-//					    	else if(velocidadKM > 7.6 ) calorias = (float) ((0.3 * peso)/60);
-//					    }			    	
-//					    	caloriastotal = caloriastotal + calorias; //c�lculo del valor de calor�as consumidas
-//					    	
-//					    	//comprobaci�n si consigue reto de calor�as
-//					    	if(repeat == 1 && calReto != 0  ){ //tenemos reto	
-//		                			if(caloriastotal > calReto){              				
-//		                				avisoRetoCompletado();
-//		                				repeat = 0;
-//		                				
-//		                			}			    		
-//					    	}
-					    	
-					    	
-					   //calculo de reto tiempo
-					   //comprobaci�n si consigue reto del tiempo
-//						   misPreferencias = getSharedPreferences(MYPREFS,mode);		    
-//						   timereto = misPreferencias.getLong("duracion", 0);
-//						   elapsedMillis = (SystemClock.elapsedRealtime() - crono.getBase()) / 1000;
-//						   elapsedMillis3 = elapsedMillis / 60; // me quedo con los minutos
-//						   				  
-//					    	if(repeat == 1 && timereto != 0  ){ //tenemos reto	
-//				       			if(elapsedMillis3 >= timereto){              				
-//				       				avisoRetoCompletado();
-//				       				repeat = 0;
-//					       				
-//					       		}			    		
-//						   	}
-						    	
 
-//			            //C�LCULO DEL RITMO MEDIO ACTUAL			   			    
-//					     elapsedMillis = (SystemClock.elapsedRealtime() - crono.getBase())/1000;
-//					     elapsedMillisLapFinal = elapsedMillis;
-//					     diferenciatime = elapsedMillisLapFinal - elapsedMillisLapInicial;
-//				
-//			            if(estado == "activo"){
-//			            	ritmomedioactual = (double) ((diferenciatime  / distanciaLap));
-//			            	//conversi�n para mostrar minutos y segundos que llevamos en la vuelta actual por km
-//			            	ritmomedioactual = (ritmomedioactual / 60)*1000;
-//			            }            	          	                      
-//			            String chronoText2 = String.valueOf(ritmomedioactual);  
-//			            //LE PASAMOS A STRING EL VALOR DEL RITMOMEDIOACTUAL QUE LLEVAMOS	            
-//			            String[] array = chronoText2.split("\\.");   //SEPARAMOS LAS CIFRAS POR EL "." PARA SACAR MINUTOS Y SEGUNDOS       	            
-//			              if (array.length == 2) {           	  
-//			            	  //acotar y transformar decimales para no pasar de 60 seg y sacar minutos           	  
-//			            	  array[1]=array[1].substring(0, 3); //ACOTA A 3 DECIMALES
-//			            	  //convertimos a double para poder realizar y sacar el valor correcto tipo :04 segs
-//			            	  Double segundos = (double) Integer.parseInt(array[1]);
-//			            	  segundos = segundos*(double)6/(double)10000;
-//			            	  String seeg = String.valueOf(segundos);  
-//			            	  String[] array2 = seeg.split("\\."); 
-//			            	  Integer minutos = Integer.parseInt(array[0]); 
-//			            	  //HAY QUE PASARLOS A STRINGS PARA HACER LA CONCATENACI�N DE VALORES Y MOSTRAR EN TEXTVIEW
-//			            	  String min = String.valueOf(minutos);  
-//			            	 
-//			            	  if(array2[1].length()>2) array2[1] = array2[1].substring(0,2);            	  	
-//			            	 
-//			            	  //CONCATENACI�N DE LOS MINUTOS Y SEGUNDOS PARA LUEGO MOSTRAR RESULTADO EN TEXTVIEW
-//			            	  ritmo = min.concat(":").concat(array2[1]);	 
-//			               }
-//			              
-//			              //guardar los laps en la bd
-//			              if(distanciaLap >= 10){ //en metros
-//				           	   velocidadLap = (double) (distanciaLap / diferenciatime);
-//				    		   velocidadLap = (velocidadLap / 1000) * 3600;
-//				               //data.guardarLaps(id, km, ritmo, velocidadLap);
-//				    		   km = km + 1;
-//				    		   distanciaLap = (float) 0;
-//				               elapsedMillisLapInicial = elapsedMillisLapFinal;
-//				          }	              
 			            }                
 			        }else{
 			        	Toast.makeText(TrainningActivity.this, R.string.msgWarning, Toast.LENGTH_LONG).show();
@@ -868,8 +787,11 @@ public class TrainningActivity extends Activity implements LocationSource{
             			// data.guardarPuntos(id, loc.getLongitude(), loc.getLatitude());
             			savedDataBaseGPS(nombre,loc.getLatitude(),loc.getLongitude(),loc.getAltitude(),0.0,0.0,0.0);
   
-            		}		
+            		}
+            		calculaVelocidades();
+            		
         	}
+
 
         private void savedDataBaseSesion(String name,String date,double basal_sistolica, double basal_diastolica,double calories, double average_speed,double total_distance, String total_time){
             
@@ -886,5 +808,40 @@ public class TrainningActivity extends Activity implements LocationSource{
             //Inserta Usuarios
             db.setGPS(name, latitude, longitude, GPS_height, partial_speed, partial_distance, partial_time);
             db.closeDataBase();
-    }        
+    }   
+        
+        private void calculaVelocidades(){
+        	int i,j,k,l;
+        	double velProm;
+        	Double [] promedios= new Double[9];
+        	Double [] veloc;
+        	i=Velocidades.size();
+        	k=Math.round(i/8);
+        	veloc=(Double[]) Velocidades.toArray();
+        	promedios[0]=veloc[0];
+        	for (i=1;i<9;i++){
+        		velProm=0;
+        		l=i*k;
+        		for (j=(l-k);j<(l+k);j++){
+        			if (j<Velocidades.size() && j>=0)
+        			velProm=velProm+veloc[j];
+        			
+        		}
+        		promedios[i]=velProm/(2*k);
+        	}
+            myPreferences = getSharedPreferences(MYPREFS_TRAINING, mode);
+            Editor myEditor = myPreferences.edit();
+            myEditor.putString("velocidadPromedio0", String.valueOf(promedios[0]));
+            myEditor.putString("velocidadPromedio1", String.valueOf(promedios[1]));
+            myEditor.putString("velocidadPromedio2", String.valueOf(promedios[2]));
+            myEditor.putString("velocidadPromedio3", String.valueOf(promedios[3]));
+            myEditor.putString("velocidadPromedio4", String.valueOf(promedios[4]));
+            myEditor.putString("velocidadPromedio5", String.valueOf(promedios[5]));
+            myEditor.putString("velocidadPromedio6", String.valueOf(promedios[6]));
+            myEditor.putString("velocidadPromedio7", String.valueOf(promedios[7]));
+            myEditor.putString("velocidadPromedio8", String.valueOf(promedios[8]));
+            myEditor.commit();        
+        	
+        	
+        }
 }

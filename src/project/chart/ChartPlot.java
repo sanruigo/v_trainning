@@ -107,7 +107,7 @@ public class ChartPlot {
 		myXYPlot.setDomainStep(XYStepMode.SUBDIVIDE, valorMode);
 		myXYPlot.setDomainLabel(label);
 		myXYPlot.setDomainValueFormat(new DecimalFormat("##.##"));
-		myXYPlot.setRangeLabel("m/s");
+		myXYPlot.setRangeLabel("km/h");
 		
 		if (this.myXYPlot!=null && this.series!=null && this.seriesFormat!=null){
 			myXYPlot.addSeries(series, seriesFormat);
