@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Strings in english -->
 <resources>
-    
-	<string name="idiomaApp">english</string>
+
+    <string name="idiomaApp">english</string>
     
     <string name="app_name">Virtual Training Assistant</string>
     <string name="action_settings">Settings</string>
@@ -11,6 +11,7 @@
     <string name="title_activity_ajustes">VTA - Settings</string>
     <string name="title_activity_resumen">VTA - Summary</string>
     <string name="title_activity_results">VTA - Results</string>
+    <string name="title_activity_about">VTA - About V-Training Assistant</string>
     
     <string name="menuExit">Exit</string>
     <string name="menuCredits">About</string>
@@ -31,7 +32,7 @@
     <string name="txtViewPeso">Weight</string>
     <string name="txtViewEstatura">Height</string>
     <string name="txtViewEdad">Age</string>
-    <string name="txtViewUnidLongitud">m</string>
+    <string name="txtViewUnidLongitud">km</string>
     <string name="txtViewUnidPeso">Kg</string>
     
     <string name="txtViewHola">Hi</string>
@@ -41,24 +42,26 @@
     <string name="txtViewTiempo">Training time:</string>
     <string name="txtViewFrecOptima">Optimal heart rate:</string>
     
-    <string name="txtVelocidad">Speed (m/s)</string>
+    <string name="txtVelocidad">Speed (km/h)</string>
     <string name="txtTiempo">Time</string>
     <string name="txtGrafVelocidad">Speed Graphics</string>
     
     <string name="msgNoGPS">"GPS is disabled or it can't obtain the location.\nVerify the service."</string>
     <string name="msgNoAjustes">You must verify de training settings before to start it.</string>
     <string name="msgSalir">Do you want to quit of the training?</string>
-	<string name="msgAjustes">Some information is empty. Please complete it all for a better app working.</string>
-	<string name="msgErrorEdad">The age is not a valid number</string>
-	<string name="msgErrorPeso">The weight is not a valid number</string>
-	<string name="msgErrorEstatura">The height is not a valid number</string>
-	<string name="msgCompartir">Share results</string>
-	<string name="msgWarning">Warning!</string>
-	<string name="msgGPSok">GPS is active</string>
-					
+    <string name="msgAjustes">Some information is empty. Please complete it all for a better app working.</string>
+    <string name="msgErrorEdad">The age is not a valid number</string>
+    <string name="msgErrorPeso">The weight is not a valid number</string>
+    <string name="msgErrorEstatura">The height is not a valid number</string>
+    <string name="msgErrorPulso">The heart rate is not a valid number</string>
+    <string name="msgCompartir">Share results</string>
+    <string name="msgWarning">Warning!</string>
+    <string name="msgGPSok">GPS is active</string>
+	<string name="msgInicio">For more accurate results, wait until you see your location on the map</string>
+    
     <string name="btnOk">OK</string>
     <string name="btnCancel">Cancel</string>
     <string name="btnShare">Share Results</string>
-    
+    <string name="btnMapa">Show Roadmap</string>
     
 </resources>

@@ -1,20 +1,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/menuOpTraining"
+        android:id="@+id/menuAjusTraining"
         android:title="@string/menuTraining"/>
 
     <item
-        android:id="@+id/menuOpResumen"
+        android:id="@+id/menuAjusResumen"
         android:title="@string/menuResumen"/>
     
     <item
-        android:id="@+id/menuOpCreditos"
+        android:id="@+id/menuAjusCreditos"
         android:title="@string/menuCredits"/>
-    
-    <item
-        android:id="@+id/menuOpSalir"
-        android:title="@string/menuExit"/>
     
 
 </menu>

@@ -16,6 +16,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -35,9 +36,11 @@ public class ResultsActivity extends Activity {
 	TextView txtCalorias;
 	TextView txtFrecOptima;
 	Button btnShare;
+	Button btnMapa;
 	ChartPlot plot;
 	String activ="";
 	String fecha="";
+	
 	
 	
 	@Override
@@ -48,6 +51,7 @@ public class ResultsActivity extends Activity {
 		//CargaDatos();
 		plot= new CPlot(R.id.PlotResult);
 		PlotResults();
+		System.out.println("onCreate results");
 	}
 
 	@Override
@@ -57,18 +61,63 @@ public class ResultsActivity extends Activity {
 		return true;
 	}
 	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		System.out.println("onResume result");
+		super.onResume();
+		CargaDatos();
+		
+	}
+
+	public boolean onMenuItemClick(MenuItem item) {
+		  return true;
+	}
+	
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    switch (item.getItemId()) {
+	        case R.id.menuResultCreditos:
+	        	launchAboutActivity(findViewById(R.id.btnAjustActSetting));
+	            return true;
+	        case R.id.menuResultShare:
+	        	compartir();
+	            return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+	}
+	
+	public void launchAboutActivity(View view){
+		startActivity(new Intent(ResultsActivity.this,AboutActivity.class));
+		
+	}
+	
+
+
 	private void createWidgets(){
 		txtTiempo=(TextView)findViewById(R.id.txtViewTiempo);
 		txtCalorias=(TextView)findViewById(R.id.txtViewCalorias);
 		txtDistancia=(TextView)findViewById(R.id.txtViewDistRecorrida);
 		txtFrecOptima=(TextView)findViewById(R.id.txtViewFrecOptima);
 		txtNombre=(TextView)findViewById(R.id.txtViewNombre);
+		
 		btnShare=(Button)findViewById(R.id.btnShare);
 		btnShare.setOnClickListener(new View.OnClickListener(){
 			public void onClick(View view) {
 				compartir();
 			}	
 		});
+		
+		btnMapa=(Button)findViewById(R.id.btnMapa);
+		btnMapa.setOnClickListener(new View.OnClickListener(){
+			public void onClick(View view) {
+				mostrarMapa();
+			}	
+		});
+	}
+	
+	private void mostrarMapa(){
+		
 	}
 	
 	private void PlotResults(){
@@ -97,9 +146,10 @@ public class ResultsActivity extends Activity {
 		startActivity(Intent.createChooser(intent, getResources().getString(R.string.msgCompartir)));
 	}
 	
-	private void CargaDatos(){
+	public void CargaDatos(){
 		int indice;
 		String temp="";
+		System.out.println("Empieza carga");
 		int mode = Activity.MODE_PRIVATE;
 		String MYPREFS_SETTINGS = "MyPreferencesSettings";
 		SharedPreferences myPreferencesRecover;
@@ -107,14 +157,19 @@ public class ResultsActivity extends Activity {
 		txtNombre.setText(myPreferencesRecover.getString("nombre", ""));
 
 		DataBase_vTrainning db =new DataBase_vTrainning(this, "DBvTrainning", null, 1);
-		//TODO el resto de la carga	
-		indice=db.getRows("SELECT * FROM sesiones");
-		fecha=db.getSesionPerIdSesion(txtNombre.getText().toString(), indice, 0);
-		temp=db.getSesionPerIdSesion(txtNombre.getText().toString(), indice, 3);
+		// el resto de la carga	
+		indice=db.getRows("select id_sesion from sesiones");
+		System.out.println(db.toString());
+		fecha=db.getSesionPerIdSesion(txtNombre.getText().toString().trim(), indice, 2);
+		System.out.println(fecha);
+		temp=db.getSesionPerIdSesion(txtNombre.getText().toString().trim(), indice, 5);
+		System.out.println(temp);
 		txtCalorias.setText(temp);
-		temp=db.getSesionPerIdSesion(txtNombre.getText().toString(), indice, 5);
+		temp=db.getSesionPerIdSesion(txtNombre.getText().toString().trim(), indice, 6);
+		System.out.println(temp);
 		txtDistancia.setText(temp);
-		temp=db.getSesionPerIdSesion(txtNombre.getText().toString(), indice, 6);
+		temp=db.getSesionPerIdSesion(txtNombre.getText().toString(), indice, 7);
+		System.out.println(temp);
 		txtTiempo.setText(temp);
 		db.closeDataBase();
 	}

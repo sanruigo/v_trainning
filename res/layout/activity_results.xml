@@ -10,221 +10,182 @@
     android:gravity="center_horizontal"
     tools:context=".ResultsActivity" >
 
-    
-    <LinearLayout 
-        android:id="@+id/LLayout1"
-        android:layout_width="fill_parent"
-        android:layout_height="35dp"
-        android:layout_alignParentTop="true"
-	    android:paddingLeft="@dimen/activity_horizontal_margin"
-    	android:paddingRight="@dimen/activity_horizontal_margin"
-    	android:paddingTop="@dimen/activity_vertical_margin"
-    	android:orientation="horizontal"
-		>
-        <LinearLayout 
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-		    android:paddingLeft="@dimen/activity_horizontal_margin"
-            > 
-		<TextView
-    	    android:id="@+id/txtViewHola"
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:textColor="#000000"
-        	android:textSize="20sp"
-        	android:text="@string/txtViewHola" />
-        </LinearLayout>
-        <LinearLayout 
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent" 
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            >
-    	<TextView
-    	    android:id="@+id/txtViewNombre"
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:textSize="20sp"
-        	android:textColor="#000000"
-        	android:text="Nombre1" />
-        </LinearLayout>
-        
-    </LinearLayout>
-
-    <LinearLayout 
-        android:id="@+id/LLayout2"
-        android:layout_width="fill_parent"
-        android:layout_height="35dp"
-        android:layout_below="@id/LLayout1"
-	    android:paddingLeft="@dimen/activity_horizontal_margin"
-    	android:paddingRight="@dimen/activity_horizontal_margin"
-    	android:paddingTop="@dimen/activity_vertical_margin"
-    	android:orientation="horizontal"
-		>
-        <LinearLayout 
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-		    android:paddingLeft="@dimen/activity_horizontal_margin"
-            > 
-		<TextView
-    	    android:id="@+id/txtViewlblTiempo"
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:textColor="#000000"
-        	android:textSize="16sp"
-        	android:text="@string/txtViewTiempo" />
-        </LinearLayout>
-        <LinearLayout 
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent" 
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            >
-    	<TextView
-    	    android:id="@+id/txtViewTiempo"
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:textSize="16sp"
-        	android:textColor="#000000"
-        	android:text="00:00.00" />
-        </LinearLayout>
-        
-    </LinearLayout>
-
 <LinearLayout 
-        android:id="@+id/LLayout3"
-        android:layout_width="fill_parent"
-        android:layout_height="35dp"
-        android:layout_below="@id/LLayout2"
-	    android:paddingLeft="@dimen/activity_horizontal_margin"
-    	android:paddingRight="@dimen/activity_horizontal_margin"
-    	android:paddingTop="@dimen/activity_vertical_margin"
-    	android:orientation="horizontal"
+    android:id="@+id/LLayout0"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+	android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="horizontal"
+    >    
+    <LinearLayout 
+        android:id="@+id/LLayout01"
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:layout_width="260dp"
+    	
 		>
-        <LinearLayout 
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-		    android:paddingLeft="@dimen/activity_horizontal_margin"
-            > 
-		<TextView
-    	    android:id="@+id/txtViewlblDistancia"
+
+    	<LinearLayout 
+        	android:id="@+id/LLayout1"
         	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:textColor="#000000"
-        	android:textSize="16sp"
-        	android:text="@string/txtViewDistRecorrida" />
-        </LinearLayout>
-        <LinearLayout 
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent" 
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            >
-    	<TextView
-    	    android:id="@+id/txtViewDistRecorrida"
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:textSize="16sp"
-        	android:textColor="#000000"
-        	android:text="0.00" />
-        </LinearLayout>
-        <LinearLayout 
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent" 
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            >
-    	<TextView
-    	    android:id="@+id/txtViewUnidLong"
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:textSize="16sp"
-        	android:textColor="#000000"
-        	android:text="@string/txtViewUnidLongitud" />
+        	android:layout_height="35dp"
+    		>
+  			<TextView
+    		    android:id="@+id/txtViewHola"
+        		android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"
+        		android:textColor="#000000"
+        		android:textSize="20sp"
+        		android:paddingRight="3dp"
+        		android:text="@string/txtViewHola" />
+        
+	    	<TextView
+    		    android:id="@+id/txtViewNombre"
+        		android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"
+	        	android:textSize="20sp"
+    	    	android:textColor="#000000"
+        		android:text="Nombre1" />
         </LinearLayout>
         
-    </LinearLayout>
+	    <LinearLayout 
+    	    android:id="@+id/LLayout2"
+        	android:layout_width="fill_parent"
+        	android:layout_height="32dp"
+        	android:layout_below="@id/LLayout1"
+	    	android:paddingLeft="@dimen/activity_horizontal_margin"
+    		android:paddingRight="@dimen/activity_horizontal_margin"
+    		android:paddingTop="@dimen/activity_vertical_margin"
+    		android:orientation="horizontal"
+			>
+			<TextView
+    		    android:id="@+id/txtViewlblTiempo"
+        		android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"
+	        	android:textColor="#000000"
+    	    	android:textSize="18sp"
+    	    	android:paddingRight="3dp"
+        		android:text="@string/txtViewTiempo" />
+	    	<TextView
+    		    android:id="@+id/txtViewTiempo"
+        		android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"
+	        	android:textSize="18sp"
+    	    	android:textColor="#000000"
+        		android:text="00:00.00" />
+    	</LinearLayout>
+
+   		<LinearLayout 
+        	android:id="@+id/LLayout3"
+        	android:layout_width="fill_parent"
+        	android:layout_height="32dp"
+        	android:layout_below="@id/LLayout2"
+	    	android:paddingLeft="@dimen/activity_horizontal_margin"
+    		android:paddingRight="@dimen/activity_horizontal_margin"
+    		android:paddingTop="@dimen/activity_vertical_margin"
+    		android:orientation="horizontal"
+			>
+			<TextView
+    		    android:id="@+id/txtViewlblDistancia"
+        		android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"
+	        	android:textColor="#000000"
+    	    	android:textSize="18sp"
+    	    	android:paddingRight="3dp"
+        		android:text="@string/txtViewDistRecorrida" />
+	    	<TextView
+    		    android:id="@+id/txtViewDistRecorrida"
+        		android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"
+	        	android:textSize="18sp"
+	        	android:paddingRight="3dp"
+    	    	android:textColor="#000000"
+        		android:text="0.00" />
+	    	<TextView
+    		    android:id="@+id/txtViewUnidLong"
+        		android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"
+	        	android:textSize="18sp"
+    	    	android:textColor="#000000"
+        		android:text="@string/txtViewUnidLongitud" />
+    	</LinearLayout>
 
 
-<LinearLayout 
-        android:id="@+id/LLayout4"
-        android:layout_width="fill_parent"
-        android:layout_height="35dp"
-        android:layout_below="@id/LLayout3"
-	    android:paddingLeft="@dimen/activity_horizontal_margin"
-    	android:paddingRight="@dimen/activity_horizontal_margin"
-    	android:paddingTop="@dimen/activity_vertical_margin"
-    	android:orientation="horizontal"
-		>
-        <LinearLayout 
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
+		<LinearLayout 
+    	    android:id="@+id/LLayout4"
+        	android:layout_width="fill_parent"
+	        android:layout_height="32dp"
+    	    android:layout_below="@id/LLayout3"
+	    	android:paddingLeft="@dimen/activity_horizontal_margin"
+	    	android:paddingRight="@dimen/activity_horizontal_margin"
+    		android:paddingTop="@dimen/activity_vertical_margin"
+    		android:orientation="horizontal"
+			>
+			<TextView
+    		    android:id="@+id/txtViewlblCalorias"
+        		android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"
+	        	android:textColor="#000000"
+    	    	android:textSize="18sp"
+    	    	android:paddingRight="3dp"
+        		android:text="@string/txtViewCalQuemadas" />
+	    	<TextView
+    		    android:id="@+id/txtViewCalorias"
+        		android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"
+	        	android:textSize="18sp"
+    	    	android:textColor="#000000"
+        		android:text="0.00KCal" />
+       
+	    </LinearLayout>
+
+		<LinearLayout 
+        	android:id="@+id/LLayout5"
+	        android:layout_width="fill_parent"
+    	    android:layout_height="32dp"
+        	android:layout_below="@id/LLayout4"
 		    android:paddingLeft="@dimen/activity_horizontal_margin"
-            > 
-		<TextView
-    	    android:id="@+id/txtViewlblCalorias"
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:textColor="#000000"
-        	android:textSize="16sp"
-        	android:text="@string/txtViewCalQuemadas" />
-        </LinearLayout>
-        <LinearLayout 
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent" 
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            >
-    	<TextView
-    	    android:id="@+id/txtViewCalorias"
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:textSize="16sp"
-        	android:textColor="#000000"
-        	android:text="0.00KCal" />
-        </LinearLayout>
-        
+    		android:paddingRight="@dimen/activity_horizontal_margin"
+    		android:paddingTop="@dimen/activity_vertical_margin"
+	    	android:orientation="horizontal"
+			>
+			<TextView
+    		    android:id="@+id/txtViewlblFrecuencia"
+        		android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"
+		       	android:textColor="#000000"
+		       	android:paddingRight="3dp"
+        		android:textSize="18sp"
+        		android:text="@string/txtViewFrecOptima" />
+	    	<TextView
+    		    android:id="@+id/txtViewFrecOptima"
+        		android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"
+	        	android:textSize="18sp"
+    	    	android:textColor="#000000"
+        		android:text="0ppm" />
+	    </LinearLayout>
     </LinearLayout>
-
-	<LinearLayout 
-        android:id="@+id/LLayout5"
-        android:layout_width="fill_parent"
-        android:layout_height="35dp"
-        android:layout_below="@id/LLayout4"
-	    android:paddingLeft="@dimen/activity_horizontal_margin"
-    	android:paddingRight="@dimen/activity_horizontal_margin"
-    	android:paddingTop="@dimen/activity_vertical_margin"
-    	android:orientation="horizontal"
-		>
-        <LinearLayout 
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-		    android:paddingLeft="@dimen/activity_horizontal_margin"
-            > 
-		<TextView
-    	    android:id="@+id/txtViewlblFrecuencia"
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:textColor="#000000"
-        	android:textSize="16sp"
-        	android:text="@string/txtViewFrecOptima" />
-        </LinearLayout>
-        <LinearLayout 
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent" 
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            >
-    	<TextView
-    	    android:id="@+id/txtViewFrecOptima"
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:textSize="16sp"
-        	android:textColor="#000000"
-        	android:text="0ppm" />
-        </LinearLayout>
+            
+    <LinearLayout 
+        android:id="@+id/LLayout02"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        >
+	
         
     </LinearLayout>
     
+</LinearLayout>
+	
 	<LinearLayout 
 		android:id="@+id/PlotLayout"
         android:layout_width="fill_parent"
-        android:layout_height="220dp"
-        android:layout_below="@id/LLayout5"
+        android:layout_height="200dp"
+        android:layout_below="@id/LLayout0"
 	    android:paddingLeft="@dimen/activity_horizontal_margin"
     	android:paddingRight="@dimen/activity_horizontal_margin"
     	android:paddingTop="@dimen/activity_vertical_margin"
@@ -238,15 +199,39 @@
 	    	title="@string/txtGrafVelocidad"/>
 	    
 	</LinearLayout>
+	
+    <LinearLayout
+            android:id="@+id/linearLayoutBotones"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+    		android:paddingRight="@dimen/activity_horizontal_margin"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:layout_centerHorizontal="true"
+            >
+        	<Button
+	    			android:id="@+id/btnShare"
+		    		android:layout_width="140dp"
+		    		android:layout_height="wrap_content"
+	    			android:paddingTop="10dp"
+	    			android:textAlignment="center"
+	    			android:layout_marginLeft="10dp"
+	    			android:drawableTop="@drawable/ic_action_share"
+	    			android:text="@string/btnShare" />
 
-	<Button
-	    android:id="@+id/btnShare"
-	    android:layout_width="180dp"
-	    android:layout_height="wrap_content"
-	    android:layout_alignParentBottom="true"
-	    
-	    android:layout_centerHorizontal="true"
-	    android:drawableTop="@drawable/ic_action_share"
-	    android:text="@string/btnShare" />
+        	<Button
+	    			android:id="@+id/btnMapa"
+		    		android:layout_width="140dp"
+		    		android:layout_height="wrap_content"
+	    			android:paddingTop="10dp"
+	    			android:layout_marginRight="10dp"
+	    			android:textAlignment="center"
+	    			android:drawableTop="@drawable/ic_action_location"
+	    			android:text="@string/btnMapa" />
+        	
+     </LinearLayout>
+	
 
 </RelativeLayout>

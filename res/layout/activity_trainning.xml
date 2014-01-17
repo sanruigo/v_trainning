@@ -54,7 +54,7 @@
     <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="fill_parent"
-        android:layout_height="220dp"
+        android:layout_height="215dp"
         android:layout_above="@+id/barrabotones"
         android:layout_alignParentLeft="true"
         android:layout_marginBottom="5dp"
@@ -67,32 +67,32 @@
 		    android:orientation="vertical">
         	<Button
             	android:id="@+id/btnTrainActStart"
-	            android:layout_width="40dp"
-    	        android:layout_height="40dp"
+	            android:layout_width="60dp"
+    	        android:layout_height="60dp"
         	    android:layout_marginLeft="10dp"
-        	    android:layout_marginTop="25dp"
+        	    android:layout_marginTop="10dp"
             	android:onClick="onClick"
             	android:background="@drawable/boton_grande1" />
 
          	<Button
 	            android:id="@+id/btnTrainActPause"
-    	        android:layout_width="40dp"
-        	    android:layout_height="40dp"
+    	        android:layout_width="60dp"
+        	    android:layout_height="60dp"
             	android:layout_marginLeft="10dp"
-            	android:layout_marginTop="20dp"
+            	android:layout_marginTop="10dp"
 	            android:onClick="onClick"
-	            android:background="@drawable/boton_grande2"
+	            android:background="@drawable/boton_grande3"
         	     />
          	<Button
 	            android:id="@+id/btnTrainActStop"
-    	        android:layout_width="40dp"
-        	    android:layout_height="40dp"
+    	        android:layout_width="60dp"
+        	    android:layout_height="60dp"
             	android:layout_marginLeft="10dp"
-            	android:layout_marginTop="15dp"
+            	android:layout_marginTop="10dp"
 	            android:onClick="onClick"
 	            android:background="@drawable/boton_grande2"
-	            />
-		</LinearLayout>
+        	     />
+         			</LinearLayout>
         
         <LinearLayout
             android:id="@+id/linearLayout12"
@@ -213,7 +213,7 @@
                     android:gravity="center"
                     android:text=""
                     android:textColor="#000000"
-                    android:textSize="22sp" />
+                    android:textSize="20sp" />
 
             </TableRow>
 
@@ -260,7 +260,7 @@
                     android:gravity="center"
                     android:text=""
                     android:textColor="#000000"
-                    android:textSize="22sp" />
+                    android:textSize="20sp" />
             </TableRow>
 
             <TableRow
@@ -307,7 +307,7 @@
                     android:gravity="center"
                     android:text=""
                     android:textColor="#000000"
-                    android:textSize="22sp" />
+                    android:textSize="20sp" />
 
             </TableRow>
             

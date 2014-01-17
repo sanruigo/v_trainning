@@ -8,27 +8,15 @@ import android.view.View;
 import android.widget.Button;
 
 public class ResumenActivity extends Activity {
-	private Button prueba;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_resumen);
 		System.out.println("Creando Resumen");
-		prueba=(Button)findViewById(R.id.btnPrueba);
-		prueba.setOnClickListener(new View.OnClickListener(){
-			public void onClick(View view) {
-				startActivity(new Intent(ResumenActivity.this,ResultsActivity.class));
-			}	
-		});
 		
 	}
 
-	@Override
-	public void onBackPressed() {
-		// TODO Auto-generated method stub
-		//super.onBackPressed();
-	}
 	
 	@Override
 	protected void onResume() {
@@ -51,7 +39,7 @@ public class ResumenActivity extends Activity {
 	
 
 	public void launchTrainningActivity(View view){
-		startActivity(new Intent(ResumenActivity.this,TrainningActivity.class));
+		finish();
 		
 	}
 

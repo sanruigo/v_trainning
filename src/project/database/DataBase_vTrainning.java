@@ -295,6 +295,7 @@ public class DataBase_vTrainning extends SQLiteOpenHelper {
        				+ "VALUES(null,'"+date+"',"+basal_sistolica+","+basal_diastolica+","+calories+","+average_speed+","+total_distance+","+total_time+","+getRows("select id_usuario from usuarios where nombre='"+name+"'")+");"; 
        		
        		dbWrite.execSQL(rowQuerry);
+       		
     		
             //Cerramos la base de datos aqui o al momento de retornar
             //dbWrite.close();

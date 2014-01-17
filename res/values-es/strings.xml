@@ -11,6 +11,7 @@
     <string name="title_activity_ajustes">VTA - Ajustes</string>
     <string name="title_activity_resumen">VTA - Resumen</string>
     <string name="title_activity_results">VTA - Resultados</string>
+    <string name="title_activity_about">VTA - Acerca de V-Training Assistant</string>
     
     <string name="menuExit">Salir</string>
     <string name="menuCredits">Acerca de</string>
@@ -19,7 +20,7 @@
     <string name="menuTraining">Entrenar!</string>
     
     <string name="txtViewDuracion">Duración</string>
-    <string name="txtViewDistancia">Distancia (Km)</string>
+    <string name="txtViewDistancia">Distancia (km)</string>
     <string name="txtViewActividad">Actividad</string>
     <string name="txtViewPulso">Pulso en reposo</string>
     <string name="timerVal">00:00</string>
@@ -31,7 +32,7 @@
     <string name="txtViewPeso">Peso</string>
     <string name="txtViewEstatura">Estatura</string>
     <string name="txtViewEdad">Edad</string>
-    <string name="txtViewUnidLongitud">m</string>
+    <string name="txtViewUnidLongitud">km</string>
     <string name="txtViewUnidPeso">Kg</string>
 
     <string name="txtViewHola">Hola </string>
@@ -41,7 +42,7 @@
     <string name="txtViewTiempo">Tiempo de entrenamiento:</string>
     <string name="txtViewFrecOptima">Frecuencia cardiaca óptima:</string>
     
-    <string name="txtVelocidad">Velocidad (m/s)</string>
+    <string name="txtVelocidad">Velocidad (km/h)</string>
     <string name="txtTiempo">Tiempo</string>
     <string name="txtGrafVelocidad">Gráfico de Velocidad</string>
     
@@ -52,12 +53,15 @@
 	<string name="msgErrorEdad">La edad no es un número válido</string>
 	<string name="msgErrorPeso">El peso no es un número válido</string>
 	<string name="msgErrorEstatura">La estatura no es un número válido</string>
+	<string name="msgErrorPulso">El pulso no es un número válido</string>
 	<string name="msgCompartir">Compartir resultados</string>
 	<string name="msgWarning">¡Atención!</string>
 	<string name="msgGPSok">GPS activado</string>
-						
+	<string name="msgInicio">Para resutados mas precisos espere a que aparezca su ubicación en el mapa</string>
+							
     <string name="btnOk">Aceptar</string>
     <string name="btnCancel">Cancelar</string>
     <string name="btnShare">Compartir Resultados</string>
+    <string name="btnMapa">Mostrar Recorrido</string>
     
 </resources>

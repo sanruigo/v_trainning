@@ -150,24 +150,26 @@
                     android:id="@+id/eTextAjustActEdad"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:ems="10" />
+                    android:ems="10" 
+                    android:textColor="#000000"/>
                 
                 </LinearLayout>
 
         </TableRow>
 
         <TableRow
-            android:id="@+id/tableRowPulso"
+            android:id="@+id/tableRowFrecuencia"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="10dp" >
+            android:paddingBottom="30dp" >
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content" 
+                android:paddingBottom="30dp" >
 
                 <TextView
-                    android:id="@+id/Pulso"
+                    android:id="@+id/Frecuencia"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/txtViewPulso"
@@ -176,10 +178,12 @@
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <EditText
-                    android:id="@+id/eTextAjustActPulso"
+                    android:id="@+id/eTextPulso"
                     android:layout_width="95dp"
                     android:layout_height="wrap_content"
-                    android:ems="10" />
+                    android:ems="10" 
+                    android:textColor="#000000"
+                    android:textSize="18sp"/>
                 <TextView
                     android:id="@+id/ppm"
                     android:layout_width="wrap_content"
@@ -193,36 +197,6 @@
 
         </TableRow>
 
-        
-        <TableRow
-            android:id="@+id/tableRowFrecuencia"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingBottom="30dp" >
-
-              <TextView
-                    android:id="@+id/Frecuencia"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="3sp"
-                    android:text="@string/txtViewPulso"
-                    android:textColor="#000000"
-                    android:textSize="18sp" />
-
-               <EditText
-                    android:id="@+id/eTextPulso"
-                    android:layout_width="95dp"
-                    android:layout_height="wrap_content"
-                    android:ems="10" />
-
-            </LinearLayout>
-
-        </TableRow>
         
         <TableRow
             android:id="@+id/tableRowActividad"
