@@ -1,12 +1,12 @@
 package project.v_trainning;
 
+
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
 
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -15,7 +15,6 @@ import java.util.Vector;
 
 import project.database.DataBase_vTrainning;
 
-//import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.annotation.SuppressLint;
@@ -26,36 +25,34 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.content.res.Resources;
-import android.util.Log;
-//import android.content.SharedPreferences.Editor;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
-//import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-//import project.gps.*;
 import android.os.AsyncTask;
-//import android.os.Bundle;
-//import android.os.Handler;
 import android.os.Looper;
 import android.location.Criteria;
 
 
-import com.google.android.gms.internal.s;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.LocationSource;
 import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
+//import com.google.android.gms.maps.SupportMapFragment;
+//import com.google.android.gms.maps.model.MarkerOptions;
 
+/**
+ * This class performs all the tasks about the training, and displays all training data for example distance, duration,
+ * type of training, and the route on a map 
+ * @author Various
+ * @version 1.0
+ */
 public class TrainningActivity extends Activity implements LocationSource{
 	/***
 	 * @param mode, MYPREFS_SETTINGS
@@ -82,8 +79,7 @@ public class TrainningActivity extends Activity implements LocationSource{
 	public Vector<Double> Distancia;
 	public int index=0;
 	/***
-	 * @param isTrainingActive 
-	 * Variable que indica si esta activo el modo entrenamiento 
+	 * It indicates if the training mode is active.
 	 * */ 
 	boolean isTrainingActive=false; //Agregado por Marlon
 	
@@ -114,58 +110,35 @@ public class TrainningActivity extends Activity implements LocationSource{
 	private Double velocidad;
 	private Double velocidadKM = 0.0;
 	
-	private Double ritmomedioactual;
-	private Double ritmomediofinal;
 	private Double velocidadFinal;
 	private Double velocidadesAux;
 	
 	private Float distancia=(float) 0;
 	private Float distanciaKM = (float) 0;
 	private Float distanciaLap = (float) 0;
-	private Float calReto;
 	private DecimalFormat df = new DecimalFormat("0.00"); 
-	private SimpleDateFormat dfo = new SimpleDateFormat("00:00");
+	//private SimpleDateFormat dfo = new SimpleDateFormat("00:00");
 	private Integer edad;
 	private String actividad;
-	private Bundle recuperacionpeso; //recuperaci�n param
+	//private Bundle recuperacionpeso; //recuperaci�n param
 	private Double peso; //recuperaci�n param
-	private Double kg=90.0; //variable peso en kg si no se introduce por parte de usuario
+	//private Double kg=90.0; //variable peso en kg si no se introduce por parte de usuario
 	private Double calorias =0.0;
-	private Double caloriastotal = 0.0;
-	private Long memoCrono;
-	private Long elapsedMillis;
-	private Long elapsedMillisLapInicial=(long) 0;
-	private Long elapsedMillisLapFinal=(long) 0;
-	private Long diferenciatime;
-	private long minutos;
-	private Double elapsedMillis2;
-	private Long elapsedMillis3;
-	private Double elapsedMillis4;
-	private Integer km=1;
-	private Integer distareto;
-	private String nombre;
 	
-	//private TextView distance;
-	//private TextView speed;
-	//private TextView alt;
-	//private TextView ritmoact;
-	//private TextView cal;
-	//private TextView usuario;
-	//EditText etxtPulso;
+	private long minutos;
+	private String nombre;
 	
 	private double frecMaxCad=0.0;
 	private int frecBasal=120;
 	private double frecOptima=0.0;
     
 	private String proveedor;
-	private Resources res = null;
     String locationContext = Context.LOCATION_SERVICE;
     String ritmo;
     String ritmoresumen;
     String estado ="inactivo";
     String duracel;
     String chronoText4;
-    
     Integer repeat = 1; 
 
 	
@@ -224,7 +197,7 @@ public class TrainningActivity extends Activity implements LocationSource{
 
 	@Override
 	protected void onResume() {
-		// TODO Auto-generated method stub
+		// Auto-generated method stub
 		super.onResume();
 
 			showSavedPreferencesSettings();
@@ -238,24 +211,32 @@ public class TrainningActivity extends Activity implements LocationSource{
 		return true;
 	}
 
-	
+	/**
+	 * Ask the user for a confirmation of the exit action. 
+	 */
 	@Override
 	public void onBackPressed() {
-		// TODO Auto-generated method stub
+		// Auto-generated method stub
         questionMessage(getResources().getString(R.string.title_activity_trainning),getResources().getString(R.string.msgSalir),
         		getResources().getString(R.string.btnOk),getResources().getString(R.string.btnCancel),false);
 	}
 
 
+	/**
+	 * Define the menu actions for this activity.
+	 * @param item
+	 * The menu selected item.
+	 * 
+	 */
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    switch (item.getItemId()) {
 	        case R.id.menuOpAjustes:
-	        	System.out.println("menuAjustes");
+	        	//System.out.println("menuAjustes");
 	        	launchSettingActivity(findViewById(R.id.btnTrainActAjust));
 	            return true;
 	        case R.id.menuOpResumen:
-	        	System.out.println("menuResumen");
-	        	launchResumeActivity(findViewById(R.id.btnTrainActResum));
+	        	//System.out.println("menuResumen");
+	        	launchResultsActivity(findViewById(R.id.btnTrainActResum));
 	            return true;
 	        case R.id.menuOpCreditos:
 	        	launchAboutActivity(findViewById(R.id.btnTrainActTrain));
@@ -269,7 +250,9 @@ public class TrainningActivity extends Activity implements LocationSource{
 	    }
 	}
 	
-	
+	/**
+	 * This method initialize the widgets and implements the start button, stop button and pause button
+	 */
 	private void createWidget(){
 		
 		txtActividad=(TextView)findViewById(R.id.tViewTrainActAct);
@@ -298,45 +281,51 @@ public class TrainningActivity extends Activity implements LocationSource{
 			
 		}
 		btnTrainActStart.setOnClickListener(new View.OnClickListener() {
-			
+			/**
+			 * Start the training measurements.
+			 */
 			public void onClick(View view) {
-				
-				int stoppedMilliseconds = 0;
-	              String chronoText = crono.getText().toString();
-	              String array[] = chronoText.split(":"); //SEPARA CIFRAS POR EL :
-	              if (array.length == 2) {
+				if (isActivatedAjustes){
+					int stoppedMilliseconds = 0;
+					String chronoText = crono.getText().toString();
+					String array[] = chronoText.split(":"); //SEPARA CIFRAS POR EL :
+					if (array.length == 2) {
 	            	  //pasa a minutos
-	                stoppedMilliseconds = Integer.parseInt(array[0]) * 60 * 1000
-	                    + Integer.parseInt(array[1]) * 1000;
-	              } else if (array.length == 3) {
+						stoppedMilliseconds = Integer.parseInt(array[0]) * 60 * 1000
+						+ Integer.parseInt(array[1]) * 1000;
+					} else if (array.length == 3) {
 	            	  //a horas
-	                stoppedMilliseconds = Integer.parseInt(array[0]) * 60 * 60 * 1000 
+						stoppedMilliseconds = Integer.parseInt(array[0]) * 60 * 60 * 1000 
 	                    + Integer.parseInt(array[1]) * 60 * 1000
 	                    + Integer.parseInt(array[2]) * 1000;
-	              }
-	              crono.setBase(SystemClock.elapsedRealtime() - stoppedMilliseconds);
-	              //elapsedMillisLapInicial = (SystemClock.elapsedRealtime() - crono.getBase())/1000;
+					}
+					crono.setBase(SystemClock.elapsedRealtime() - stoppedMilliseconds);
+					//elapsedMillisLapInicial = (SystemClock.elapsedRealtime() - crono.getBase())/1000;
 	            
 	            
-	              float tiempo =  (SystemClock.elapsedRealtime() - stoppedMilliseconds);
+					float tiempo =  (SystemClock.elapsedRealtime() - stoppedMilliseconds);
 	              
-	              estado = "activo"; //al darle a bot�n inicio el estado pasa a estar activo
+					estado = "activo"; //al darle a bot�n inicio el estado pasa a estar activo
 	              //etxtPulso.setActivated(false);
-	              isTrainingActive=true;
+					isTrainingActive=true;
 
-	              crono.start(); //inicia el cron�metro    
-	              btnTrainActStart.setAlpha((float) 0.5);
-	              btnTrainActStart.setEnabled(false);
-	              btnTrainActPause.setAlpha(1);
-	              btnTrainActPause.setEnabled(true);
-	              btnTrainActStop.setAlpha(1);
-	              btnTrainActStop.setEnabled(true);
-	              
+					crono.start(); //inicia el cron�metro    
+					btnTrainActStart.setAlpha((float) 0.5);
+					btnTrainActStart.setEnabled(false);
+					btnTrainActPause.setAlpha(1);
+					btnTrainActPause.setEnabled(true);
+					btnTrainActStop.setAlpha(1);
+					btnTrainActStop.setEnabled(true);
+				}else{
+					Toast.makeText(getApplicationContext(), R.string.msgNoAjustes, Toast.LENGTH_LONG).show();
+				}
 			}
 		});
 		
 		btnTrainActPause.setOnClickListener(new View.OnClickListener() {
-			
+			/**
+			 * Pause the training measurements.
+			 */
 			public void onClick(View view) {
 				System.out.println("click pause");
 				//etxtPulso.setActivated(true);
@@ -353,7 +342,9 @@ public class TrainningActivity extends Activity implements LocationSource{
 		});
 
         btnTrainActStop.setOnClickListener(new View.OnClickListener() {
-            
+			/**
+			 * Stop the training measurements and make the results computations.
+			 */
             public void onClick(View view) {
                     //c�lculo de los par�metros finales de resumen
             	calculofinal();         
@@ -361,7 +352,7 @@ public class TrainningActivity extends Activity implements LocationSource{
             	//SQLiteDatabase db = data.getWritableDatabase();         
             	//CAMBIOS EN FECHA AHORA SIENDO UN STRING MOSTRANDO BIEN EL FORMATO
             	//mitime = fechaActusql.getTime();                           
-            	String mitime = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
+            	//String mitime = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
             	//guardamos entrenamiento en la BD
             	//data.guardarEntrenamiento(id, duracel, distanciaKM, velocidadfinal, ritmoresumen, caloriastotal, mitime, elapsedMillis);
         
@@ -376,6 +367,9 @@ public class TrainningActivity extends Activity implements LocationSource{
             	crono.setBase(SystemClock.elapsedRealtime());
             	estado = "inactivo"; //el estado pasa a estar inactivo y paramos el tiempo
             	crono.stop();
+            	//crono.setBase(0);
+            	txtDistancia.setText("");
+            	txtVelocidad.setText("");
             	showResults();
             	//reset de preferencias al guardar la sesi�n
             	//misPreferencias = getSharedPreferences(MYPREFS, mode);
@@ -395,24 +389,35 @@ public class TrainningActivity extends Activity implements LocationSource{
 	
 
 	/**
-	 * Method to launch Settings
+	 * Method to launch Settings Activity.
+	 * @param view
 	 * */
 	public void launchSettingActivity(View view){
-		//isActivatedAjustes=true;
 		startActivity(new Intent(TrainningActivity.this,AjustesActivity.class));
-		//isActivatedAjustes=true;
+
 	}
 	
 	/**
-	 * Method to launch Resume
+	 * Method to launch Resumen Activity.
+	 * @param view
 	 * */
 	public void launchResumeActivity(View view){
+		startActivity(new Intent(TrainningActivity.this,ResumenActivity.class));
+		
+	}
+	
+	/**
+	 * Method to launch Results Activity.
+	 * @param view
+	 * */
+	public void launchResultsActivity(View view){
 		startActivity(new Intent(TrainningActivity.this,ResultsActivity.class));
 		
 	}
 	
 	/**
-	 * Method to launch About
+	 * Method to launch About Activity.
+	 * @param view
 	 * */	
 	public void launchAboutActivity(View view){
 		startActivity(new Intent(TrainningActivity.this,AboutActivity.class));
@@ -420,12 +425,19 @@ public class TrainningActivity extends Activity implements LocationSource{
 	}
 
 	
+	/**
+	 * Method to launch Results Activity with the training results.
+	 * */
 	private void showResults(){
 		startActivity(new Intent(TrainningActivity.this,ResultsActivity.class));
 	}
 	
+	
+	/**
+	 * Save the user data in the app preferences.
+	 */
 	private void savePreferences() {
-		// TODO Auto-generated method stub
+		// Auto-generated method stub
 		myPreferences = getSharedPreferences(MYPREFS_TRAINING, mode);
 		Editor myEditor = myPreferences.edit();
 	
@@ -436,34 +448,42 @@ public class TrainningActivity extends Activity implements LocationSource{
 	}
 
 
+	/**
+	 * Recover the saved data from preferences
+	 */
 	private void showSavedPreferencesSettings() {
-		// TODO Auto-generated method stub
+		// Auto-generated method stub
 		String temp;
 
 		myPreferencesRecover = getSharedPreferences(MYPREFS_SETTINGS,mode);
 		System.out.println(myPreferencesRecover.getString("nombre_actividad", "").toString());
+		nombre=myPreferencesRecover.getString("nombre", "").toString();
+		System.out.println(nombre);
 		txtActividad.setText(myPreferencesRecover.getString("nombre_actividad", "").toString());
 		temp=myPreferencesRecover.getString("completo", "").toString();
 		isActivatedAjustes=Boolean.valueOf(temp);
-        peso=Double.valueOf(myPreferencesRecover.getString("peso", "60.0").toString());
-        edad=Integer.valueOf(myPreferencesRecover.getString("edad", "20").toString());
+		temp=myPreferencesRecover.getString("peso", "60.0").toString();
+		if (isPosDouble(temp)){
+			peso=Double.valueOf(temp);
+		}else peso=0.0;
+        temp=myPreferencesRecover.getString("edad", "20").toString();
+        if (isPosInteger(temp))
+        	edad=Integer.valueOf(temp);
+        else edad=0;
         temp=myPreferencesRecover.getString("frecuencia_basal", "120");
-        if (temp!=null && !temp.equals(""))
+        if (isPosInteger(temp))
         	frecBasal=Integer.valueOf(temp);
         else frecBasal=120;
 		myPreferencesRecoverTrainning=getSharedPreferences(MYPREFS_TRAINING,mode);
 		isTrainingActive=myPreferencesRecoverTrainning.getBoolean("estadoTimer", false);
         velocidadFinal=Double.valueOf(myPreferencesRecoverTrainning.getString("velocidadFinal", "0.0"));
 
-
 	}
-
-
 
 
 		@Override
 		public void activate(OnLocationChangedListener listener) {
-			// TODO Auto-generated method stub
+			// Auto-generated method stub
 			mListener = listener;
 		}
 
@@ -473,7 +493,7 @@ public class TrainningActivity extends Activity implements LocationSource{
 
 		@Override
 		public void deactivate() {
-			// TODO Auto-generated method stub
+			// Auto-generated method stub
 			mListener = null;
 		}
 		//SE HACE UN PROPIO LOCATION LISTENER
@@ -550,11 +570,14 @@ public class TrainningActivity extends Activity implements LocationSource{
 			    }
 			 
 			 
-
 			//forzar usuario a que encienda gps antes de iniciar app
-			@Override
+			/**
+		|	* If GPS is disabled force the user to activate it.
+			* @param arg0
+			*/
+			 @Override
 			public void onProviderDisabled(String arg0) {
-				// TODO Auto-generated method stub
+				// Auto-generated method stub
 				Toast.makeText(getApplicationContext(), R.string.msgNoGPS, Toast.LENGTH_LONG).show();
 				Intent intent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
 			    startActivity(intent);
@@ -562,36 +585,23 @@ public class TrainningActivity extends Activity implements LocationSource{
 
 			@Override
 			public void onProviderEnabled(String arg0) {
-				// TODO Auto-generated method stub
+				// Auto-generated method stub
 				
 			}
 
 			@Override
 			public void onStatusChanged(String proveedor, int status, Bundle extras) {
-				// TODO Auto-generated method stub
+				// Auto-generated method stub
 					
-//			    switch (status) {
-//			    case LocationProvider.OUT_OF_SERVICE:
-//			        Log.i("", "Status Changed: Out of Service");
-//			        Toast.makeText(TrainningActivity.this, "Status Changed: Out of Service",
-//			                Toast.LENGTH_SHORT).show();
-//			        break;
-//			    case LocationProvider.TEMPORARILY_UNAVAILABLE:
-//			        Log.i("", "Status Changed: Temporarily Unavailable");
-//			        Toast.makeText(TrainningActivity.this, "Status Changed: Temporarily Unavailable",
-//			                Toast.LENGTH_SHORT).show();
-//			        break;
-//			    case LocationProvider.AVAILABLE:
-//			        Log.i("", "Status Changed: Available");
-//			        Toast.makeText(TrainningActivity.this, "Status Changed: Available",
-//			                Toast.LENGTH_SHORT).show();
-//			        break;
-//				
-//			    }
-//			
 			}	
 		  }
 		 
+		 /**
+		  * Calculate the distance between the actual and last locations.
+		  * @param locationDis
+		  * The actual location.
+		  * @author Daniel Aparicio
+		  */
 		 public void distancefunc (Location locationDis){
 			 
 //				misPreferencias = getSharedPreferences(MYPREFS,mode);
@@ -610,6 +620,11 @@ public class TrainningActivity extends Activity implements LocationSource{
 		        
 		    }
 		 
+		 /**
+		  * This class provides the asyncronus tasks fot updates the distance textView.
+		  * @author Jorge Zambrano
+		  *
+		  */
 		  private class task extends AsyncTask<Void, Void, Void>{
 			   @Override
 				protected Void doInBackground(Void... arg0) {
@@ -637,12 +652,18 @@ public class TrainningActivity extends Activity implements LocationSource{
 			   
 		  }
 
+		  	/**
+		  	 * Initialize the map.
+		  	 */
 		    private void setUpMap()
 		    {
 		        mMap.setMyLocationEnabled(true); //nos localiza
 		        mMap.getUiSettings().setMyLocationButtonEnabled(false); //quita el bot�n de mi opsici�n
 		    }
 		     
+		    /**
+		     * Setup the map if the map isn't initializated.
+		     */
 			 @SuppressLint("NewApi")
 			private void setUpMapIfNeeded() {
 			        // todav�a sin inicializar el mapa
@@ -662,7 +683,9 @@ public class TrainningActivity extends Activity implements LocationSource{
 			        }
 			    }
 
-			 
+			 /**
+			  * Start the listener for GPS.
+			  */
 			 private void startListener()  
 			  {  
 			    // Create a new Thread and start it  
@@ -694,6 +717,9 @@ public class TrainningActivity extends Activity implements LocationSource{
 			    .start();  
 			  } 
 
+			 /**
+			  * Show an alert if GPS isn't enable or doesn't work suitably.
+			  */
 			 public void avisoNoConexionGPS(){
 			    	
 			    	AlertDialog.Builder builder4 = new AlertDialog.Builder(TrainningActivity.this);
@@ -712,11 +738,13 @@ public class TrainningActivity extends Activity implements LocationSource{
 			    	alert4.show();
 			    }
 
-			 
-	public void salir(){
-		finish();
-		System.exit(0);
-	}
+			 /**
+			  * Finish the Activity and the app.
+			  */
+			 public void salir(){
+				 finish();
+				 System.exit(0);
+			 }
 				
 				
 		private void questionMessage(String title,String text, String nameButton1, String nameButton2, boolean cancelable){
@@ -741,13 +769,13 @@ public class TrainningActivity extends Activity implements LocationSource{
 
 		}
 			 
-        public void calculofinal(){
-            //myPreferencesRecover = getSharedPreferences(MYPREFS_SETTINGS,mode);
-            //frecBasal=myPreferencesRecover.getInt("frecuencia_basal", 120);
-            //peso=Double.valueOf(myPreferencesRecover.getString("peso", "").toString());
-            //edad=Integer.valueOf(myPreferencesRecover.getString("edad", "").toString());
-            //actividad=myPreferencesRecover.getString("nombre_actividad", "").toString();
-            //nombre=myPreferencesRecover.getString("nombre", "");
+        /**
+         * Calculates the training Results.
+         * @author Sandra Ruiz
+         */
+		public void calculofinal(){
+
+        	Toast.makeText(TrainningActivity.this, getResources().getString(R.string.msgCalculo), Toast.LENGTH_LONG).show();
             double basal=frecBasal;
             actividad=txtActividad.getText().toString();
             frecMaxCad=208-(0.7*edad);
@@ -792,16 +820,49 @@ public class TrainningActivity extends Activity implements LocationSource{
             		
         	}
 
-
+		/**
+		 * Save the training session results in the database.
+		 * @param name
+		 * User name
+		 * @param date
+		 * The training date
+		 * @param basal_sistolica
+		 * Sistolic heart rate
+		 * @param basal_diastolica
+		 * Distolic heart rate
+		 * @param calories
+		 * Burned calories
+		 * @param average_speed
+		 * Training average speed
+		 * @param total_distance
+		 * Total training distance
+		 * @param total_time
+		 * Total training time
+		 */
         private void savedDataBaseSesion(String name,String date,double basal_sistolica, double basal_diastolica,double calories, double average_speed,double total_distance, String total_time){
             
             DataBase_vTrainning db =new DataBase_vTrainning(this, "DBvTrainning", null, 1);
             //Inserta Usuarios
             boolean bbb= db.setSesion(name, date, basal_sistolica, basal_diastolica, calories, average_speed, total_distance, total_time);
+            System.out.println(name);
+            System.out.println(date);
+            System.out.println(basal_sistolica);
+            System.out.println(calories);
+            System.out.println(total_time);
             System.out.println("Guardado:"+bbb);
             db.closeDataBase();
         }
     
+        /**
+         * Save the GPS data for future use.
+         * @param name
+         * @param latitude
+         * @param longitude
+         * @param GPS_height
+         * @param partial_speed
+         * @param partial_distance
+         * @param partial_time
+         */
         private void savedDataBaseGPS(String name,double latitude,double longitude,double GPS_height,double partial_speed,double partial_distance,double partial_time){
             
             DataBase_vTrainning db =new DataBase_vTrainning(this, "DBvTrainning", null, 1);
@@ -810,24 +871,31 @@ public class TrainningActivity extends Activity implements LocationSource{
             db.closeDataBase();
     }   
         
+        /**
+         * Calculates the average speeds over time, to show them in a graphic.
+         */
         private void calculaVelocidades(){
         	int i,j,k,l;
         	double velProm;
         	Double [] promedios= new Double[9];
-        	Double [] veloc;
         	i=Velocidades.size();
-        	k=Math.round(i/8);
-        	veloc=(Double[]) Velocidades.toArray();
+        	Double [] veloc=new Double[i];
+        	for (j=0; j<i; j++)
+        		veloc[j]= Velocidades.get(j);
+        	k=Math.round(i/16);
+        	if (k==0) k=1;
         	promedios[0]=veloc[0];
         	for (i=1;i<9;i++){
         		velProm=0;
-        		l=i*k;
-        		for (j=(l-k);j<(l+k);j++){
+        		l=i*2*k;
+        		for (j=(l-k);j<=(l+k);j++){
         			if (j<Velocidades.size() && j>=0)
         			velProm=velProm+veloc[j];
         			
         		}
-        		promedios[i]=velProm/(2*k);
+        		if (j<=Velocidades.size()){
+        			promedios[i]=velProm/(2*k);
+        		}else promedios[i]=velProm/(k);
         	}
             myPreferences = getSharedPreferences(MYPREFS_TRAINING, mode);
             Editor myEditor = myPreferences.edit();
@@ -844,4 +912,37 @@ public class TrainningActivity extends Activity implements LocationSource{
         	
         	
         }
+
+    	/**
+    	 * Verify if an input string is a positive integer.
+    	 * @param cadena
+    	 * @return true if cadena is a integer number greater than zero; false if not.
+    	 */
+    	private boolean isPosInteger(String cadena){
+    		try{
+    			int dd=Integer.parseInt(cadena);
+    			if (dd>0){
+    				return true;
+    			}else return false;
+    		}catch (NumberFormatException e){
+    			return false;
+    		}
+    	}
+
+    	/**
+    	 * Verify if an input string is a positive double.
+    	 * @param cadena
+    	 * @return true if cadena is a double number greater than zero; false if not.
+    	 */
+    	private boolean isPosDouble(String cadena){
+    		try{
+    			double dd=Double.parseDouble(cadena);
+    			if (dd>0){
+    				return true;
+    			}else return false;
+    		}catch (NumberFormatException e){
+    			return false;
+    		}
+    	}
+
 }

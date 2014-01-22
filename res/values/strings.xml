@@ -46,6 +46,9 @@
     <string name="txtVelocidad">Speed (km/h)</string>
     <string name="txtTiempo">Time</string>
     <string name="txtGrafVelocidad">Speed Graphics</string>
+    <string name="txtFecha">Date</string>
+    <string name="txtCalorias">Burned Calories</string>
+    <string name="txtDistancia">Distance</string>
     
     <string name="msgNoGPS">"GPS is disabled or it can't obtain the location.\nVerify the service."</string>
     <string name="msgNoAjustes">You must verify de training settings before to start it.</string>
@@ -59,10 +62,12 @@
     <string name="msgWarning">Warning!</string>
     <string name="msgGPSok">GPS is active</string>
 	<string name="msgInicio">For more accurate results, wait until you see your location on the map</string>
-    
+	<string name="msgCalculo">Doing the math, take a breath a moment.</string>
+	
     <string name="btnOk">OK</string>
     <string name="btnCancel">Cancel</string>
     <string name="btnShare">Share Results</string>
     <string name="btnMapa">Show Route</string>
+
     
 </resources>

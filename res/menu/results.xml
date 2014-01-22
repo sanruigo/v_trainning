@@ -5,6 +5,14 @@
         android:title="@string/btnShare"/>
     
     <item
+        android:id="@+id/menuResultResum"
+        android:title="@string/menuResumen"/>
+    
+    <item
+        android:id="@+id/menuResultTrain"
+        android:title="@string/menuTraining"/>
+    
+    <item
         android:id="@+id/menuResultCreditos"
         android:title="@string/menuCredits"/>
     

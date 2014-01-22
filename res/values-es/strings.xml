@@ -46,6 +46,9 @@
     <string name="txtVelocidad">Velocidad (km/h)</string>
     <string name="txtTiempo">Tiempo</string>
     <string name="txtGrafVelocidad">Gráfico de Velocidad</string>
+    <string name="txtFecha">Fecha</string>
+    <string name="txtCalorias">Calorías quemadas</string>
+    <string name="txtDistancia">Distancia</string>
     
     <string name="msgNoGPS">"El GPS esta desactivado o no se puede obtener la ubicación.\nVerifique el servicio."</string>
     <string name="msgNoAjustes">"Debe verificar los ajustes del entrenamiento antes de iniciar el mismo."</string>
@@ -59,10 +62,12 @@
 	<string name="msgWarning">¡Atención!</string>
 	<string name="msgGPSok">GPS activado</string>
 	<string name="msgInicio">Para resutados mas precisos espere a que aparezca su ubicación en el mapa</string>
-							
+	<string name="msgCalculo">Realizando calculos, toma aire un momento.</string>
+								
     <string name="btnOk">Aceptar</string>
     <string name="btnCancel">Cancelar</string>
     <string name="btnShare">Compartir Resultados</string>
     <string name="btnMapa">Mostrar Recorrido</string>
+
     
 </resources>

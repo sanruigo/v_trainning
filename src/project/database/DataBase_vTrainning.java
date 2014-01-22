@@ -150,6 +150,7 @@ public class DataBase_vTrainning extends SQLiteOpenHelper {
     	return rows;
     }
 
+    
     /**
      * Insert a user in the Database
      * @param name user's name
@@ -168,6 +169,21 @@ public class DataBase_vTrainning extends SQLiteOpenHelper {
             //dbWrite.close();
         
     	return isInsert;
+    }
+    
+    /**
+     * Update a user in the Database
+     * @param name user's name
+     * @param age user's age
+     * @param weight user's weight
+     * @return isUpdate if this transaction was successful
+     * */
+    public boolean updateUsuario(String name, int age,double weight,double height){
+    	boolean isUpdate=true;
+    	String rowQuerry="update usuarios set nombre='"+name+"',edad='"+age+"',peso='"+weight+"',estatura='"+height+"' where id_usuario=1";
+    	dbWrite.execSQL(rowQuerry);
+    	
+    	return isUpdate;
     }
     
     /**
@@ -390,6 +406,90 @@ public class DataBase_vTrainning extends SQLiteOpenHelper {
     		cursor.close();
         }
     	return idSession;
+    }
+    
+    /**
+     * return all the sessions dates
+     * 
+     * @return sDates the sessions dates
+     * */
+    public Vector<String> getAllSesionDate(){  	
+    	Vector<String> sDates=new Vector<String>();
+      	if(dbRead != null)
+        {
+    		String rowQuerry="select sesiones.fecha from sesiones"; 
+    		
+    		Cursor cursor=dbRead.rawQuery(rowQuerry,null);
+    		while(cursor.moveToNext()){
+    			sDates.add(cursor.getString(0).substring(0,10));
+    		}
+    		//Cerramos el cursor
+    		cursor.close();
+        }
+    	return sDates;
+    }
+    
+    /**
+     * return all the sessions distances
+     * 
+     * @return sDistances the sessions distances
+     * */
+    public Vector<Double> getAllSesionDistance(){  	
+    	Vector<Double> sDistances=new Vector<Double>();
+      	if(dbRead != null)
+        {
+    		String rowQuerry="select sesiones.distancia_total from sesiones"; 
+    		
+    		Cursor cursor=dbRead.rawQuery(rowQuerry,null);
+    		while(cursor.moveToNext()){
+    			sDistances.add(cursor.getDouble(0));
+    		}
+    		//Cerramos el cursor
+    		cursor.close();
+        }
+    	return sDistances;
+    }
+    
+    /**
+     * return all the burned calories by sessions 
+     * 
+     * @return sCalories the burned calories by sessions 
+     * */
+    public Vector<Double> getAllSesionCal(){  	
+    	Vector<Double> sCalories=new Vector<Double>();
+      	if(dbRead != null)
+        {
+    		String rowQuerry="select sesiones.calorias_quemadas from sesiones"; 
+    		
+    		Cursor cursor=dbRead.rawQuery(rowQuerry,null);
+    		while(cursor.moveToNext()){
+    			sCalories.add(cursor.getDouble(0));
+    		}
+    		//Cerramos el cursor
+    		cursor.close();
+        }
+    	return sCalories;
+    }
+    
+    /**
+     * return all the sessions times
+     * 
+     * @return sDates the sessions dates
+     * */
+    public Vector<String> getAllSesionTime(){  	
+    	Vector<String> sDates=new Vector<String>();
+      	if(dbRead != null)
+        {
+    		String rowQuerry="select sesiones.tiempo_total from sesiones"; 
+    		
+    		Cursor cursor=dbRead.rawQuery(rowQuerry,null);
+    		while(cursor.moveToNext()){
+    			sDates.add(cursor.getString(0));
+    		}
+    		//Cerramos el cursor
+    		cursor.close();
+        }
+    	return sDates;
     }
     
     /**

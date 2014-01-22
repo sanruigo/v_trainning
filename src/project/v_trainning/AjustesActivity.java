@@ -1,6 +1,5 @@
 package project.v_trainning;
 
-//import android.R;
 
 import project.database.DataBase_vTrainning;
 
@@ -22,6 +21,12 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+/**
+ * This class displays a form that the user must fill in to make a training session
+ * 
+ * @author Various 
+ *
+ */
 @SuppressLint("NewApi")
 public class AjustesActivity extends Activity {
 	  final int mode = Activity.MODE_PRIVATE;
@@ -41,7 +46,9 @@ public class AjustesActivity extends Activity {
 		createWidget();
 	}
 
-	
+	/**
+	 * Create the activity widgets. 
+	 */
 	private void createWidget(){
 		
 		txtPrefName=(EditText)findViewById(R.id.eTextAjustActNombre);
@@ -66,17 +73,28 @@ public class AjustesActivity extends Activity {
 		});
 		
 	}
-	
+
+	/**
+	 * Save the user data in the database. If it's necessary only update the data.
+	 * 
+	 */
 	private void savedDataBase(){
 		
 		DataBase_vTrainning db =new DataBase_vTrainning(this, "DBvTrainning", null, 1);
 		//Inserta Usuarios
-		if (!datosCompletos)
+		if (!datosCompletos){
 			db.setUsuario(txtPrefName.getText().toString(),Integer.valueOf(txtPrefAge.getText().toString()),Double.valueOf(txtPrefWeight.getText().toString()),Double.valueOf(txtPrefHeight.getText().toString()));
+		}else{
+			db.updateUsuario(txtPrefName.getText().toString(),Integer.valueOf(txtPrefAge.getText().toString()),Double.valueOf(txtPrefWeight.getText().toString()),Double.valueOf(txtPrefHeight.getText().toString()));
+		}
 		db.closeDataBase();
 	}
+	
+	/**
+	 * Recover the saved data from preferences
+	 */
 	private void showSavedPreferences() {
-		// TODO Auto-generated method stub
+		// Auto-generated method stub
 		myPreferencesRecover = getSharedPreferences(MYPREFS_SETTINGS,mode);
 		txtPrefName.setText(myPreferencesRecover.getString("nombre", ""));
 		txtPrefAge.setText(myPreferencesRecover.getString("edad", ""));
@@ -89,9 +107,13 @@ public class AjustesActivity extends Activity {
 		
 	}
 	
+	/**
+	 * Do the corresponding task when the activity gets focus.
+	 * These include showSavedPreferences.
+	 */
 	@Override
 	protected void onResume() {
-		// TODO Auto-generated method stub
+		// Auto-generated method stub
 		super.onResume();
 		showSavedPreferences();
 		
@@ -103,7 +125,10 @@ public class AjustesActivity extends Activity {
 		}
 	}
 
-
+	/**
+	 * Perform the corresponding tasks when the activities lost focus.
+	 * These include savePreferences and verify the input data. 
+	 */
 	@Override
 	protected void onPause(){
 		boolean completo=false;
@@ -118,6 +143,7 @@ public class AjustesActivity extends Activity {
 						completo=true;
 						if (!isPosInteger(txtPrefPulso.getText().toString())){
 							Toast.makeText(getApplicationContext(), R.string.msgErrorPulso, Toast.LENGTH_LONG).show();
+						
 						}
 					}else{
 						Toast.makeText(getApplicationContext(), R.string.msgErrorEstatura, Toast.LENGTH_LONG).show();
@@ -136,17 +162,21 @@ public class AjustesActivity extends Activity {
 		finish();
 	}
 
-/*	
-	public void salir(){
-		finishFromChild(getParent());
-		finish();
-	}
-*/	
-	
+	/**
+	 * The default action on menu select item.
+	 * @param item
+	 * @return true
+	 */
 	public boolean onMenuItemClick(MenuItem item) {
 		  return true;
 	}
-	
+
+	/**
+	 * Define the menu actions for this activity.
+	 * @param item
+	 * The menu selected item.
+	 * @return true if action is selected.
+	 */
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    switch (item.getItemId()) {
 	        case R.id.menuAjusTraining:
@@ -168,13 +198,17 @@ public class AjustesActivity extends Activity {
 /*	
 	@Override
 	public void onBackPressed() {
-		// TODO Auto-generated method stub
+		// Auto-generated method stub
 		//super.onBackPressed();
 	}
 */
-
+	/**
+	 * Save the user data in the app preferences.
+	 * @param completo
+	 * indicates if all the data is complete.
+	 */
 	private void savePreferences(boolean completo) {
-		// TODO Auto-generated method stub
+		// Auto-generated method stub
 		myPreferences = getSharedPreferences(MYPREFS_SETTINGS, mode);
 		Editor myEditor = myPreferences.edit();
 		myEditor.putString("nombre", txtPrefName.getText().toString().trim());
@@ -196,23 +230,39 @@ public class AjustesActivity extends Activity {
 		return true;
 	}
 	
+	/**
+	 * Launch the Training Activity, finishing this.
+	 * @param view
+	 */
 	public void launchTranningActivity(View view){
 		
 		finish();
-
 	}
 	
+	/**
+	 * Launch the About Activity.
+	 * @param view
+	 */
 	public void launchAboutActivity(View view){
 		startActivity(new Intent(AjustesActivity.this,AboutActivity.class));
 		
 	}
 	
 
+	/**
+	 * Launch the Resumen Activity.
+	 * @param view
+	 */
 	public void launchResumeActivity(View view){
 		startActivity(new Intent(AjustesActivity.this,ResumenActivity.class));
 		
 	}
 	
+	/**
+	 * Verify if an input string is a positive integer.
+	 * @param cadena
+	 * @return true if cadena is a integer number greater than zero; false if not.
+	 */
 	public boolean isPosInteger(String cadena){
 		try{
 			int dd=Integer.parseInt(cadena);
@@ -224,6 +274,11 @@ public class AjustesActivity extends Activity {
 		}
 	}
 
+	/**
+	 * Verify if an input string is a positive double.
+	 * @param cadena
+	 * @return true if cadena is a double number greater than zero; false if not.
+	 */
 	public boolean isPosDouble(String cadena){
 		try{
 			double dd=Double.parseDouble(cadena);
@@ -235,44 +290,6 @@ public class AjustesActivity extends Activity {
 		}
 	}
 	
-	/*
-	private void alertMessage(String title, String text, String nameButton, boolean cancelable){
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setMessage(text)
-		        .setTitle(title)
-		        .setCancelable(cancelable)
-		        .setNeutralButton(nameButton,
-		                new DialogInterface.OnClickListener() {
-		                    public void onClick(DialogInterface dialog, int id) {
-		                        dialog.cancel();
-		                    }
-		                });
-		AlertDialog alert = builder.create();
-		alert.show();
-	}
-	*/
-	/*
-	private void questionMessage(String title,String text, String nameButton1, String nameButton2, boolean cancelable){
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setMessage(text)
-		        .setTitle(title)
-		        .setCancelable(cancelable)
-		        .setPositiveButton(nameButton1,
-		                new DialogInterface.OnClickListener() {
-		                    public void onClick(DialogInterface dialog, int id) {
-		                		salir();
-		                		//finish();
-		                    }
-		                })
-		         .setNegativeButton(nameButton2,
-		        		 new DialogInterface.OnClickListener() {
-		        	 		public void onClick(DialogInterface dialog, int id) {
-		        	 		}
-                });
-		AlertDialog alert = builder.create();
-		alert.show();
 
-	}
-	*/
 
 }

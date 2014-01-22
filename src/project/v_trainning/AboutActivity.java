@@ -2,8 +2,11 @@ package project.v_trainning;
 
 import android.os.Bundle;
 import android.app.Activity;
-//import android.view.Menu;
 
+/**
+ * This class lets to show information about the app.
+ *
+ */
 public class AboutActivity extends Activity {
 
 	@Override

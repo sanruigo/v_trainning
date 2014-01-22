@@ -13,10 +13,6 @@ package project.chart;
 import java.text.DecimalFormat;
 import java.util.Arrays;
 
-//import java.util.List;
-//import java.util.Vector;
-
-//import android.graphics.Color;
 
 import com.androidplot.xy.LineAndPointFormatter;
 import com.androidplot.xy.SimpleXYSeries;
@@ -96,10 +92,10 @@ public class ChartPlot {
 			seriesFormat= new LineAndPointFormatter(linea,punto,relleno, null);
 	}
 	/**
+	 * Plot a XY graphic. 
 	 * 
-	 * @Plot()
-	 * devuelve true si se pudo plotear
-	 * false si no se pudo
+	 * @return true if it can plot
+	 * false if not.
 	 */
 	public boolean Plot(String label, int valmode){
 		this.valorMode=valmode;

@@ -10,7 +10,11 @@ import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.os.Bundle;
 
-
+/**
+ * This class implements GPS methods.
+ * @author Daniel Aparicio
+ *
+ */
 public class GPS {
 	/***
 	 * @param E
