@@ -6,6 +6,11 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
 
+import java.util.Locale;
+import android.speech.tts.TextToSpeech;
+import android.speech.tts.TextToSpeech.Engine;
+import android.speech.tts.TextToSpeech.OnInitListener;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -141,6 +146,12 @@ public class TrainningActivity extends Activity implements LocationSource{
     String chronoText4;
     Integer repeat = 1; 
 
+    
+    /////TextToSpeech
+	private TextToSpeech tts;
+	private static int TTS_DATA_CHECK = 1;
+	private boolean isTTSInitialized = false;
+    
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -156,12 +167,14 @@ public class TrainningActivity extends Activity implements LocationSource{
 		 //Location myLocation = lm.getLastKnownLocation("network"); //using "gps" returned NULL
 		 Location myLocation = lm.getLastKnownLocation(lm.GPS_PROVIDER);
 		
-		System.out.println("Creando Trainning");
+		//System.out.println("Creando Trainning");
 		
 		createWidget();
 		setUpMapIfNeeded();
 		//avisoNoConexionGPS();
-		 
+		speakBeggin();
+		confirmTTSData();
+
         if(locationManager != null)
         {         
             
@@ -182,6 +195,9 @@ public class TrainningActivity extends Activity implements LocationSource{
         {
         	//Toast.makeText(this, "fallo location manager", Toast.LENGTH_LONG).show();
         }	
+        
+//		speakUserLocale(getResources().getString(R.string.msgWelcome));
+//		confirmTTSData();
 	}
 
 	
@@ -255,6 +271,7 @@ public class TrainningActivity extends Activity implements LocationSource{
 	 */
 	private void createWidget(){
 		
+		
 		txtActividad=(TextView)findViewById(R.id.tViewTrainActAct);
 		txtDistancia=(TextView)findViewById(R.id.tViewTrainActDist);
 		txtVelocidad=(TextView)findViewById(R.id.tViewTrainActVeloc);
@@ -285,6 +302,8 @@ public class TrainningActivity extends Activity implements LocationSource{
 			 * Start the training measurements.
 			 */
 			public void onClick(View view) {
+				speakUserLocale(getResources().getString(R.string.msgStart));
+				confirmTTSData();
 				if (isActivatedAjustes){
 					int stoppedMilliseconds = 0;
 					String chronoText = crono.getText().toString();
@@ -308,7 +327,7 @@ public class TrainningActivity extends Activity implements LocationSource{
 					estado = "activo"; //al darle a bot�n inicio el estado pasa a estar activo
 	              //etxtPulso.setActivated(false);
 					isTrainingActive=true;
-
+					//speakUserLocale();
 					crono.start(); //inicia el cron�metro    
 					btnTrainActStart.setAlpha((float) 0.5);
 					btnTrainActStart.setEnabled(false);
@@ -319,6 +338,7 @@ public class TrainningActivity extends Activity implements LocationSource{
 				}else{
 					Toast.makeText(getApplicationContext(), R.string.msgNoAjustes, Toast.LENGTH_LONG).show();
 				}
+				
 			}
 		});
 		
@@ -327,7 +347,9 @@ public class TrainningActivity extends Activity implements LocationSource{
 			 * Pause the training measurements.
 			 */
 			public void onClick(View view) {
-				System.out.println("click pause");
+				//System.out.println("click pause");
+				speakUserLocale(getResources().getString(R.string.msgPause));
+				confirmTTSData();
 				//etxtPulso.setActivated(true);
 				isTrainingActive=false;
 				crono.stop();
@@ -347,6 +369,8 @@ public class TrainningActivity extends Activity implements LocationSource{
 			 */
             public void onClick(View view) {
                     //c�lculo de los par�metros finales de resumen
+            	speakUserLocale(getResources().getString(R.string.msgStop));
+				confirmTTSData();
             	calculofinal();         
             	//acceso a bd para guardar el entrenamiento realizado         
             	//SQLiteDatabase db = data.getWritableDatabase();         
@@ -456,9 +480,9 @@ public class TrainningActivity extends Activity implements LocationSource{
 		String temp;
 
 		myPreferencesRecover = getSharedPreferences(MYPREFS_SETTINGS,mode);
-		System.out.println(myPreferencesRecover.getString("nombre_actividad", "").toString());
+		//System.out.println(myPreferencesRecover.getString("nombre_actividad", "").toString());
 		nombre=myPreferencesRecover.getString("nombre", "").toString();
-		System.out.println(nombre);
+		//System.out.println(nombre);
 		txtActividad.setText(myPreferencesRecover.getString("nombre_actividad", "").toString());
 		temp=myPreferencesRecover.getString("completo", "").toString();
 		isActivatedAjustes=Boolean.valueOf(temp);
@@ -536,10 +560,33 @@ public class TrainningActivity extends Activity implements LocationSource{
 			            txtVelocidad.setText(String.valueOf((Math.round(velocidadKM*10)/10)));
 			            velocidadesAux=0.0;
 			            Velocidades.add(velocidadKM);
-			            System.out.println("Velocidad Size:"+Velocidades.size());
+			            //System.out.println("Velocidad Size:"+Velocidades.size());
+			            
+
+			            
+			            //System.out.println("q===="+multiplo(Long.valueOf((crono.getText().toString().substring(0,crono.getText().toString().indexOf(":")))), 5));
+			            
+			            //long t=Long.valueOf((crono.getText().toString().substring(0,crono.getText().toString().indexOf(":"))));
+			            if(Long.valueOf((crono.getText().toString().substring(0,crono.getText().toString().indexOf(":"))))>0){
+			            	if(multiplo(Long.valueOf((crono.getText().toString().substring(0,crono.getText().toString().indexOf(":")))), 2)){
+				            	
+			            		if(unaVez){
+			            			System.out.println("siiii");
+					            	speakUserLocale("Animo!!! vamos!!!");
+									confirmTTSData();
+									unaVez=false;
+			            		}else{
+			            			
+			            		}
+			            		
+			            	}else{
+			            		unaVez=true;
+			            	}
+			            }
+			            
 			            
                         for(int i=0;i<Velocidades.size();i++){
-                        	System.out.println(i+":"+Velocidades.get(i));
+                        	//System.out.println("....l."+i+":"+Velocidades.get(i));
                             velocidadesAux+=Velocidades.get(i);
                             
                         }
@@ -705,6 +752,8 @@ public class TrainningActivity extends Activity implements LocationSource{
 		        	lm.requestLocationUpdates(proveedor, 0, 10F, myLocationListener);
 		        	locationProvider = lm.getProvider(proveedor);
 		        	
+		        	
+		        	
 		        	//ya sabemos que GPS ON
 		        	Toast.makeText(TrainningActivity.this, getResources().getString(R.string.msgGPSok), Toast.LENGTH_LONG).show();
 		        	
@@ -786,7 +835,7 @@ public class TrainningActivity extends Activity implements LocationSource{
             velocidadFinal=Double.valueOf(myPreferencesRecoverTrainning.getString("velocidadFinal", "0.0"));
 
             minutos=Long.valueOf((crono.getText().toString().substring(0,crono.getText().toString().indexOf(":"))));
-            System.out.println("..............."+minutos);
+            //System.out.println("..............."+minutos);
           //Actividad ciclismo
             if(actividad.equalsIgnoreCase(getResources().getString(R.string.ActivCycling))){ 
                     
@@ -797,9 +846,9 @@ public class TrainningActivity extends Activity implements LocationSource{
                     }        
                     
             		}else if(actividad.equalsIgnoreCase(getResources().getString(R.string.ActivRunning))){
-                    
-            			System.out.println("peso:"+peso);
-            			System.out.println("distancia:"+String.valueOf(distanciaKM).substring(0, String.valueOf(distanciaKM).indexOf(".")+4));
+//                    
+//            			System.out.println("peso:"+peso);
+//            			System.out.println("distancia:"+String.valueOf(distanciaKM).substring(0, String.valueOf(distanciaKM).indexOf(".")+4));
                     
             			calorias=1.03*peso*Double.valueOf(String.valueOf(distanciaKM).substring(0, String.valueOf(distanciaKM).indexOf(".")+4));
             		}
@@ -844,12 +893,12 @@ public class TrainningActivity extends Activity implements LocationSource{
             DataBase_vTrainning db =new DataBase_vTrainning(this, "DBvTrainning", null, 1);
             //Inserta Usuarios
             boolean bbb= db.setSesion(name, date, basal_sistolica, basal_diastolica, calories, average_speed, total_distance, total_time);
-            System.out.println(name);
-            System.out.println(date);
-            System.out.println(basal_sistolica);
-            System.out.println(calories);
-            System.out.println(total_time);
-            System.out.println("Guardado:"+bbb);
+//            System.out.println(name);
+//            System.out.println(date);
+//            System.out.println(basal_sistolica);
+//            System.out.println(calories);
+//            System.out.println(total_time);
+//            System.out.println("Guardado:"+bbb);
             db.closeDataBase();
         }
     
@@ -944,5 +993,101 @@ public class TrainningActivity extends Activity implements LocationSource{
     			return false;
     		}
     	}
+    	
+    	
+    	
+    	
+    	
+    	private void confirmTTSData()  {
+	    	Intent intent = new Intent(Engine.ACTION_CHECK_TTS_DATA);
+	    	startActivityForResult(intent, TTS_DATA_CHECK);
+	    }
+
+	    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	    	if (requestCode == TTS_DATA_CHECK) {
+	    		if (resultCode == Engine.CHECK_VOICE_DATA_PASS) {
+	    			//Voice data exists		
+	    			initializeTTS();
+	    		}
+	    		else {
+	    			Intent installIntent = new Intent(Engine.ACTION_INSTALL_TTS_DATA);
+	    			startActivity(installIntent);
+	    		}
+	    	}
+	    }
+	    
+	    private void initializeTTS() {
+	    	
+	    	tts = new TextToSpeech(this, new OnInitListener() {
+	    		public void onInit(int status) {
+	    			if (status == TextToSpeech.SUCCESS) {
+	    				isTTSInitialized = true;
+	    			}
+	    			else {
+	    				//Handle initialization error here
+	    				isTTSInitialized = false;
+	    			}
+	    		}
+	    	});
+	    }
+	    
+	    private void speakUserLocale(String message) {
+	    	if(isTTSInitialized) {
+	    		//Determine User's Locale
+	    		Locale locale = this.getResources().getConfiguration().locale;
+	    		
+//	    		System.out.println("locale="+locale);
+	    		if (tts.isLanguageAvailable(locale) >= 0) 
+	    			tts.setLanguage(locale);
+	    		
+	    		tts.setPitch(0.8f);
+	    		tts.setSpeechRate(1.1f);
+	    		
+	    		tts.speak(message, TextToSpeech.QUEUE_ADD, null);
+	    	}
+	    }
+	    
+	    private void speakBeggin() {
+	    	if(isTTSInitialized) {
+	    		//Determine User's Locale
+	    		Locale locale = this.getResources().getConfiguration().locale;
+	    		
+	    		//System.out.println("locale="+locale);
+	    		if (tts.isLanguageAvailable(locale) >= 0) 
+	    			tts.setLanguage(locale);
+	    		
+	    		tts.setPitch(0.8f);
+	    		tts.setSpeechRate(1.1f);
+	    		
+	    		tts.speak("", TextToSpeech.QUEUE_ADD, null);
+	    	}
+	    }
+
+	    @Override
+	    public void onDestroy() {
+	    	if (tts != null) {
+	    		
+	    		tts.stop();
+	    		tts.shutdown();
+	    	}
+	    	super.onDestroy();
+	    }
+	    
+	    boolean unaVez=false;
+	    public boolean multiplo(long num, int multiplo){
+	    	
+	    	long mul=num%multiplo;
+	    	
+	    	if(mul==0){
+	    		
+	    		return true;
+	    	
+	    	}
+	    	else{
+	    		
+	    		return false;
+	    	}
+	    	
+	    }
 
 }

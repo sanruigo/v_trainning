@@ -68,6 +68,9 @@
     <string name="btnCancel">Cancelar</string>
     <string name="btnShare">Compartir Resultados</string>
     <string name="btnMapa">Mostrar Recorrido</string>
-
+    <string name="msgWelcome">Bienvenido al Entrenador Virtual</string>
+    <string name="msgStart">Acabas de empezar tu actividad</string>
+    <string name="msgPause">Has detenido momentáneamente tu actividad</string>
+	<string name="msgStop">Felicidades! Usted acaba de finalizar tu entrenamiento</string>
     
 </resources>

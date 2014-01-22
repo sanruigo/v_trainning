@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+
 <!-- Strings in english -->
 <resources>
 
@@ -68,6 +68,9 @@
     <string name="btnCancel">Cancel</string>
     <string name="btnShare">Share Results</string>
     <string name="btnMapa">Show Route</string>
-
+    <string name="msgWelcome">Welcome to Virtual Trainning Assistant</string>
+    <string name="msgStart">Starting your activity</string>
+    <string name="msgPause">You have temporarily stopped your activity</string>
+	<string name="msgStop">Congratulations! You just completed your training</string>
     
 </resources>
