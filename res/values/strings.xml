@@ -72,5 +72,7 @@
     <string name="msgStart">Starting your activity</string>
     <string name="msgPause">You have temporarily stopped your activity</string>
 	<string name="msgStop">Congratulations! You just completed your training</string>
-    
+	<string name="msgCourage">Courage! Let\'s go!</string>
+
+		
 </resources>

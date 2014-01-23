@@ -41,7 +41,6 @@ import android.os.AsyncTask;
 import android.os.Looper;
 import android.location.Criteria;
 
-
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.LocationSource;
@@ -74,6 +73,7 @@ public class TrainningActivity extends Activity implements LocationSource{
 	Button btnTrainActStart,btnTrainActPause,btnTrainActStop;
 	Chronometer crono;
 	
+    private boolean unaVez=false;
 	
 	
 /*
@@ -163,7 +163,7 @@ public class TrainningActivity extends Activity implements LocationSource{
 		//Crea el objeto que gestiona las localizaciones
 		 lm = (LocationManager) getSystemService(locationContext);
 		 myLocationListener = new MyLocationListener();
-		 lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, myLocationListener);
+		 lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 0, myLocationListener);
 		 //Location myLocation = lm.getLastKnownLocation("network"); //using "gps" returned NULL
 		 Location myLocation = lm.getLastKnownLocation(lm.GPS_PROVIDER);
 		
@@ -572,7 +572,7 @@ public class TrainningActivity extends Activity implements LocationSource{
 				            	
 			            		if(unaVez){
 			            			System.out.println("siiii");
-					            	speakUserLocale("Animo!!! vamos!!!");
+					            	speakUserLocale(getResources().getString(R.string.msgCompartir));
 									confirmTTSData();
 									unaVez=false;
 			            		}else{
@@ -752,8 +752,6 @@ public class TrainningActivity extends Activity implements LocationSource{
 		        	lm.requestLocationUpdates(proveedor, 0, 10F, myLocationListener);
 		        	locationProvider = lm.getProvider(proveedor);
 		        	
-		        	
-		        	
 		        	//ya sabemos que GPS ON
 		        	Toast.makeText(TrainningActivity.this, getResources().getString(R.string.msgGPSok), Toast.LENGTH_LONG).show();
 		        	
@@ -795,7 +793,18 @@ public class TrainningActivity extends Activity implements LocationSource{
 				 System.exit(0);
 			 }
 				
-				
+		/**
+		 * Show a dialog message asking for an exit confirm.		
+		 * @param title
+		 * The message title.
+		 * @param text
+		 * The text fo the message
+		 * @param nameButton1
+		 * The name of the afirmative button
+		 * @param nameButton2
+		 * The name of the negative button (cancel)
+		 * @param cancelable
+		 */
 		private void questionMessage(String title,String text, String nameButton1, String nameButton2, boolean cancelable){
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setMessage(text)
@@ -995,17 +1004,14 @@ public class TrainningActivity extends Activity implements LocationSource{
     	}
     	
     	
-    	
-    	
-    	/**
-    	 * Confirms data text to speech
-    	 * 
-    	 */
+      /**
+       * Confirms data text to speech
+       * 
+       */    	
     	private void confirmTTSData()  {
 	    	Intent intent = new Intent(Engine.ACTION_CHECK_TTS_DATA);
 	    	startActivityForResult(intent, TTS_DATA_CHECK);
 	    }
-
 
     	
 	    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -1020,7 +1026,12 @@ public class TrainningActivity extends Activity implements LocationSource{
 	    		}
 	    	}
 	    }
-	    
+
+	    /**
+	    * Transforms the received text to synthesize speech
+	    * @param message text to speech 
+	    * 
+	    */
 	    private void initializeTTS() {
 	    	
 	    	tts = new TextToSpeech(this, new OnInitListener() {
@@ -1037,11 +1048,10 @@ public class TrainningActivity extends Activity implements LocationSource{
 	    }
 	    
 	    /**
-    	 * Transforms the received text to synthesize speech
-    	 * @param message text to speech 
-    	 * 
-    	 */
-	    
+	     * Speach a message.
+	     * @param message
+	     * The message string to speach.
+	     */
 	    private void speakUserLocale(String message) {
 	    	if(isTTSInitialized) {
 	    		//Determine User's Locale
@@ -1058,6 +1068,9 @@ public class TrainningActivity extends Activity implements LocationSource{
 	    	}
 	    }
 	    
+	    /**
+	     * Initialize the TextToSpeach variable according to local language. 
+	     */
 	    private void speakBeggin() {
 	    	if(isTTSInitialized) {
 	    		//Determine User's Locale
@@ -1084,13 +1097,16 @@ public class TrainningActivity extends Activity implements LocationSource{
 	    	super.onDestroy();
 	    }
 	    
-	    boolean unaVez=false;
 	    /**
-    	 * Verify if an number is multiple of another one
-    	 * @param num input number
-    	 * @param multiplo multiple number
-    	 * 
-    	 */
+	     * Verify if a number is multiple of another.
+	     * @param num
+	     * The number to test.
+	     * @param multiplo
+	     * The base of multiple number.
+	     * @return
+	     * True if "num" is a multiple of "nultiplo".
+	     * False if not.
+	     */
 	    public boolean multiplo(long num, int multiplo){
 	    	
 	    	long mul=num%multiplo;

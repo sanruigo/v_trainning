@@ -72,5 +72,7 @@
     <string name="msgStart">Acabas de empezar tu actividad</string>
     <string name="msgPause">Has detenido momentáneamente tu actividad</string>
 	<string name="msgStop">Felicidades! Usted acaba de finalizar tu entrenamiento</string>
-    
+	<string name="msgCourage">¡Ánimo! ¡Vamos!</string>
+	
+	
 </resources>
