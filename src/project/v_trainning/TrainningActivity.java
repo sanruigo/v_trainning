@@ -997,12 +997,17 @@ public class TrainningActivity extends Activity implements LocationSource{
     	
     	
     	
-    	
+    	/**
+    	 * Confirms data text to speech
+    	 * 
+    	 */
     	private void confirmTTSData()  {
 	    	Intent intent = new Intent(Engine.ACTION_CHECK_TTS_DATA);
 	    	startActivityForResult(intent, TTS_DATA_CHECK);
 	    }
 
+
+    	
 	    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 	    	if (requestCode == TTS_DATA_CHECK) {
 	    		if (resultCode == Engine.CHECK_VOICE_DATA_PASS) {
@@ -1030,6 +1035,12 @@ public class TrainningActivity extends Activity implements LocationSource{
 	    		}
 	    	});
 	    }
+	    
+	    /**
+    	 * Transforms the received text to synthesize speech
+    	 * @param message text to speech 
+    	 * 
+    	 */
 	    
 	    private void speakUserLocale(String message) {
 	    	if(isTTSInitialized) {
@@ -1074,6 +1085,12 @@ public class TrainningActivity extends Activity implements LocationSource{
 	    }
 	    
 	    boolean unaVez=false;
+	    /**
+    	 * Verify if an number is multiple of another one
+    	 * @param num input number
+    	 * @param multiplo multiple number
+    	 * 
+    	 */
 	    public boolean multiplo(long num, int multiplo){
 	    	
 	    	long mul=num%multiplo;
